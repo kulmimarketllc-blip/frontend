@@ -1,0 +1,8 @@
+name,description,categoryId,sku,price,comparePrice,stock,lowStockAt,imageUrl,isFeatured
+Negative Price Example,"Should fail validation because price is negative",electronics,ESQ-EDGE-001,-5.00,10.00,10,3,https://images.unsplash.com/photo-1588423771073-b8903fbb85b5,false
+Missing Name Example,"Should fail if name is required",electronics,ESQ-EDGE-002,19.99,29.99,20,5,https://images.unsplash.com/photo-1591799265444-d66432b91588,false
+Huge Stock Example,"Valid shape but useful for stress testing",tools-diy,ESQ-EDGE-003,79.99,99.99,100000,100,https://images.unsplash.com/photo-1504148455328-c376907d081c,false
+Invalid Category Example,"Should fail if category slug/id does not exist",unknown-category,ESQ-EDGE-004,25.00,30.00,25,5,https://images.unsplash.com/photo-1512820790803-83ca734da794,false
+Zero Stock Example,"Valid but should appear as out of stock",beauty,ESQ-EDGE-005,15.00,20.00,0,5,https://images.unsplash.com/photo-1556228720-195a672e8a03,false
+No Compare Price Example,"Valid row with blank comparePrice",fashion,ESQ-EDGE-006,35.00,,50,10,https://images.unsplash.com/photo-1521572163474-6864f9cf17ab,true
+Bad Image URL Example,"Valid core fields, image URL intentionally malformed",sports,ESQ-EDGE-007,29.00,39.00,60,10,not-a-url,false

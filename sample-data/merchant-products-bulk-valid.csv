@@ -1,0 +1,23 @@
+name,description,categoryId,sku,price,comparePrice,stock,lowStockAt,imageUrl,isFeatured
+Wireless Earbuds ANC,"Bluetooth 5.3 earbuds with noise cancellation and 30-hour battery",electronics,ESQ-ELE-001,59.99,79.99,120,15,https://images.unsplash.com/photo-1588423771073-b8903fbb85b5,true
+Smart Fitness Band X2,"Heart-rate tracking, sleep monitor, and 5 ATM water resistance",electronics,ESQ-ELE-002,34.50,49.00,80,12,https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6,false
+Portable SSD 1TB,"High-speed external SSD with USB-C support and metal body",electronics,ESQ-ELE-003,89.00,109.00,45,8,https://images.unsplash.com/photo-1591799265444-d66432b91588,false
+Mechanical Keyboard TKL,"Hot-swappable switches, RGB backlight, compact TKL layout",electronics,ESQ-ELE-004,72.00,95.00,30,6,https://images.unsplash.com/photo-1511467687858-23d96c32e4ae,true
+Gaming Mouse Pro,"Lightweight 69g shell with programmable buttons and 26K DPI",electronics,ESQ-ELE-005,39.99,59.99,75,10,https://images.unsplash.com/photo-1527864550417-7fd91fc51a46,false
+Cotton Oversize Hoodie,"Soft brushed fleece hoodie with drop-shoulder fit",fashion,ESQ-FAS-001,42.00,65.00,90,20,https://images.unsplash.com/photo-1521572163474-6864f9cf17ab,false
+Classic Denim Jacket,"Mid-weight denim jacket with button closure and side pockets",fashion,ESQ-FAS-002,68.00,89.00,40,10,https://images.unsplash.com/photo-1548883354-7622d03aca27,true
+Minimalist Leather Wallet,"Slim bifold wallet with RFID blocking and 8 card slots",fashion,ESQ-FAS-003,25.50,35.00,110,25,https://images.unsplash.com/photo-1627123424574-724758594e93,false
+Ceramic Plant Pot Set,"Set of 3 matte ceramic planters with drainage trays",home-garden,ESQ-HG-001,31.00,45.00,55,10,https://images.unsplash.com/photo-1501004318641-b39e6451bec6,false
+LED Desk Lamp Pro,"Dimmable desk lamp with USB charging and touch controls",home-garden,ESQ-HG-002,27.99,39.99,65,12,https://images.unsplash.com/photo-1507473885765-e6ed057f782c,false
+Vitamin C Bright Serum,"10% vitamin C formula for daily brightening and hydration",beauty,ESQ-BEA-001,19.99,29.99,140,25,https://images.unsplash.com/photo-1629198688000-71f23e745b6e,true
+Hydrating Face Cream,"Ceramide-rich moisturizer suitable for dry and sensitive skin",beauty,ESQ-BEA-002,22.50,32.00,95,18,https://images.unsplash.com/photo-1556228720-195a672e8a03,false
+Organic Honey 500g,"Raw unfiltered honey sourced from local farms",food-grocery,ESQ-FOO-001,11.99,14.99,200,30,https://images.unsplash.com/photo-1587049352851-8d4e89133924,false
+Roasted Almond Mix,"Premium roasted almonds with sea salt in resealable pouch",food-grocery,ESQ-FOO-002,9.75,12.50,175,28,https://images.unsplash.com/photo-1599599810769-bcde5a160d32,false
+Yoga Mat 6mm,"Non-slip yoga mat with alignment lines and carrying strap",sports,ESQ-SPO-001,24.99,34.99,85,14,https://images.unsplash.com/photo-1518611012118-696072aa579a,true
+Adjustable Dumbbell Pair,"Quick-adjust dumbbells from 2.5kg to 24kg",sports,ESQ-SPO-002,189.00,229.00,18,4,https://images.unsplash.com/photo-1517836357463-d25dfeac3438,false
+Bestseller Novel Bundle,"Set of 3 contemporary fiction bestsellers",books,ESQ-BOO-001,29.99,39.99,70,12,https://images.unsplash.com/photo-1512820790803-83ca734da794,false
+Kids STEM Robot Kit,"Build-and-code robot kit for ages 8+ with app guidance",toys-kids,ESQ-TOY-001,49.99,69.99,50,10,https://images.unsplash.com/photo-1587654780291-39c9404d746b,true
+Cordless Drill 20V,"Brushless cordless drill with 2 batteries and carry case",tools-diy,ESQ-TOL-001,109.00,139.00,26,5,https://images.unsplash.com/photo-1504148455328-c376907d081c,false
+Pet Grooming Brush,"Self-cleaning deshedding brush for cats and dogs",pet-supplies,ESQ-PET-001,14.50,21.00,130,20,https://images.unsplash.com/photo-1517849845537-4d257902454a,false
+Digital Thermometer,"Fast-read digital thermometer with fever alarm",health,ESQ-HEA-001,12.99,18.99,160,25,https://images.unsplash.com/photo-1584982751601-97dcc096659c,false
+Blood Pressure Monitor,"Automatic upper-arm monitor with irregular heartbeat detection",health,ESQ-HEA-002,44.00,59.00,42,8,https://images.unsplash.com/photo-1584515933487-779824d29309,true

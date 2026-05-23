@@ -1,0 +1,73 @@
+{
+  "stats": [
+    {
+      "label": "Total Orders",
+      "val": "14",
+      "icon": "Package",
+      "bg": "bg-teal/10"
+    },
+    {
+      "label": "Total Spent",
+      "val": "$1,240",
+      "icon": "Truck",
+      "bg": "bg-blue-500/10"
+    },
+    {
+      "label": "Wishlist Items",
+      "val": "5",
+      "icon": "Heart",
+      "bg": "bg-red/10"
+    },
+    {
+      "label": "Avg Rating",
+      "val": "4.8",
+      "icon": "Star",
+      "bg": "bg-yellow/10"
+    }
+  ],
+  "recentOrders": [
+    {
+      "id": "#ESQ-00847",
+      "date": "Placed Mar 12, 2026",
+      "desc": "Wireless Earbuds Pro + 2 more items",
+      "meta": "Sold by TechZone MN · Standard Delivery",
+      "total": "$392.95",
+      "status": "Delivered",
+      "statusColor": "text-green-500 bg-green-500/10",
+      "images": ["https://loremflickr.com/300/300/electronics?seed=3", "https://loremflickr.com/300/300/electronics?seed=4"]
+    },
+    {
+      "id": "#ESQ-00846",
+      "date": "Placed Mar 12, 2026",
+      "desc": "Urban Runner Sneakers (Size 10)",
+      "meta": "Sold by SoleStyle · Express Delivery",
+      "total": "$64.99",
+      "status": "In Transit",
+      "statusColor": "text-yellow bg-yellow/10",
+      "images": ["https://loremflickr.com/300/300/fashion?seed=3"]
+    },
+    {
+      "id": "#ESQ-00821",
+      "date": "Placed Feb 28, 2026",
+      "desc": "Premium Polarized Sunglasses",
+      "meta": "Sold by VisionX · Standard Delivery",
+      "total": "$28.99",
+      "status": "Delivered",
+      "statusColor": "text-green-500 bg-green-500/10",
+      "images": ["https://loremflickr.com/300/300/fashion?seed=4"]
+    }
+  ],
+  "wishlisted": [
+    { "id": 1, "name": "Premium Polarized Sunglasses", "price": "$28.99", "image": "https://loremflickr.com/300/300/fashion?seed=4" },
+    { "id": 2, "name": "Laptop Stand Adjustable", "price": "$34.99", "image": "https://loremflickr.com/300/300/furniture?seed=3" },
+    { "id": 3, "name": "Leather Crossbody Bag", "price": "$54.99", "image": "https://loremflickr.com/300/300/fashion?seed=5" },
+    { "id": 4, "name": "Indoor Plant Collection", "price": "$39.99", "image": "https://loremflickr.com/300/300/plants?seed=1" },
+    { "id": 5, "name": "Non-Stick Cookware Set", "price": "$89.00", "image": "https://loremflickr.com/300/300/food?seed=1" }
+  ],
+  "quickActions": [
+    { "id": "orders", "label": "View All Orders", "sub": "Track and manage your purchases" },
+    { "id": "track", "label": "Track Current Delivery", "sub": "Live progress for active packages" },
+    { "id": "addresses", "label": "Manage Addresses", "sub": "Set and update delivery locations" },
+    { "id": "settings", "label": "Account Settings", "sub": "Security and notification preferences" }
+  ]
+}

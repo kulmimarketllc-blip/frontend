@@ -1,0 +1,38 @@
+export const dummyUsers = [
+  {
+    id: 1,
+    email: 'user@esuuq.com',
+    password: 'password123',
+    firstName: 'Ahmed',
+    lastName: 'Mohamed',
+    phone: '+15551234567',
+    role: 'user',
+  },
+  {
+    id: 2,
+    email: 'admin@esuuq.com',
+    password: 'password123',
+    firstName: 'Fatima',
+    lastName: 'Ali',
+    phone: '+15557654321',
+    role: 'admin',
+  },
+  {
+    id: 3,
+    email: 'merchant@esuuq.com',
+    password: 'password123',
+    firstName: 'Yusuf',
+    lastName: 'Hassan',
+    phone: '+15558889999',
+    role: 'merchant',
+  },
+  {
+    id: 4,
+    email: 'subadmin@esuuq.com',
+    password: 'password123',
+    firstName: 'Fatima',
+    lastName: 'Abdi',
+    phone: '+15556667777',
+    role: 'subadmin',
+  },
+];

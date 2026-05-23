@@ -1,0 +1,86 @@
+{
+  "premium-china-sneakers-y26-1033": {
+    "name": "Premium China Sneakers-Y26-1033",
+    "store": "Sneaker Hub Official",
+    "storeRating": 4.5,
+    "price": 1800,
+    "oldPrice": 4500,
+    "off": 60,
+    "rating": 4.3,
+    "reviews": 95,
+    "sold": 120,
+    "stock": 18,
+    "description": "Step up your style with these premium sneakers featuring a sleek design and superior comfort. The lightweight construction ensures fatigue-free wear while the padded collar offers ankle support. Perfect for daily wear and light sports activities.",
+    "features": [
+      "Breathable Mesh Upper",
+      "Cushioned Insole",
+      "Non-slip Rubber Sole",
+      "Reflective Accents",
+      "True to Size Fit"
+    ],
+    "specs": {
+      "Model": "Y26-1033",
+      "Material": "Synthetic Leather & Textile",
+      "Closure": "Lace-up",
+      "Heel": "Flat",
+      "Colors": "Black, Gray"
+    },
+    "colors": ["Black", "Gray"],
+    "sizes": ["39", "40", "41", "42", "43"],
+    "images": [
+      "/img/products/sneaker-black.png",
+      "/img/products/sneaker-gray.png",
+      "/img/products/sneaker-black.png"
+    ],
+    "category": "Sneakers",
+    "materials": "Premium quality materials sourced from trusted suppliers. Built to last with attention to every detail.",
+    "care": "Machine washable at 30°C. Do not bleach. Tumble dry low. Iron at medium heat if needed.",
+    "shipping": {
+      "dhaka": "1-2 business days (৳60)",
+      "outside": "3-5 business days (৳120)",
+      "free_threshold": 2000
+    }
+  },
+  "default": {
+    "name": "Premium China Sneakers-Y26-1033",
+    "store": "Sneaker Hub Official",
+    "storeRating": 4.5,
+    "price": 1800,
+    "oldPrice": 4500,
+    "off": 60,
+    "rating": 4.3,
+    "reviews": 95,
+    "sold": 120,
+    "stock": 18,
+    "description": "Step up your style with these premium sneakers featuring a sleek design and superior comfort. The lightweight construction ensures fatigue-free wear while the padded collar offers ankle support. Perfect for daily wear and light sports activities.",
+    "features": [
+      "Breathable Mesh Upper",
+      "Cushioned Insole",
+      "Non-slip Rubber Sole",
+      "Reflective Accents",
+      "True to Size Fit"
+    ],
+    "specs": {
+      "Model": "Y26-1033",
+      "Material": "Synthetic Leather & Textile",
+      "Closure": "Lace-up",
+      "Heel": "Flat",
+      "Colors": "Black, Gray"
+    },
+    "colors": ["Black", "Gray"],
+    "sizes": ["39", "40", "41", "42", "43"],
+    "images": [
+      "/img/products/sneaker-black.png",
+      "/img/products/sneaker-gray.png",
+      "/img/products/sneaker-black.png"
+    ],
+    "category": "Sneakers",
+    "materials": "Premium quality materials sourced from trusted suppliers. Built to last with attention to every detail.",
+    "care": "Machine washable at 30°C. Do not bleach. Tumble dry low. Iron at medium heat if needed.",
+    "shipping": {
+      "dhaka": "1-2 business days (৳60)",
+      "outside": "3-5 business days (৳120)",
+      "free_threshold": 2000
+    }
+  }
+}

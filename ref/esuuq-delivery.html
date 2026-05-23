@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ESUUQ — Delivery Partner App</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0A0F1E; --navy2:#111827; --navy3:#1E2A3A;
+  --teal:#00C9A7; --teal2:#00A88C; --teal-glow:rgba(0,201,167,0.12);
+  --white:#F8FAFC; --gray:#94A3B8; --gray2:#CBD5E1;
+  --card:#141E30; --border:rgba(255,255,255,0.08);
+  --yellow:#FBBF24; --red:#FF4D4D; --green:#22C55E;
+  --purple:#8B5CF6; --orange:#F97316; --blue:#3B82F6;
+}
+
+html,body{height:100%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;}
+
+/* ── DEVICE SHELL ── */
+.device-wrap{display:flex;gap:2.5rem;align-items:flex-start;padding:2rem;flex-wrap:wrap;justify-content:center;}
+.device-label{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);text-align:center;margin-bottom:0.8rem;}
+.phone{
+  width:375px;height:812px;
+  background:var(--navy);
+  border-radius:44px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 40px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.1);
+  flex-shrink:0;
+  display:flex;flex-direction:column;
+}
+/* notch */
+.notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:130px;height:34px;background:#000;border-radius:0 0 22px 22px;
+  z-index:100;
+}
+.status-bar{
+  height:44px;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 24px 6px;flex-shrink:0;z-index:50;
+  font-size:0.72rem;font-weight:600;color:var(--white);
+}
+.status-right{display:flex;gap:0.3rem;align-items:center;}
+
+/* ── SCREEN ── */
+.screen{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative;}
+.page{display:none;flex-direction:column;height:100%;overflow-y:auto;scrollbar-width:none;}
+.page::-webkit-scrollbar{display:none;}
+.page.active{display:flex;}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  height:80px;background:rgba(10,15,30,0.98);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-around;
+  padding-bottom:16px;flex-shrink:0;
+  z-index:50;
+}
+.bnav-item{
+  display:flex;flex-direction:column;align-items:center;gap:0.2rem;
+  cursor:pointer;padding:0.4rem 0.8rem;border-radius:8px;
+  transition:all 0.2s;flex:1;background:none;border:none;
+}
+.bnav-item.active .bnav-icon{color:var(--teal);}
+.bnav-item.active .bnav-label{color:var(--teal);}
+.bnav-icon{font-size:1.3rem;color:var(--gray);}
+.bnav-label{font-size:0.6rem;color:var(--gray);font-weight:500;letter-spacing:0.04em;font-family:'DM Sans',sans-serif;}
+.bnav-dot{width:5px;height:5px;border-radius:50%;background:var(--red);position:absolute;top:-2px;right:-2px;}
+
+/* ── COMMON COMPONENTS ── */
+.topbar-app{
+  padding:12px 20px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.app-brand{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--white);}
+.app-brand span{color:var(--teal);}
+.icon-btn-sm{background:var(--navy3);border:none;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1rem;cursor:pointer;position:relative;}
+.top-row{display:flex;gap:0.5rem;}
+
+.section-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:0.7rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem;}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.8rem;}
+
+.pill{display:inline-flex;align-items:center;gap:0.25rem;padding:0.18rem 0.55rem;border-radius:20px;font-size:0.65rem;font-weight:600;white-space:nowrap;}
+.pill::before{content:'';width:4px;height:4px;border-radius:50%;background:currentColor;}
+.pill.green{background:rgba(34,197,94,0.15);color:var(--green);}
+.pill.yellow{background:rgba(251,191,36,0.15);color:var(--yellow);}
+.pill.red{background:rgba(255,77,77,0.15);color:var(--red);}
+.pill.blue{background:rgba(59,130,246,0.15);color:var(--blue);}
+.pill.teal{background:var(--teal-glow);color:var(--teal);}
+
+.btn-full{width:100%;padding:0.9rem;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em;}
+.btn-teal{background:var(--teal);color:var(--navy);}
+.btn-teal:hover{background:var(--teal2);}
+.btn-red-full{background:rgba(255,77,77,0.15);color:var(--red);border:1px solid rgba(255,77,77,0.2);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--gray2);}
+.btn-sm-inline{padding:0.4rem 0.9rem;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
+
+/* ── PAGE: HOME ── */
+.home-header{
+  background:linear-gradient(160deg,#091830 0%,#0D2137 100%);
+  padding:12px 20px 20px;flex-shrink:0;
+}
+.driver-row{display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;}
+.driver-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:var(--navy);flex-shrink:0;}
+.driver-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--white);}
+.driver-sub{font-size:0.72rem;color:var(--gray);margin-top:0.1rem;}
+.online-toggle{margin-left:auto;display:flex;flex-direction:column;align-items:center;gap:0.2rem;}
+.toggle-btn{
+  width:56px;height:28px;border-radius:20px;border:none;cursor:pointer;
+  position:relative;transition:background 0.3s;
+}
+.toggle-btn.on{background:var(--teal);}
+.toggle-btn.off{background:var(--navy3);}
+.toggle-btn::after{content:'';position:absolute;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left 0.25s;}
+.toggle-btn.on::after{left:30px;}
+.toggle-btn.off::after{left:3px;}
+.toggle-label{font-size:0.6rem;font-weight:600;letter-spacing:0.08em;}
+.toggle-btn.on + .toggle-label{color:var(--teal);}
+.toggle-btn.off + .toggle-label{color:var(--gray);}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;}
+.mini-stat{background:rgba(255,255,255,0.06);border-radius:10px;padding:0.7rem 0.5rem;text-align:center;}
+.ms-val{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--white);}
+.ms-label{font-size:0.6rem;color:var(--gray);margin-top:0.1rem;}
+
+.home-body{padding:16px;flex:1;}
+.new-order-card{
+  background:linear-gradient(135deg,rgba(0,201,167,0.12),rgba(0,168,140,0.06));
+  border:1px solid rgba(0,201,167,0.35);
+  border-radius:16px;padding:1rem;margin-bottom:1rem;
+  animation:pulse-border 2s infinite;
+}
+@keyframes pulse-border{0%,100%{border-color:rgba(0,201,167,0.35);}50%{border-color:rgba(0,201,167,0.7);}}
+.noc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;}
+.noc-badge{background:var(--teal);color:var(--navy);font-size:0.65rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:20px;letter-spacing:0.06em;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.noc-timer{font-size:0.72rem;color:var(--yellow);font-weight:600;}
+.noc-route{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.8rem;}
+.route-point{display:flex;align-items:flex-start;gap:0.6rem;}
+.rp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.rp-dot.pickup{background:var(--teal);}
+.rp-dot.drop{background:var(--red);}
+.rp-line{width:1px;height:16px;background:var(--border);margin-left:4.5px;}
+.rp-label{font-size:0.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;}
+.rp-addr{font-size:0.8rem;color:var(--white);font-weight:500;line-height:1.3;}
+.noc-meta{display:flex;gap:1rem;font-size:0.72rem;color:var(--gray);margin-bottom:0.8rem;}
+.noc-meta span{color:var(--white);font-weight:500;}
+.noc-actions{display:grid;grid-template-columns:1fr 2fr;gap:0.6rem;}
+.btn-decline{background:rgba(255,77,77,0.12);color:var(--red);border:1px solid rgba(255,77,77,0.2);border-radius:10px;padding:0.7rem;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-accept{background:var(--teal);color:var(--navy);border:none;border-radius:10px;padding:0.7rem;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+.active-delivery-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1rem;margin-bottom:1rem;}
+.adc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;}
+.adc-id{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);}
+.map-placeholder{height:120px;background:linear-gradient(135deg,#0D2137,#1A3A5C);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem;position:relative;overflow:hidden;}
+.map-grid-lines{position:absolute;inset:0;opacity:0.08;background-image:repeating-linear-gradient(0deg,transparent,transparent 20px,rgba(0,201,167,0.8) 20px,rgba(0,201,167,0.8) 21px),repeating-linear-gradient(90deg,transparent,transparent 20px,rgba(0,201,167,0.8) 20px,rgba(0,201,167,0.8) 21px);}
+.map-pin-anim{font-size:2rem;animation:bounce 1.5s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.map-route-line{position:absolute;top:50%;left:20%;right:20%;height:2px;background:var(--teal);opacity:0.5;}
+.step-progress{display:flex;align-items:center;margin-bottom:0.8rem;}
+.sp-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.25rem;}
+.sp-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;}
+.sp-circle.done{background:var(--teal);color:var(--navy);}
+.sp-circle.active{background:var(--teal-glow);border:2px solid var(--teal);color:var(--teal);}
+.sp-circle.pending{background:var(--navy3);border:2px solid var(--border);color:var(--gray);}
+.sp-label{font-size:0.6rem;color:var(--gray);}
+.sp-line{flex:1;height:2px;background:var(--border);margin:0 -0.5rem;margin-bottom:1.2rem;}
+.sp-line.done{background:var(--teal);}
+
+/* ── PAGE: DELIVERIES ── */
+.deliveries-body{padding:16px;flex:1;}
+.filter-row{display:flex;gap:0.5rem;margin-bottom:1rem;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+.filter-row::-webkit-scrollbar{display:none;}
+.filter-chip{background:var(--navy3);border:1px solid var(--border);color:var(--gray);padding:0.35rem 0.9rem;border-radius:20px;font-size:0.72rem;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.filter-chip.active{background:var(--teal-glow);border-color:var(--teal);color:var(--teal);}
+
+.delivery-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:0.8rem;cursor:pointer;transition:border-color 0.2s;}
+.delivery-item:hover{border-color:rgba(0,201,167,0.3);}
+.di-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;}
+.di-id{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--teal);}
+.di-time{font-size:0.68rem;color:var(--gray);}
+.di-route{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;}
+.di-from{font-size:0.78rem;color:var(--white);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.di-arrow{color:var(--gray);font-size:0.7rem;flex-shrink:0;}
+.di-to{font-size:0.78rem;color:var(--white);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
+.di-meta{display:flex;align-items:center;justify-content:space-between;}
+.di-earn{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--green);}
+.di-dist{font-size:0.7rem;color:var(--gray);}
+
+/* ── PAGE: EARNINGS ── */
+.earn-header{background:linear-gradient(160deg,#091830,#0D2137);padding:16px 20px 20px;flex-shrink:0;}
+.earn-balance{text-align:center;padding:1rem 0;}
+.eb-label{font-size:0.72rem;color:var(--teal);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.3rem;}
+.eb-amount{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--white);line-height:1;}
+.eb-sub{font-size:0.72rem;color:var(--gray);margin-top:0.4rem;}
+.earn-body{padding:16px;flex:1;}
+.earn-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1rem;}
+.earn-stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.9rem;}
+.esc-val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--white);}
+.esc-label{font-size:0.68rem;color:var(--gray);margin-top:0.2rem;}
+.esc-trend{font-size:0.65rem;font-weight:600;margin-top:0.3rem;}
+.esc-trend.up{color:var(--green);}
+.esc-trend.down{color:var(--red);}
+
+.mini-bar-chart{display:flex;align-items:flex-end;gap:3px;height:50px;}
+.mbc-bar{flex:1;border-radius:2px 2px 0 0;background:var(--teal);opacity:0.6;}
+.mbc-bar.today{opacity:1;}
+
+.trans-item{display:flex;align-items:center;gap:0.7rem;padding:0.75rem 0;border-bottom:1px solid var(--border);}
+.trans-item:last-child{border-bottom:none;}
+.trans-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.trans-label{font-size:0.82rem;font-weight:500;color:var(--white);flex:1;}
+.trans-sub{font-size:0.68rem;color:var(--gray);margin-top:0.1rem;}
+.trans-amount{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;}
+.trans-amount.credit{color:var(--green);}
+.trans-amount.debit{color:var(--red);}
+
+/* ── PAGE: PROFILE ── */
+.profile-header{background:linear-gradient(160deg,#091830,#0D2137);padding:20px;text-align:center;flex-shrink:0;}
+.profile-av-lg{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--purple));display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:var(--navy);margin:0 auto 0.8rem;}
+.profile-name{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--white);}
+.profile-sub{font-size:0.75rem;color:var(--gray);margin-top:0.2rem;}
+.profile-badges{display:flex;gap:0.5rem;justify-content:center;margin-top:0.7rem;flex-wrap:wrap;}
+.profile-body{padding:16px;flex:1;}
+.menu-item{display:flex;align-items:center;gap:0.8rem;padding:0.9rem;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:0.6rem;cursor:pointer;transition:border-color 0.2s;}
+.menu-item:hover{border-color:rgba(0,201,167,0.3);}
+.mi-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.mi-label{font-size:0.85rem;font-weight:500;color:var(--white);flex:1;}
+.mi-arrow{color:var(--gray);font-size:0.8rem;}
+.mi-val{font-size:0.78rem;color:var(--teal);font-weight:500;}
+
+/* ── ACTIVE DELIVERY DETAIL ── */
+.delivery-detail{position:absolute;inset:0;background:var(--navy);z-index:80;display:none;flex-direction:column;}
+.delivery-detail.show{display:flex;}
+.dd-map{height:220px;background:linear-gradient(135deg,#0D2137,#1A3A5C);position:relative;overflow:hidden;flex-shrink:0;}
+.dd-map-grid{position:absolute;inset:0;opacity:0.07;background-image:repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(0,201,167,1) 24px,rgba(0,201,167,1) 25px),repeating-linear-gradient(90deg,transparent,transparent 24px,rgba(0,201,167,1) 24px,rgba(0,201,167,1) 25px);}
+.dd-map-content{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.4rem;}
+.dd-back{position:absolute;top:52px;left:16px;background:rgba(10,15,30,0.8);border:none;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1rem;cursor:pointer;z-index:10;}
+.dd-nav-btn{position:absolute;bottom:16px;right:16px;background:var(--teal);border:none;padding:0.5rem 1rem;border-radius:10px;color:var(--navy);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+.dd-body{flex:1;overflow-y:auto;padding:16px;scrollbar-width:none;}
+.dd-body::-webkit-scrollbar{display:none;}
+.dd-order-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;margin-bottom:0.8rem;}
+.dd-section-label{font-size:0.65rem;color:var(--teal);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:0.5rem;}
+.dd-addr-row{display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:0.7rem;}
+.dd-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.dd-dot.pickup{background:var(--teal);}
+.dd-dot.drop{background:var(--red);}
+.dd-addr-text{}
+.dd-addr-label{font-size:0.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;}
+.dd-addr-val{font-size:0.85rem;color:var(--white);font-weight:500;line-height:1.3;}
+.dd-connector{width:1px;height:12px;background:var(--border);margin-left:4px;margin-bottom:4px;}
+
+.customer-row{display:flex;align-items:center;gap:0.7rem;padding:0.8rem;background:var(--navy3);border-radius:10px;margin-bottom:0.8rem;}
+.cust-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--blue));display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;color:#fff;flex-shrink:0;}
+.cust-name{font-size:0.85rem;font-weight:500;color:var(--white);}
+.cust-phone{font-size:0.72rem;color:var(--gray);}
+.call-btn{margin-left:auto;background:var(--teal-glow);border:1px solid rgba(0,201,167,0.3);color:var(--teal);width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;}
+
+.otp-card{background:linear-gradient(135deg,rgba(0,201,167,0.1),rgba(0,168,140,0.05));border:1px solid rgba(0,201,167,0.3);border-radius:12px;padding:0.9rem;margin-bottom:0.8rem;text-align:center;}
+.otp-label{font-size:0.68rem;color:var(--teal);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;}
+.otp-code{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--white);letter-spacing:0.3em;}
+
+.action-btns{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.page.active{animation:fadeIn 0.25s ease both;}
+
+/* ── DESKTOP PREVIEW LABEL ── */
+.preview-note{font-size:0.75rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:1rem;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="device-wrap">
+
+  <!-- PHONE -->
+  <div>
+    <div class="device-label">ESUUQ · Delivery Partner App</div>
+    <div class="phone">
+      <div class="notch"></div>
+
+      <!-- STATUS BAR -->
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-right">
+          <span>●●●●</span>
+          <span>WiFi</span>
+          <span>⚡</span>
+        </div>
+      </div>
+
+      <!-- SCREEN -->
+      <div class="screen">
+
+        <!-- ══ HOME PAGE ══ -->
+        <div class="page active" id="page-home">
+          <div class="home-header">
+            <div class="driver-row">
+              <div class="driver-av">H</div>
+              <div>
+                <div class="driver-name">Hassan M.</div>
+                <div class="driver-sub">⭐ 4.9 · 284 deliveries</div>
+              </div>
+              <div class="online-toggle">
+                <button class="toggle-btn on" id="online-toggle" onclick="toggleOnline(this)"></button>
+                <div class="toggle-label" id="online-label">ONLINE</div>
+              </div>
+            </div>
+            <div class="stat-row">
+              <div class="mini-stat"><div class="ms-val">$84</div><div class="ms-label">Today</div></div>
+              <div class="mini-stat"><div class="ms-val">6</div><div class="ms-label">Deliveries</div></div>
+              <div class="mini-stat"><div class="ms-val">97%</div><div class="ms-label">Success</div></div>
+            </div>
+          </div>
+
+          <div class="home-body">
+            <!-- NEW ORDER INCOMING -->
+            <div class="new-order-card">
+              <div class="noc-top">
+                <div class="noc-badge">⚡ NEW ORDER</div>
+                <div class="noc-timer" id="timer">0:28</div>
+              </div>
+              <div class="noc-route">
+                <div class="route-point">
+                  <div class="rp-dot pickup"></div>
+                  <div>
+                    <div class="rp-label">Pickup</div>
+                    <div class="rp-addr">TechZone MN · 142 Tech Blvd, Savage MN</div>
+                  </div>
+                </div>
+                <div class="rp-line" style="margin-left:4.5px;"></div>
+                <div class="route-point">
+                  <div class="rp-dot drop"></div>
+                  <div>
+                    <div class="rp-label">Deliver to</div>
+                    <div class="rp-addr">Ahmed M. · 88 Oak St, Prior Lake MN</div>
+                  </div>
+                </div>
+              </div>
+              <div class="noc-meta">
+                📦 3 items &nbsp;·&nbsp; 🗺 4.2 mi &nbsp;·&nbsp; ⏱ ~18 min &nbsp;·&nbsp; 💰 <span>$8.50</span>
+              </div>
+              <div class="noc-actions">
+                <button class="btn-decline" onclick="declineOrder()">✕ Decline</button>
+                <button class="btn-accept" onclick="acceptOrder()">✓ Accept Order</button>
+              </div>
+            </div>
+
+            <!-- ACTIVE DELIVERY -->
+            <div class="section-title">Active Delivery</div>
+            <div class="active-delivery-card">
+              <div class="adc-top">
+                <div class="adc-id">#ESQ-00846</div>
+                <span class="pill yellow">In Progress</span>
+              </div>
+              <!-- Map -->
+              <div class="map-placeholder" onclick="showDetail()">
+                <div class="map-grid-lines"></div>
+                <div class="map-route-line"></div>
+                <div class="map-pin-anim">📍</div>
+                <div style="position:absolute;bottom:8px;right:8px;background:var(--teal);color:var(--navy);font-size:0.65rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:6px;cursor:pointer;">Open Map →</div>
+              </div>
+              <!-- Step progress -->
+              <div class="step-progress">
+                <div class="sp-item">
+                  <div class="sp-circle done">✓</div>
+                  <div class="sp-label">Assigned</div>
+                </div>
+                <div class="sp-line done"></div>
+                <div class="sp-item">
+                  <div class="sp-circle done">✓</div>
+                  <div class="sp-label">Picked Up</div>
+                </div>
+                <div class="sp-line done"></div>
+                <div class="sp-item">
+                  <div class="sp-circle active">●</div>
+                  <div class="sp-label">En Route</div>
+                </div>
+                <div class="sp-line"></div>
+                <div class="sp-item">
+                  <div class="sp-circle pending">4</div>
+                  <div class="sp-label">Delivered</div>
+                </div>
+              </div>
+              <button class="btn-full btn-teal" onclick="showDetail()" style="font-size:0.82rem;padding:0.7rem;">📍 View Delivery Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ DELIVERIES PAGE ══ -->
+        <div class="page" id="page-deliveries">
+          <div class="topbar-app">
+            <div class="app-brand">ES<span>UUQ</span></div>
+            <div class="top-row">
+              <div class="icon-btn-sm">🔍</div>
+              <div class="icon-btn-sm">⚙️</div>
+            </div>
+          </div>
+          <div class="deliveries-body">
+            <div class="section-title">My Deliveries</div>
+            <div class="filter-row">
+              <button class="filter-chip active">All (284)</button>
+              <button class="filter-chip" onclick="setFilter(this)">Today (6)</button>
+              <button class="filter-chip" onclick="setFilter(this)">Completed</button>
+              <button class="filter-chip" onclick="setFilter(this)">Failed</button>
+              <button class="filter-chip" onclick="setFilter(this)">Returns</button>
+            </div>
+
+            <div class="delivery-item" onclick="showDetail()">
+              <div class="di-top"><div class="di-id">#ESQ-00847</div><span class="pill green">Delivered</span></div>
+              <div class="di-route"><div class="di-from">TechZone MN, Savage</div><div class="di-arrow">→</div><div class="di-to">Ahmed M., Prior Lake</div></div>
+              <div class="di-meta"><div class="di-earn">+$8.50</div><div class="di-dist">4.2 mi · Mar 12, 2:34 PM</div></div>
+            </div>
+            <div class="delivery-item" onclick="showDetail()">
+              <div class="di-top"><div class="di-id">#ESQ-00844</div><span class="pill green">Delivered</span></div>
+              <div class="di-route"><div class="di-from">SoleStyle, Burnsville</div><div class="di-arrow">→</div><div class="di-to">Fatima O., Eagan</div></div>
+              <div class="di-meta"><div class="di-earn">+$6.75</div><div class="di-dist">3.8 mi · Mar 12, 11:12 AM</div></div>
+            </div>
+            <div class="delivery-item" onclick="showDetail()">
+              <div class="di-top"><div class="di-id">#ESQ-00841</div><span class="pill green">Delivered</span></div>
+              <div class="di-route"><div class="di-from">HomeChef, Eden Prairie</div><div class="di-arrow">→</div><div class="di-to">James K., Bloomington</div></div>
+              <div class="di-meta"><div class="di-earn">+$9.20</div><div class="di-dist">5.1 mi · Mar 12, 9:48 AM</div></div>
+            </div>
+            <div class="delivery-item" onclick="showDetail()">
+              <div class="di-top"><div class="di-id">#ESQ-00836</div><span class="pill red">Failed</span></div>
+              <div class="di-route"><div class="di-from">AudioPro, Savage</div><div class="di-arrow">→</div><div class="di-to">David P., Shakopee</div></div>
+              <div class="di-meta"><div class="di-earn" style="color:var(--red)">$0.00</div><div class="di-dist">2.9 mi · Mar 11, 5:22 PM</div></div>
+            </div>
+            <div class="delivery-item" onclick="showDetail()">
+              <div class="di-top"><div class="di-id">#ESQ-00830</div><span class="pill green">Delivered</span></div>
+              <div class="di-route"><div class="di-from">VisionX, Burnsville</div><div class="di-arrow">→</div><div class="di-to">Sara L., Apple Valley</div></div>
+              <div class="di-meta"><div class="di-earn">+$7.40</div><div class="di-dist">4.6 mi · Mar 11, 3:15 PM</div></div>
+            </div>
+            <div class="delivery-item" onclick="showDetail()">
+              <div class="di-top"><div class="di-id">#ESQ-00822</div><span class="pill green">Delivered</span></div>
+              <div class="di-route"><div class="di-from">GreenHome, Eden Prairie</div><div class="di-arrow">→</div><div class="di-to">Mia R., Minnetonka</div></div>
+              <div class="di-meta"><div class="di-earn">+$11.00</div><div class="di-dist">6.3 mi · Mar 11, 1:08 PM</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EARNINGS PAGE ══ -->
+        <div class="page" id="page-earnings">
+          <div class="earn-header">
+            <div class="earn-balance">
+              <div class="eb-label">Available Balance</div>
+              <div class="eb-amount">$284.50</div>
+              <div class="eb-sub">Next payout: Monday, Mar 18</div>
+            </div>
+            <button class="btn-full btn-teal" style="margin-top:0.5rem;">💸 Request Payout</button>
+          </div>
+          <div class="earn-body">
+            <div class="earn-stat-grid">
+              <div class="earn-stat-card">
+                <div class="esc-val">$84.00</div>
+                <div class="esc-label">Today</div>
+                <div class="esc-trend up">↑ 12% vs yesterday</div>
+              </div>
+              <div class="earn-stat-card">
+                <div class="esc-val">$412.50</div>
+                <div class="esc-label">This Week</div>
+                <div class="esc-trend up">↑ 8% vs last week</div>
+              </div>
+              <div class="earn-stat-card">
+                <div class="esc-val">$1,820</div>
+                <div class="esc-label">This Month</div>
+                <div class="esc-trend up">↑ 22% vs last</div>
+              </div>
+              <div class="earn-stat-card">
+                <div class="esc-val">$3,240</div>
+                <div class="esc-label">All Time</div>
+                <div class="esc-trend up">↑ Great work!</div>
+              </div>
+            </div>
+
+            <!-- Mini bar chart -->
+            <div class="card" style="margin-bottom:1rem;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;">
+                <div class="section-title" style="margin:0;">Daily Earnings</div>
+                <div style="font-size:0.68rem;color:var(--gray);">Last 7 days</div>
+              </div>
+              <div class="mini-bar-chart">
+                <div class="mbc-bar" style="height:55%;"></div>
+                <div class="mbc-bar" style="height:70%;"></div>
+                <div class="mbc-bar" style="height:45%;"></div>
+                <div class="mbc-bar" style="height:85%;"></div>
+                <div class="mbc-bar" style="height:60%;"></div>
+                <div class="mbc-bar" style="height:90%;"></div>
+                <div class="mbc-bar today" style="height:100%;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:0.4rem;">
+                <span style="font-size:0.6rem;color:var(--gray);">Mon</span>
+                <span style="font-size:0.6rem;color:var(--gray);">Tue</span>
+                <span style="font-size:0.6rem;color:var(--gray);">Wed</span>
+                <span style="font-size:0.6rem;color:var(--gray);">Thu</span>
+                <span style="font-size:0.6rem;color:var(--gray);">Fri</span>
+                <span style="font-size:0.6rem;color:var(--gray);">Sat</span>
+                <span style="font-size:0.6rem;color:var(--teal);font-weight:600;">Today</span>
+              </div>
+            </div>
+
+            <!-- Transactions -->
+            <div class="section-title">Recent Transactions</div>
+            <div class="card">
+              <div class="trans-item">
+                <div class="trans-icon" style="background:rgba(34,197,94,0.12);">🚚</div>
+                <div><div class="trans-label">Delivery #ESQ-00847</div><div class="trans-sub">Mar 12, 2:34 PM · 4.2 mi</div></div>
+                <div class="trans-amount credit">+$8.50</div>
+              </div>
+              <div class="trans-item">
+                <div class="trans-icon" style="background:rgba(34,197,94,0.12);">🚚</div>
+                <div><div class="trans-label">Delivery #ESQ-00844</div><div class="trans-sub">Mar 12, 11:12 AM · 3.8 mi</div></div>
+                <div class="trans-amount credit">+$6.75</div>
+              </div>
+              <div class="trans-item">
+                <div class="trans-icon" style="background:rgba(34,197,94,0.12);">🚚</div>
+                <div><div class="trans-label">Delivery #ESQ-00841</div><div class="trans-sub">Mar 12, 9:48 AM · 5.1 mi</div></div>
+                <div class="trans-amount credit">+$9.20</div>
+              </div>
+              <div class="trans-item">
+                <div class="trans-icon" style="background:rgba(59,130,246,0.12);">🏦</div>
+                <div><div class="trans-label">Payout to Chase ···4291</div><div class="trans-sub">Mar 10, Processed</div></div>
+                <div class="trans-amount debit">−$240.00</div>
+              </div>
+              <div class="trans-item">
+                <div class="trans-icon" style="background:rgba(34,197,94,0.12);">🚚</div>
+                <div><div class="trans-label">Delivery #ESQ-00830</div><div class="trans-sub">Mar 11, 3:15 PM · 4.6 mi</div></div>
+                <div class="trans-amount credit">+$7.40</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PROFILE PAGE ══ -->
+        <div class="page" id="page-profile">
+          <div class="profile-header">
+            <div class="profile-av-lg">H</div>
+            <div class="profile-name">Hassan Mohamed</div>
+            <div class="profile-sub">Delivery Partner · Savage, MN</div>
+            <div class="profile-badges">
+              <span class="pill teal">Verified Driver</span>
+              <span class="pill green">Top Rated</span>
+              <span class="pill" style="background:rgba(251,191,36,0.15);color:var(--yellow);">⭐ 4.9</span>
+            </div>
+          </div>
+          <div class="profile-body">
+            <div class="section-title">Performance</div>
+            <div class="earn-stat-grid" style="margin-bottom:1rem;">
+              <div class="earn-stat-card" style="text-align:center;">
+                <div class="esc-val" style="color:var(--teal);">284</div>
+                <div class="esc-label">Deliveries</div>
+              </div>
+              <div class="earn-stat-card" style="text-align:center;">
+                <div class="esc-val" style="color:var(--yellow);">4.9★</div>
+                <div class="esc-label">Rating</div>
+              </div>
+              <div class="earn-stat-card" style="text-align:center;">
+                <div class="esc-val" style="color:var(--green);">97%</div>
+                <div class="esc-label">Success</div>
+              </div>
+              <div class="earn-stat-card" style="text-align:center;">
+                <div class="esc-val">34m</div>
+                <div class="esc-label">Avg Time</div>
+              </div>
+            </div>
+
+            <div class="section-title">Account</div>
+            <div class="menu-item">
+              <div class="mi-icon" style="background:var(--teal-glow);">👤</div>
+              <div class="mi-label">Personal Info</div>
+              <div class="mi-arrow">›</div>
+            </div>
+            <div class="menu-item">
+              <div class="mi-icon" style="background:rgba(59,130,246,0.12);">🚗</div>
+              <div class="mi-label">Vehicle Details</div>
+              <div class="mi-val">Toyota Camry 2022</div>
+              <div class="mi-arrow">›</div>
+            </div>
+            <div class="menu-item">
+              <div class="mi-icon" style="background:rgba(34,197,94,0.12);">🏦</div>
+              <div class="mi-label">Bank Account</div>
+              <div class="mi-val">Chase ···4291</div>
+              <div class="mi-arrow">›</div>
+            </div>
+            <div class="menu-item">
+              <div class="mi-icon" style="background:rgba(139,92,246,0.12);">📄</div>
+              <div class="mi-label">Documents</div>
+              <div class="mi-val">All verified</div>
+              <div class="mi-arrow">›</div>
+            </div>
+            <div class="menu-item">
+              <div class="mi-icon" style="background:rgba(251,191,36,0.12);">🔔</div>
+              <div class="mi-label">Notifications</div>
+              <div class="mi-arrow">›</div>
+            </div>
+            <div class="menu-item">
+              <div class="mi-icon" style="background:rgba(249,115,22,0.12);">💬</div>
+              <div class="mi-label">Help & Support</div>
+              <div class="mi-arrow">›</div>
+            </div>
+            <div class="menu-item" style="border-color:rgba(255,77,77,0.2);">
+              <div class="mi-icon" style="background:rgba(255,77,77,0.1);">🚪</div>
+              <div class="mi-label" style="color:var(--red);">Logout</div>
+              <div class="mi-arrow" style="color:var(--red);">›</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ DELIVERY DETAIL OVERLAY ══ -->
+        <div class="delivery-detail" id="delivery-detail">
+          <div class="dd-map">
+            <div class="dd-map-grid"></div>
+            <div class="dd-map-content">
+              <div style="font-size:2.5rem;animation:bounce 1.5s infinite;">🚚</div>
+              <div style="font-size:0.72rem;color:var(--teal);font-weight:600;background:rgba(0,0,0,0.5);padding:0.2rem 0.6rem;border-radius:8px;">En Route · 1.8 mi away</div>
+            </div>
+            <button class="dd-back" onclick="hideDetail()">←</button>
+            <button class="dd-nav-btn">🗺 Navigate</button>
+          </div>
+
+          <div class="dd-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--white);">#ESQ-00846</div>
+                <div style="font-size:0.72rem;color:var(--gray);">3 items · TechZone MN</div>
+              </div>
+              <span class="pill yellow">En Route</span>
+            </div>
+
+            <!-- Step Progress -->
+            <div class="step-progress" style="margin-bottom:1rem;">
+              <div class="sp-item"><div class="sp-circle done">✓</div><div class="sp-label">Assigned</div></div>
+              <div class="sp-line done"></div>
+              <div class="sp-item"><div class="sp-circle done">✓</div><div class="sp-label">Picked Up</div></div>
+              <div class="sp-line done"></div>
+              <div class="sp-item"><div class="sp-circle active">●</div><div class="sp-label">En Route</div></div>
+              <div class="sp-line"></div>
+              <div class="sp-item"><div class="sp-circle pending">4</div><div class="sp-label">Done</div></div>
+            </div>
+
+            <!-- Addresses -->
+            <div class="dd-order-card">
+              <div class="dd-section-label">Route</div>
+              <div class="dd-addr-row">
+                <div class="dd-dot pickup"></div>
+                <div>
+                  <div class="dd-addr-label">Pickup — Merchant</div>
+                  <div class="dd-addr-val">TechZone MN<br/>142 Tech Blvd, Savage MN 55378</div>
+                </div>
+              </div>
+              <div class="dd-connector"></div>
+              <div class="dd-addr-row">
+                <div class="dd-dot drop"></div>
+                <div>
+                  <div class="dd-addr-label">Deliver To — Customer</div>
+                  <div class="dd-addr-val">Fatima Omar<br/>88 Oak Street, Prior Lake MN 55372</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer -->
+            <div class="dd-section-label">Customer</div>
+            <div class="customer-row">
+              <div class="cust-av">F</div>
+              <div>
+                <div class="cust-name">Fatima Omar</div>
+                <div class="cust-phone">+1 (612) 555-0198</div>
+              </div>
+              <div class="call-btn">📞</div>
+            </div>
+
+            <!-- OTP -->
+            <div class="otp-card">
+              <div class="otp-label">Delivery Confirmation OTP</div>
+              <div class="otp-code">8 4 2 7</div>
+              <div style="font-size:0.68rem;color:var(--gray);margin-top:0.3rem;">Ask customer for this code to confirm delivery</div>
+            </div>
+
+            <!-- Actions -->
+            <div class="action-btns" style="margin-bottom:1rem;">
+              <button class="btn-full btn-outline" style="font-size:0.8rem;border-radius:12px;padding:0.8rem;">📞 Call Customer</button>
+              <button class="btn-full btn-outline" style="font-size:0.8rem;border-radius:12px;padding:0.8rem;">💬 Chat</button>
+            </div>
+            <button class="btn-full btn-teal" style="margin-bottom:0.6rem;" onclick="hideDetail()">✓ Confirm Delivery (OTP)</button>
+            <button class="btn-full btn-red-full" onclick="hideDetail()">⚠ Report Failed Delivery</button>
+          </div>
+        </div>
+
+      </div><!-- end screen -->
+
+      <!-- BOTTOM NAV -->
+      <div class="bottom-nav">
+        <button class="bnav-item active" id="bnav-home" onclick="goPage('home')">
+          <div style="position:relative;"><div class="bnav-icon">🏠</div></div>
+          <div class="bnav-label">Home</div>
+        </button>
+        <button class="bnav-item" id="bnav-deliveries" onclick="goPage('deliveries')">
+          <div style="position:relative;"><div class="bnav-icon">📦</div></div>
+          <div class="bnav-label">Deliveries</div>
+        </button>
+        <button class="bnav-item" id="bnav-earnings" onclick="goPage('earnings')">
+          <div style="position:relative;"><div class="bnav-icon">💰</div></div>
+          <div class="bnav-label">Earnings</div>
+        </button>
+        <button class="bnav-item" id="bnav-profile" onclick="goPage('profile')">
+          <div style="position:relative;"><div class="bnav-icon">👤</div></div>
+          <div class="bnav-label">Profile</div>
+        </button>
+      </div>
+
+    </div><!-- end phone -->
+    <div class="preview-note">Tap the bottom nav to switch screens<br/>Tap "Accept Order" · "View Delivery Details" · "Open Map" to interact</div>
+  </div>
+
+</div><!-- device-wrap -->
+
+<script>
+// ── PAGE NAV ──
+function goPage(page){
+  ['home','deliveries','earnings','profile'].forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('active', p===page);
+    document.getElementById('bnav-'+p).classList.toggle('active', p===page);
+  });
+}
+
+// ── ONLINE TOGGLE ──
+function toggleOnline(btn){
+  btn.classList.toggle('on');
+  btn.classList.toggle('off');
+  const label = document.getElementById('online-label');
+  label.textContent = btn.classList.contains('on') ? 'ONLINE' : 'OFFLINE';
+}
+
+// ── FILTER CHIPS ──
+function setFilter(btn){
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── ORDER ACCEPT / DECLINE ──
+function acceptOrder(){
+  const card = document.querySelector('.new-order-card');
+  card.style.transition='all 0.3s';
+  card.style.opacity='0';
+  card.style.transform='scale(0.95)';
+  setTimeout(()=>{card.style.display='none';},300);
+}
+function declineOrder(){
+  const card = document.querySelector('.new-order-card');
+  card.style.transition='all 0.3s';
+  card.style.opacity='0';
+  card.style.transform='translateX(-20px)';
+  setTimeout(()=>{card.style.display='none';},300);
+}
+
+// ── DELIVERY DETAIL ──
+function showDetail(){
+  document.getElementById('delivery-detail').classList.add('show');
+}
+function hideDetail(){
+  document.getElementById('delivery-detail').classList.remove('show');
+}
+
+// ── COUNTDOWN TIMER ──
+let secs = 28;
+const timerEl = document.getElementById('timer');
+const timerInterval = setInterval(()=>{
+  secs--;
+  if(secs < 0){ clearInterval(timerInterval); if(timerEl) timerEl.textContent='Expired'; return; }
+  timerEl.textContent = '0:' + String(secs).padStart(2,'0');
+}, 1000);
+</script>
+</body>
+</html>
