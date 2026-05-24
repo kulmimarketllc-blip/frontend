@@ -356,7 +356,7 @@ const MerchantAddProduct = ({ onNav, productId: propProductId }) => {
               aria-label="Upload product images"
             />
 
-            {imagePreviews.length > 0 ? (
+            {imagePreviews.length > 0 && (
               <div className="grid grid-cols-2 gap-2 mb-4">
                 {imagePreviews.map((src, idx) => (
                   <div key={idx} className="relative">
@@ -375,17 +375,19 @@ const MerchantAddProduct = ({ onNav, productId: propProductId }) => {
                   </div>
                 ))}
               </div>
-            ) : (
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className="border-white/10 hover:border-teal/50 bg-navy3/50 hover:bg-navy3/80 mb-4 flex cursor-pointer flex-col items-center justify-center rounded border-2 border-dashed px-6 py-12 text-center transition-all"
-              >
-                <Upload size={28} className="text-teal mb-3" strokeWidth={1.5} />
-                <p className="text-gray mb-1 font-semibold">Click to upload images</p>
-                <p className="text-gray2 text-[0.8rem]">or drag and drop</p>
-                <p className="text-gray2 mt-2 text-[0.75rem]">PNG, JPG, GIF up to 5MB each</p>
-              </div>
             )}
+
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="border-white/10 hover:border-teal/50 bg-navy3/50 hover:bg-navy3/80 mb-4 flex cursor-pointer flex-col items-center justify-center rounded border-2 border-dashed px-6 py-12 text-center transition-all"
+            >
+              <Upload size={28} className="text-teal mb-3" strokeWidth={1.5} />
+              <p className="text-gray mb-1 font-semibold">
+                {imagePreviews.length > 0 ? 'Add more images' : 'Click to upload images'}
+              </p>
+              <p className="text-gray2 text-[0.8rem]">or drag and drop</p>
+              <p className="text-gray2 mt-2 text-[0.75rem]">PNG, JPG, GIF up to 5MB each</p>
+            </div>
 
             {form.imageFiles && form.imageFiles.length > 0 && (
               <div className="text-gray2 mt-2 text-[0.8rem] space-y-1">
