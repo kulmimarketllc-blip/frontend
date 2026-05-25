@@ -4,6 +4,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, useNavigate, useP
 import RootLayout from '../layout/public/RootLayout';
 import LoadingFallback from './components/LoadingFallback';
 import ProtectedRoute from './components/ProtectedRoute';
+import RouteErrorBoundary from './components/RouteErrorBoundary';
 
 const Home = lazy(() => import('../pages/public/public_Home/Home'));
 const ContactView = lazy(() => import('../pages/public/public_contact/ContactView'));
@@ -23,6 +24,7 @@ const SearchView = lazy(() => import('../pages/public/public_Search/SearchView')
 const ProductDetailsView = lazy(
   () => import('../pages/public/public_ProductDetails/ProductDetailsView')
 );
+const WishlistView = lazy(() => import('../pages/public/public_Wishlist/WishlistView'));
 
 // Account Pages
 const LoginView = lazy(() => import('../pages/auth/LoginView'));
@@ -161,7 +163,7 @@ const AdminPlaceholder = ({ title, icon }) => (
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<RootLayout />}>
+      <Route path="/" element={<RootLayout />} errorElement={<RouteErrorBoundary />}>
         <Route index element={<Home />} />
         <Route path="contact" element={wrap(ContactView)} />
         <Route path="electronics" element={wrap(ElectronicsView)} />
@@ -176,6 +178,7 @@ const router = createBrowserRouter(
         <Route path="pet-supplies" element={wrap(PetSuppliesView)} />
         <Route path="health" element={wrap(HealthView)} />
         <Route path="search" element={wrap(SearchView)} />
+        <Route path="wishlist" element={wrap(WishlistView)} />
         <Route path="cart" element={<ProtectedRoute>{wrap(CartView)}</ProtectedRoute>} />
         <Route
           path="product/:id"
@@ -199,7 +202,7 @@ const router = createBrowserRouter(
         <ProtectedRoute>
           {wrap(UserView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrapElement(<UserDashboardRoute />)} />
         <Route path="orders" element={wrap(UserOrders)} />
         <Route path="track" element={wrap(UserTrackOrder)} />
@@ -217,7 +220,7 @@ const router = createBrowserRouter(
         <ProtectedRoute allowedRoles={['admin']}>
           {wrap(AdminView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrapElement(<AdminDashboardRoute />)} />
         <Route path="orders" element={wrap(AdminOrders)} />
         <Route path="products" element={wrap(AdminProducts)} />
@@ -237,7 +240,7 @@ const router = createBrowserRouter(
         <ProtectedRoute allowedRoles={['merchant']}>
           {wrap(MerchantView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrapElement(<MerchantDashboardRoute />)} />
         <Route path="orders" element={wrap(MerchantOrders)} />
         <Route path="products" element={wrapElement(<MerchantProductsRoute />)} />
@@ -256,7 +259,7 @@ const router = createBrowserRouter(
         <ProtectedRoute allowedRoles={['sub_admin', 'admin']}>
           {wrap(SubAdminView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrap(SubAdminDashboard)} />
         <Route path="support-tickets" element={wrap(SubAdminSupportTickets)} />
         <Route path="review-moderation" element={wrap(SubAdminReviewModeration)} />

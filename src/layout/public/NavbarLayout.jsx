@@ -238,7 +238,7 @@ const NavbarLayout = () => {
           </button>
 
           {searchOpen && (
-            <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-[500] rounded-sm border border-white/10 bg-navy2 p-2 shadow-2xl">
+            <div className="absolute top-[calc(100%+6px)] left-0 right-0 rounded-sm border border-white/10 bg-navy2 p-2 shadow-2xl" style={{ zIndex: 500 }}>
               {searchText.trim() ? (
                 <>
                   <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Suggestions</div>
@@ -374,7 +374,7 @@ const NavbarLayout = () => {
           )}
 
           <Link
-            to="/dashboard/wishlist"
+            to="/wishlist"
             className="icon-btn text-gray2 hover:text-teal relative rounded-sm px-1.5 py-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:px-[0.7rem]"
             title="Wishlist"
           >
