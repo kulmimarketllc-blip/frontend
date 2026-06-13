@@ -16,7 +16,7 @@ const RouteErrorBoundary = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#0b1020] px-4 text-white">
       <div className="bg-card w-full max-w-xl rounded-2xl border border-white/10 p-6 shadow-2xl shadow-black/30">
-        <div className="text-xs font-bold uppercase tracking-[0.3em] text-teal">ESUUQ</div>
+        <div className="text-xs font-bold uppercase tracking-[0.3em] text-teal">Kulmi Market</div>
         <h1 className="font-['Syne'] mt-3 text-2xl font-bold">{title}</h1>
         <p className="text-gray2 mt-3 text-sm leading-6">{message}</p>
         <div className="mt-6 flex flex-wrap gap-3">

@@ -17,7 +17,7 @@ const TermsOfServiceView = () => {
           <section>
             <h2 className="mb-4 text-2xl font-bold text-white">1. Acceptance of Terms</h2>
             <p>
-              By accessing and using the ESUUQ platform, you agree to be bound by these Terms of
+              By accessing and using the Kulmi Market platform, you agree to be bound by these Terms of
               Service. If you do not agree to these terms, please do not use our services.
             </p>
           </section>
@@ -52,7 +52,7 @@ const TermsOfServiceView = () => {
           <section>
             <h2 className="mb-4 text-2xl font-bold text-white">4. Limitation of Liability</h2>
             <p>
-              ESUUQ shall not be liable for any indirect, incidental, special, consequential, or
+              Kulmi Market shall not be liable for any indirect, incidental, special, consequential, or
               punitive damages, or any loss of profits or revenues, whether incurred directly or
               indirectly, or any loss of data, use, goodwill, or other intangible losses resulting
               from your access to or use of or inability to access or use the services.

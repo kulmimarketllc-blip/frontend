@@ -1,5 +1,5 @@
-const CART_KEY = 'esuuq_cart_items';
-const WISHLIST_KEY = 'esuuq_wishlist_items';
+const CART_KEY = 'kulmi_cart_items';
+const WISHLIST_KEY = 'kulmi_wishlist_items';
 
 const read = (key) => {
   try {
@@ -14,7 +14,7 @@ const read = (key) => {
 const write = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
   if (typeof window !== 'undefined') {
-    window.dispatchEvent(new Event('esuuq:shop-updated'));
+    window.dispatchEvent(new Event('kulmi:shop-updated'));
   }
 };
 

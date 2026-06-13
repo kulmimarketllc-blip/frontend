@@ -17,7 +17,7 @@ const PrivacyPolicyView = () => {
           <section>
             <h2 className="mb-4 text-2xl font-bold text-white">1. Information We Collect</h2>
             <p className="mb-4">
-              At ESUUQ, we collect information to provide better services to all our users. The
+              At Kulmi Market, we collect information to provide better services to all our users. The
               types of personal information we obtain include:
             </p>
             <ul className="list-disc space-y-2 pl-6 text-gray-400">
@@ -58,7 +58,7 @@ const PrivacyPolicyView = () => {
             <h2 className="mb-4 text-2xl font-bold text-white">4. Your Rights</h2>
             <p>
               You have the right to access, update, or delete your personal information. You can
-              manage your account settings directly through the ESUUQ dashboard or by contacting our
+              manage your account settings directly through the Kulmi Market dashboard or by contacting our
               support team.
             </p>
           </section>

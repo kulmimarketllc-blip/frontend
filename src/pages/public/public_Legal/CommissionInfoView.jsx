@@ -68,7 +68,7 @@ const CommissionInfoView = () => {
 
           <div className="mt-10 rounded-2xl bg-blue-500/10 p-6 border border-blue-500/20">
             <h3 className="mb-2 text-xl font-bold text-blue-400">Ready to start selling?</h3>
-            <p className="mb-4 text-gray-300">Join thousands of merchants already growing their business on ESUUQ.</p>
+            <p className="mb-4 text-gray-300">Join thousands of merchants already growing their business on Kulmi Market.</p>
             <a href="/merchant-register" className="inline-block rounded-full bg-blue-500 px-6 py-2 font-bold text-white transition-colors duration-300 hover:bg-blue-600">
               Become a Merchant
             </a>

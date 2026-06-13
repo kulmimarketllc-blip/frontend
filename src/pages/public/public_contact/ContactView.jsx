@@ -28,8 +28,8 @@ const ContactView = () => {
               icon: Mail,
               title: 'Email Inquiries',
               description: 'Comprehensive support for detailed requests or account inquiries.',
-              detail: 'support@esuuq.com',
-              action: 'mailto:support@esuuq.com'
+              detail: 'support@kulmi.com',
+              action: 'mailto:support@kulmi.com'
             },
             {
               icon: MessageSquare,

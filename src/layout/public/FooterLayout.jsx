@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Twitter, Instagram, Linkedin, CreditCard } from 'lucide-react';
+import Logo from '../../components/Logo';
 
 const FooterLayout = () => {
   return (
@@ -7,12 +8,7 @@ const FooterLayout = () => {
       <div className="container mx-auto">
         <div className="mb-10 grid grid-cols-1 gap-8 min-[450px]:grid-cols-2 min-[900px]:grid-cols-4">
           <div>
-            <a
-              href="#"
-              className="font-['Syne'] text-[1.4rem] font-extrabold tracking-[-0.02em] text-white no-underline lg:text-[1.625rem]"
-            >
-              ES<span className="text-teal">UUQ</span>
-            </a>
+            <Logo className="h-10 min-[900px]:h-12 w-fit mb-2" textClassName="text-white" />
             <p className="text-gray mt-3 max-w-65 text-[0.85rem] lg:text-[1rem]">
               Your one-stop marketplace for everything you need - delivered fast, securely, and at
               the best prices.
@@ -113,7 +109,7 @@ const FooterLayout = () => {
 
         <div className="flex flex-wrap-reverse items-center justify-center gap-3 border-t border-white/10 pt-5 md:justify-between">
           <p className="text-gray text-[0.75rem]">
-            @copyright 2026 ESUUQ Marketplace. All rights reserved.
+            @copyright 2026 Kulmi Market Marketplace. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             <span className="text-gray mr-1.5 flex items-center gap-1 text-[0.72rem]">

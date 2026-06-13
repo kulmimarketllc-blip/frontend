@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import UserPageHeader from '../components/UserPageHeader';
 
-const STORAGE_KEY = 'esuuq_saved_payment_methods';
+const STORAGE_KEY = 'kulmi_saved_payment_methods';
 
 const defaultMethods = [];
 

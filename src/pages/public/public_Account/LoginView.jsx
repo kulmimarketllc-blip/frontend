@@ -11,7 +11,7 @@ const LoginView = () => {
   };
 
   return (
-    <AccountLayout title="Welcome Back" sub="Secure access to your ESUUQ account">
+    <AccountLayout title="Welcome Back" sub="Secure access to your Kulmi Market account">
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label className="text-gray mb-1.5 block text-[0.7rem] font-medium tracking-[0.14em] uppercase">
@@ -77,7 +77,7 @@ const LoginView = () => {
 
         <div className="mt-6 text-center">
           <p className="text-gray2 text-[0.8rem]">
-            New to ESUUQ?{' '}
+            New to Kulmi Market?{' '}
             <Link
               to="/register"
               className="text-teal hover:text-teal2 inline-flex items-center gap-0.5 font-bold no-underline"

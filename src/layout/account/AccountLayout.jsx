@@ -1,17 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../../components/Logo';
 
 const AccountLayout = ({ children, title, sub, showHome = true }) => {
   return (
     <div className="bg-navy flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md animate-[fadeUp_0.4s_ease_both] space-y-8">
         <div className="text-center">
-          <Link
-            to="/"
-            className="font-['Syne'] text-[2rem] font-extrabold tracking-tight text-white no-underline"
-          >
-            ES<span className="text-teal">UUQ</span>
-          </Link>
+          <Logo className="h-12 w-fit mx-auto mb-2" textClassName="text-white" />
           <h2 className="mt-6 font-['Syne'] text-[1.4rem] font-bold tracking-tight text-white">
             {title}
           </h2>

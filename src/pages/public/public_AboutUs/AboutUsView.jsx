@@ -12,7 +12,7 @@ const AboutUsView = () => {
             Redefining Commerce
           </h1>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400 md:text-xl">
-            At ESUUQ, we're building more than just a marketplace. We're creating an ecosystem where
+            At Kulmi Market, we're building more than just a marketplace. We're creating an ecosystem where
             quality meets convenience, connecting millions of buyers and sellers globally through
             cutting-edge technology.
           </p>

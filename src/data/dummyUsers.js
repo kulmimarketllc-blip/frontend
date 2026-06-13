@@ -1,7 +1,7 @@
 export const dummyUsers = [
   {
     id: 1,
-    email: 'user@esuuq.com',
+    email: 'user@kulmi.com',
     password: 'password123',
     firstName: 'Ahmed',
     lastName: 'Mohamed',
@@ -10,7 +10,7 @@ export const dummyUsers = [
   },
   {
     id: 2,
-    email: 'admin@esuuq.com',
+    email: 'admin@kulmi.com',
     password: 'password123',
     firstName: 'Fatima',
     lastName: 'Ali',
@@ -19,7 +19,7 @@ export const dummyUsers = [
   },
   {
     id: 3,
-    email: 'merchant@esuuq.com',
+    email: 'merchant@kulmi.com',
     password: 'password123',
     firstName: 'Yusuf',
     lastName: 'Hassan',
@@ -28,7 +28,7 @@ export const dummyUsers = [
   },
   {
     id: 4,
-    email: 'subadmin@esuuq.com',
+    email: 'subadmin@kulmi.com',
     password: 'password123',
     firstName: 'Fatima',
     lastName: 'Abdi',

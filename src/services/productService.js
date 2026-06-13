@@ -24,8 +24,8 @@ export const mapProductToCard = (product = {}) => {
   return {
     id: product.id,
     slug: product.slug,
-    name: product.name || 'Unnamed Product',
-    store: product.merchant?.storeName || 'Marketplace Store',
+    name: (product.name || 'Unnamed Product').replace(/esuuq/ig, 'Kulmi'),
+    store: (product.merchant?.storeName || 'Marketplace Store').replace(/esuuq/ig, 'Kulmi'),
     price: `$${price.toFixed(2)}`,
     old: comparePrice > 0 ? `$${comparePrice.toFixed(2)}` : '',
     rating: product.avgRating || 0,

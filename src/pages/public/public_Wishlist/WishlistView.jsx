@@ -11,11 +11,11 @@ const WishlistView = () => {
 
     const refresh = () => setWishlistItems(getWishlistItems());
     window.addEventListener('storage', refresh);
-    window.addEventListener('esuuq:shop-updated', refresh);
+    window.addEventListener('kulmi:shop-updated', refresh);
 
     return () => {
       window.removeEventListener('storage', refresh);
-      window.removeEventListener('esuuq:shop-updated', refresh);
+      window.removeEventListener('kulmi:shop-updated', refresh);
     };
   }, []);
 

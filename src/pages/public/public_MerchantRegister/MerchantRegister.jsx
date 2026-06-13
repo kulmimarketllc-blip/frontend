@@ -267,10 +267,10 @@ const MerchantRegister = () => {
       <div className="border-b border-white/[0.07] bg-[linear-gradient(135deg,var(--color-navy2)_0%,var(--color-navy)_100%)] px-4 py-12 text-center min-[640px]:px-10 min-[900px]:py-20">
         <div className="mb-5 inline-flex items-center gap-2 rounded-[20px] border border-[rgba(0,201,167,0.25)] bg-[rgba(0,201,167,0.08)] px-4 py-1.5 text-[0.75rem] font-semibold tracking-widest text-teal">
           <Rocket size={14} />
-          JOIN 500+ MERCHANTS ON ESUUQ
+          JOIN 500+ MERCHANTS ON Kulmi Market
         </div>
         <h1 className="mb-4 font-['Syne'] text-[1.8rem] font-extrabold leading-[1.1] text-white min-[640px]:text-[3rem] min-[900px]:text-[3.6rem]">
-          Start Selling on <span className="text-teal">ESUUQ</span>
+          Start Selling on <span className="text-teal">Kulmi Market</span>
         </h1>
         <p className="mx-auto mb-8 max-w-150 text-base leading-[1.8] text-gray min-[640px]:text-lg">
           Reach thousands of East African customers. Set up your store in minutes and start earning today.
@@ -310,7 +310,7 @@ const MerchantRegister = () => {
             </div>
             <div className="mb-6 text-[0.875rem] leading-relaxed text-gray min-[640px]:text-base">This is what customers will see when they visit your store.</div>
 
-            <InputField label="Store Name" required name="storeName" value={form.storeName} onChange={handleChange} placeholder="e.g. Barwaaqo Electronics" hint="This will be your public store name on ESUUQ" />
+            <InputField label="Store Name" required name="storeName" value={form.storeName} onChange={handleChange} placeholder="e.g. Barwaaqo Electronics" hint="This will be your public store name on Kulmi Market" />
 
             <div className="mb-4">
               <label className="mb-1.5 block text-[0.82rem] font-semibold text-gray2 min-[640px]:text-[0.875rem]">
@@ -425,7 +425,7 @@ const MerchantRegister = () => {
                 {agreements.terms && '✓'}
               </div>
               <div className="text-[0.875rem] leading-[1.6] text-gray2">
-                I agree to the <a href="#" className="text-teal no-underline hover:underline">ESUUQ Merchant Terms &amp; Conditions</a> and understand that ESUUQ charges a commission on each sale. My store will be reviewed before going live.
+                I agree to the <a href="#" className="text-teal no-underline hover:underline">Kulmi Market Merchant Terms &amp; Conditions</a> and understand that Kulmi Market charges a commission on each sale. My store will be reviewed before going live.
               </div>
             </div>
 
@@ -437,7 +437,7 @@ const MerchantRegister = () => {
                 {agreements.products && '✓'}
               </div>
               <div className="text-[0.875rem] leading-[1.6] text-gray2">
-                I confirm that all products I list comply with <a href="#" className="text-teal no-underline hover:underline">ESUUQ's product guidelines</a> and that I will not sell prohibited or counterfeit items.
+                I confirm that all products I list comply with <a href="#" className="text-teal no-underline hover:underline">Kulmi Market's product guidelines</a> and that I will not sell prohibited or counterfeit items.
               </div>
             </div>
 
@@ -474,7 +474,7 @@ const MerchantRegister = () => {
 
           {/* Benefits */}
           <div className="rounded-2xl border border-white/[0.07] bg-navy2 p-6 min-[640px]:p-8">
-            <div className="mb-5 font-['Syne'] text-[1rem] font-bold text-white min-[640px]:text-[1.1rem]">🎯 Why Sell on ESUUQ?</div>
+            <div className="mb-5 font-['Syne'] text-[1rem] font-bold text-white min-[640px]:text-[1.1rem]">🎯 Why Sell on Kulmi Market?</div>
             <div className="flex flex-col gap-5">
               {BENEFITS.map((b) => (
                 <div className="flex items-start gap-4" key={b.title}>
@@ -552,7 +552,7 @@ const MerchantRegister = () => {
             <div className="mb-8 text-base leading-[1.7] text-gray">
               {isLoggedIn 
                 ? 'Your store information has been updated and sent for review. We will contact you within 1–2 business days.'
-                : 'Welcome to the ESUUQ merchant community! Our team will review your application and contact you within 1–2 business days.'
+                : 'Welcome to the Kulmi Market merchant community! Our team will review your application and contact you within 1–2 business days.'
               }
             </div>
 

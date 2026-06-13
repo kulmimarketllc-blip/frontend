@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../../../components/Logo';
 
 const AuthLayout = ({
   mode,
@@ -37,9 +38,7 @@ const AuthLayout = ({
           />
 
           <div className="relative z-10">
-            <div className="font-syne mb-8 text-[2.2rem] font-extrabold text-white">
-              ES<span className="text-teal">UUQ</span>
-            </div>
+            <Logo className="h-10 min-[640px]:h-12 w-fit mb-8" textClassName="text-white" />
             <h2 className="font-syne mb-4 text-[2.2rem] leading-[1.2] font-bold text-white">
               {leftTagline} <em className="text-teal not-italic">{leftTaglineEmphasis}</em>
             </h2>
@@ -71,9 +70,7 @@ const AuthLayout = ({
           </div>
 
           <div className="w-full max-w-[420px]">
-            <div className="font-syne mb-10 text-[2rem] font-extrabold text-white lg:hidden">
-              ES<span className="text-teal">UUQ</span>
-            </div>
+            <Logo className="h-10 w-fit mb-10 lg:hidden" textClassName="text-white" />
 
             <h1 className="font-syne text-[1.8rem] font-extrabold text-white">{title}</h1>
 

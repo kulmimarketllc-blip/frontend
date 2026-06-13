@@ -25,11 +25,13 @@ import { getCurrentUser, logout } from '../../services/authService';
 import { getTrendingSearches, searchAutocomplete } from '../../services/productService';
 import { getCartItems, getWishlistItems } from '../../services/shopStorageService';
 import { getToken } from '../../utils/storage';
+import Logo from '../../components/Logo';
 
 const NavbarLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Departments');
@@ -55,8 +57,8 @@ const NavbarLayout = () => {
 
   useEffect(() => {
     const onShopUpdate = () => refreshCounts();
-    window.addEventListener('esuuq:shop-updated', onShopUpdate);
-    return () => window.removeEventListener('esuuq:shop-updated', onShopUpdate);
+    window.addEventListener('kulmi:shop-updated', onShopUpdate);
+    return () => window.removeEventListener('kulmi:shop-updated', onShopUpdate);
   }, []);
 
   useEffect(() => {
@@ -182,26 +184,24 @@ const NavbarLayout = () => {
         <div className="flex items-center gap-2 min-[900px]:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="icon-btn text-gray2 hover:text-teal rounded-sm px-2 py-2 transition hover:bg-[rgba(0,201,167,0.15)]"
+            className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 min-[640px]:p-2 transition hover:bg-[rgba(0,201,167,0.15)]"
             title="Menu"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
-          <a
-            href="#"
-            className="icon-btn text-gray2 hover:text-teal rounded-sm px-2 py-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)]"
+          <button
+            onClick={() => {
+              setMobileSearchOpen(!mobileSearchOpen);
+              if (mobileMenuOpen) setMobileMenuOpen(false);
+            }}
+            className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 min-[640px]:p-2 transition hover:bg-[rgba(0,201,167,0.15)]"
             title="Search"
           >
-            <Search size={18} />
-          </a>
+            {mobileSearchOpen ? <X size={18} /> : <Search size={18} />}
+          </button>
         </div>
 
-        <Link
-          to="/"
-          className="font-['Syne'] text-[1.2rem] font-extrabold tracking-[-0.02em] text-white no-underline min-[640px]:text-[1.6rem] min-[900px]:col-start-1"
-        >
-          ES<span className="text-teal">UUQ</span>
-        </Link>
+        <Logo className="h-10 min-[640px]:h-12 min-[900px]:col-start-1" textClassName="text-white" />
 
         <div ref={searchBoxRef} className="search-bar bg-navy3 relative hidden items-center overflow-visible rounded-sm border border-white/10 min-[900px]:flex">
           <select 
@@ -273,7 +273,7 @@ const NavbarLayout = () => {
           )}
         </div>
 
-        <div className="flex items-center gap-1.5 min-[640px]:gap-2">
+        <div className="flex items-center gap-1 min-[640px]:gap-2">
           <div
             className="relative order-last min-[640px]:order-first group"
             ref={profileBtnRef}
@@ -282,7 +282,7 @@ const NavbarLayout = () => {
           >
             {currentUser ? (
               <button
-                className="icon-btn text-gray2 hover:text-teal rounded-sm px-2 py-2 transition hover:bg-[rgba(0,201,167,0.15)]"
+                className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 min-[640px]:p-2 transition hover:bg-[rgba(0,201,167,0.15)]"
                 title="Account"
                 onClick={() => setProfileDropdownOpen((v) => !v)}
                 aria-haspopup="true"
@@ -293,7 +293,7 @@ const NavbarLayout = () => {
             ) : (
               <button
                 onClick={() => navigate('/auth/login')}
-                className="hidden icon-btn text-gray2 hover:text-teal rounded-sm px-2 py-2 transition hover:bg-[rgba(0,201,167,0.15)]"
+                className="min-[500px]:hidden icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 transition hover:bg-[rgba(0,201,167,0.15)]"
                 title="Sign In"
               >
                 <User size={20} />
@@ -367,7 +367,7 @@ const NavbarLayout = () => {
           {!currentUser && (
             <button
               onClick={() => navigate('/auth/login')}
-              className="text-teal hover:text-teal2 border border-teal hover:border-teal2 rounded-sm px-3 py-1.5 text-[0.82rem] font-semibold transition"
+              className="hidden min-[500px]:block text-teal hover:text-teal2 border border-teal hover:border-teal2 rounded-sm px-3 py-1.5 text-[0.82rem] font-semibold transition"
             >
               Sign In
             </button>
@@ -375,7 +375,7 @@ const NavbarLayout = () => {
 
           <Link
             to="/wishlist"
-            className="icon-btn text-gray2 hover:text-teal relative rounded-sm px-1.5 py-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:px-[0.7rem]"
+            className="icon-btn text-gray2 hover:text-teal relative rounded-sm p-1.5 min-[640px]:p-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)]"
             title="Wishlist"
           >
             <Heart size={18} className="min-[640px]:size-5" />
@@ -385,7 +385,7 @@ const NavbarLayout = () => {
           </Link>
           <Link
             to="/cart"
-            className="icon-btn text-gray2 hover:text-teal relative rounded-sm px-1.5 py-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:px-[0.7rem]"
+            className="icon-btn text-gray2 hover:text-teal relative rounded-sm p-1.5 min-[640px]:p-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)]"
             title="Cart"
           >
             <ShoppingCart size={18} className="min-[640px]:size-5" />
@@ -394,6 +394,81 @@ const NavbarLayout = () => {
             </span>
           </Link>
         </div>
+
+        {/* Mobile Search Overlay */}
+        {mobileSearchOpen && (
+          <div className="absolute top-full left-0 right-0 border-b border-white/10 bg-[rgba(10,15,30,0.98)] p-3 min-[900px]:hidden backdrop-blur-lg">
+            <div className="relative flex h-11 items-center overflow-visible rounded-sm border border-white/10 bg-navy3">
+              <input
+                type="text"
+                autoComplete="off"
+                value={searchText}
+                onChange={(event) => setSearchText(event.target.value)}
+                onFocus={() => setSearchOpen(true)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    setMobileSearchOpen(false);
+                    submitSearch();
+                  }
+                }}
+                placeholder="Search products, brands..."
+                className="placeholder:text-gray flex-1 bg-transparent px-4 text-[0.9rem] text-white outline-none w-full h-full"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileSearchOpen(false);
+                  submitSearch();
+                }}
+                className="bg-teal text-navy hover:bg-teal2 h-full px-5 transition-colors shrink-0"
+              >
+                <Search size={18} />
+              </button>
+
+              {searchOpen && (
+                <div className="absolute top-[calc(100%+6px)] left-0 right-0 rounded-sm border border-white/10 bg-navy2 p-2 shadow-2xl" style={{ zIndex: 500 }}>
+                  {searchText.trim() ? (
+                    <>
+                      <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Suggestions</div>
+                      {(searchSuggestions.length ? searchSuggestions : [searchText]).map((item) => (
+                        <button
+                          type="button"
+                          key={item}
+                          onClick={() => {
+                            setMobileSearchOpen(false);
+                            submitSearch(item);
+                          }}
+                          className="block w-full rounded px-2 py-2 text-left text-[0.8rem] text-gray2 transition-colors hover:bg-white/5 hover:text-white"
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Trending</div>
+                      {trendingSearches.map((item) => (
+                        <button
+                          type="button"
+                          key={item.query}
+                          onClick={() => {
+                            setMobileSearchOpen(false);
+                            submitSearch(item.query);
+                          }}
+                          className="flex w-full items-center justify-between rounded px-2 py-2 text-left text-[0.8rem] text-gray2 transition-colors hover:bg-white/5 hover:text-white"
+                        >
+                          <span>{item.query}</span>
+                          <span className="text-[0.65rem] text-gray">{item.count}</span>
+                        </button>
+                      ))}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
 
       <Sidebar

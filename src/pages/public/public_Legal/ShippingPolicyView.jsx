@@ -64,7 +64,7 @@ const ShippingPolicyView = () => {
                 P.O. Boxes and APO/FPO Addresses
               </h2>
               <p>
-                ESUUQ ships to addresses within the U.S., U.S. Territories, and APO/FPO/DPO
+                Kulmi Market ships to addresses within the U.S., U.S. Territories, and APO/FPO/DPO
                 addresses. However, certain items may have shipping restrictions.
               </p>
             </section>
