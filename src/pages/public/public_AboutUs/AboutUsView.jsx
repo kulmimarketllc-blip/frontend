@@ -81,7 +81,7 @@ const AboutUsView = () => {
             <span className="border-teal/30 bg-teal/10 text-teal mb-4 inline-block rounded-full border px-4 py-1.5 text-xs font-semibold tracking-widest uppercase">
               About Us
             </span>
-            <h1 className="from-teal mt-4 mb-5 bg-gradient-to-r to-blue-500 bg-clip-text font-['Syne'] text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="from-teal mt-4 mb-5 bg-linear-to-r to-blue-500 bg-clip-text font-['Syne'] text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
               About Kulmi Market
             </h1>
             <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-400 sm:text-lg md:text-xl">
@@ -96,7 +96,7 @@ const AboutUsView = () => {
         {/* ─── Our Story ───────────────────────────────────── */}
         <div className="mb-4">
           <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:rounded-3xl sm:p-8 md:p-10">
-            <div className="from-teal/10 absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l to-transparent" />
+            <div className="from-teal/10 absolute top-0 right-0 h-full w-1/2 bg-linear-to-l to-transparent" />
             <div className="relative z-10">
               <h2 className="mb-3 flex items-center gap-3 font-['Syne'] text-2xl font-bold sm:text-3xl">
                 <Lightbulb className="text-teal h-7 w-7 shrink-0" />
@@ -116,7 +116,7 @@ const AboutUsView = () => {
         {/* ─── Mission & Vision ────────────────────────────── */}
         <div className="mb-4 grid gap-4 sm:grid-cols-2">
           {/* Mission */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-[#0a0f1c] p-6 sm:rounded-3xl sm:p-8 md:p-10">
+          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-[#0a0f1c] p-6 sm:rounded-3xl sm:p-8 md:p-10">
             <div className="bg-teal/10 group-hover:bg-teal/20 absolute -top-10 -right-10 h-40 w-40 rounded-full blur-[50px] transition-all duration-500" />
             <div className="relative z-10">
               <Target className="text-teal mb-4 h-9 w-9 sm:h-11 sm:w-11" />
@@ -129,7 +129,7 @@ const AboutUsView = () => {
             </div>
           </div>
           {/* Vision */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-[#0a0f1c] p-6 sm:rounded-3xl sm:p-8 md:p-10">
+          <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-[#0a0f1c] p-6 sm:rounded-3xl sm:p-8 md:p-10">
             <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-blue-500/10 blur-[50px] transition-all duration-500 group-hover:bg-blue-500/20" />
             <div className="relative z-10">
               <Users className="mb-4 h-9 w-9 text-blue-400 sm:h-11 sm:w-11" />
@@ -160,7 +160,7 @@ const AboutUsView = () => {
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:bg-white/10"
               >
                 <div
-                  className={`absolute -top-6 -right-6 h-24 w-24 rounded-full bg-gradient-to-br ${glow} to-transparent blur-2xl transition-all duration-500 group-hover:scale-150`}
+                  className={`absolute -top-6 -right-6 h-24 w-24 rounded-full bg-linear-to-br ${glow} to-transparent blur-2xl transition-all duration-500 group-hover:scale-150`}
                 />
                 <div className="relative z-10">
                   <Icon className={`mb-3 h-9 w-9 ${color}`} />
@@ -172,7 +172,7 @@ const AboutUsView = () => {
           </div>
         </div>
 
-        {/* ─── Core Values ─────────────────────────────────── */}
+        {/* ─── Core Values ── */}
         <div className="mb-4 lg:mt-15">
           <div className="mb-6 pt-6 text-center">
             <h2 className="mb-2 font-['Syne'] text-3xl font-bold sm:text-4xl">Our Core Values</h2>
@@ -196,7 +196,7 @@ const AboutUsView = () => {
 
         {/* ─── At Our Core ──────────────────────────────────── */}
         <div className="pt-6 pb-16">
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-8 text-center sm:rounded-3xl sm:p-12 md:p-14">
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/2 p-8 text-center sm:rounded-3xl sm:p-12 md:p-14">
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
               <div className="h-64 w-96 rounded-full bg-blue-500/10 blur-[80px]" />
             </div>
