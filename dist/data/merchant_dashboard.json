@@ -1,0 +1,104 @@
+{
+  "stats": [
+    {
+      "icon": "DollarSign",
+      "bg": "bg-teal/10",
+      "val": "$24,300",
+      "label": "Total Revenue",
+      "sub": "After 8% commission deducted",
+      "trend": "↑ 22%",
+      "up": true
+    },
+    {
+      "icon": "Package",
+      "bg": "bg-purple-500/10",
+      "val": "648",
+      "label": "Total Orders",
+      "sub": "5 require action",
+      "trend": "↑ 14%",
+      "up": true
+    },
+    {
+      "icon": "ShoppingBag",
+      "bg": "bg-yellow/10",
+      "val": "248",
+      "label": "Active Products",
+      "sub": "3 low stock alerts",
+      "trend": "↑ 3%",
+      "up": true
+    },
+    {
+      "icon": "Star",
+      "bg": "bg-green-500/10",
+      "val": "4.9",
+      "label": "Store Rating",
+      "sub": "From 1,204 reviews",
+      "trend": "↑ 0.1",
+      "up": true
+    }
+  ],
+  "barData": [
+    { "label": "Mon", "height": "55%", "val": "$2.1k" },
+    { "label": "Tue", "height": "72%", "val": "$2.8k" },
+    { "label": "Wed", "height": "48%", "val": "$1.8k" },
+    { "label": "Thu", "height": "88%", "val": "$3.4k" },
+    { "label": "Fri", "height": "100%", "val": "$3.9k" },
+    { "label": "Sat", "height": "68%", "val": "$2.6k" },
+    { "label": "Sun", "height": "42%", "val": "$1.6k" }
+  ],
+  "topProducts": [
+    { "name": "Wireless Earbuds Pro", "sold": "834 sold", "w": "100%", "c": "bg-green-500" },
+    { "name": "Studio Headphones", "sold": "592 sold", "w": "71%", "c": "bg-green-500" },
+    { "name": "Laptop Stand", "sold": "312 sold", "w": "37%", "c": "bg-yellow" },
+    { "name": "USB-C Hub 7-in-1", "sold": "198 sold", "w": "24%", "c": "bg-yellow" },
+    { "name": "Phone Mount Car", "sold": "142 sold", "w": "17%", "c": "bg-red" }
+  ],
+  "recentOrders": [
+    {
+      "id": "#ESQ-00847",
+      "customer": "Ahmed M.",
+      "product": "Earbuds Pro",
+      "total": "$49.99",
+      "status": "Delivered",
+      "sc": "text-green-500 bg-green-500/10"
+    },
+    {
+      "id": "#ESQ-00845",
+      "customer": "James K.",
+      "product": "USB-C Hub",
+      "total": "$34.99",
+      "status": "Processing",
+      "sc": "text-blue-500 bg-blue-500/10"
+    },
+    {
+      "id": "#ESQ-00841",
+      "customer": "Sara L.",
+      "product": "Headphones",
+      "total": "$79.99",
+      "status": "Shipping",
+      "sc": "text-yellow bg-yellow/10"
+    },
+    {
+      "id": "#ESQ-00838",
+      "customer": "Mia R.",
+      "product": "Laptop Stand",
+      "total": "$34.99",
+      "status": "Delivered",
+      "sc": "text-green-500 bg-green-500/10"
+    },
+    {
+      "id": "#ESQ-00835",
+      "customer": "David P.",
+      "product": "Earbuds Pro",
+      "total": "$49.99",
+      "status": "Returned",
+      "sc": "text-red bg-red/10"
+    }
+  ],
+  "quickLinks": [
+    { "id": "add-product", "label": "Add New Product" },
+    { "id": "orders", "label": "View All Orders" },
+    { "id": "payouts", "label": "Request Payout" },
+    { "id": "products", "label": "Manage Products" }
+  ]
+}
