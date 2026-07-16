@@ -42,62 +42,10 @@ const toUiProduct = (item = {}) => {
     sizes: sizes
       .map((variant) => (typeof variant === 'string' ? variant : variant.value || variant.label))
       .filter(Boolean),
-    materials: item.metadata?.materials || 'Standard materials',
-    care: item.metadata?.care || 'Handle with care',
-    shipping: item.metadata?.shipping || {
-      dhaka: '24-48 hours',
-      outside: '2-5 days',
-      free_threshold: 2000,
-    },
-    key_features:
-      item.key_features ||
-      item.metadata?.key_features ||
-      (() => {
-        const name = (item.name || '').toLowerCase();
-        const cat = (item.category?.name || '').toLowerCase();
-
-        if (name.includes('headphone') || name.includes('earbud')) {
-          return [
-            'Active Noise Cancellation (ANC)',
-            'Up to 40 hours battery life',
-            'Bluetooth 5.2 connectivity',
-            'Premium memory foam cushions',
-            'Crystal clear voice calls',
-            'Foldable & travel-friendly',
-          ];
-        }
-
-        if (cat.includes('fashion') || name.includes('shirt') || name.includes('shoe')) {
-          return [
-            'Premium breathable fabric',
-            'Machine washable & durable',
-            'Modern tailored fit',
-            'Sustainable materials',
-            'Color-fade resistant',
-            'Perfect for daily wear',
-          ];
-        }
-
-        if (cat.includes('electronic') || cat.includes('tech')) {
-          return [
-            'Smart energy saving mode',
-            'User-friendly interface',
-            'High-speed performance',
-            '1-year manufacturer warranty',
-            'Quick setup & installation',
-            'Latest firmware pre-installed',
-          ];
-        }
-
-        return [
-          'Premium quality materials',
-          'Ergonomic & modern design',
-          'High-performance functionality',
-          'Built for durability',
-          'Ethically sourced',
-          'Manufacturer warranty included',
-        ];
-      })(),
+    materials: item.metadata?.materials || '',
+    care: item.metadata?.care || '',
+    shipping: item.metadata?.shipping || null,
+    key_features: item.key_features || item.metadata?.key_features || [],
   };
 };
 

@@ -23,11 +23,11 @@ const priceRangeToBounds = (label) => {
   return { minPrice: undefined, maxPrice: undefined };
 };
 
-const CategoryPageLayout = ({ title, description, products = [] }) => {
+const CategoryPageLayout = ({ title, description }) => {
   const location = useLocation();
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
-  const [items, setItems] = useState(products);
-  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     priceRange: '',
@@ -48,6 +48,7 @@ const CategoryPageLayout = ({ title, description, products = [] }) => {
       try {
         setLoading(true);
         setError('');
+        setItems([]);
 
         const params = {
           page: 1,
@@ -68,6 +69,7 @@ const CategoryPageLayout = ({ title, description, products = [] }) => {
         setItems((result?.products || []).map(mapProductToCard));
       } catch (err) {
         if (!active) return;
+        setItems([]);
         setError(err?.response?.data?.message || err.message || 'Could not load category products.');
       } finally {
         if (active) setLoading(false);
@@ -104,7 +106,9 @@ const CategoryPageLayout = ({ title, description, products = [] }) => {
         <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <CategoryHeader title={title} description={description} />
           <div className="flex items-center gap-3">
-            <span className="text-gray text-[0.8rem] md:hidden lg:block">{items.length} products</span>
+            <span className="text-gray text-[0.8rem] md:hidden lg:block">
+              {loading ? '…' : `${items.length} products`}
+            </span>
             <select
               value={filters.sort}
               onChange={(e) => handleFilterChange('sort', e.target.value)}
@@ -153,13 +157,22 @@ const CategoryPageLayout = ({ title, description, products = [] }) => {
           )}
 
           <div className="flex-1">
-            {loading ? <div className="text-gray2 py-4 text-sm">Loading category products...</div> : null}
+            {loading ? (
+              <div className="text-gray2 flex min-h-[240px] items-center justify-center py-12 text-sm">
+                Loading category products...
+              </div>
+            ) : null}
             {error ? <div className="text-red py-4 text-sm">{error}</div> : null}
-            <div className="grid grid-cols-1 gap-2 min-[375px]:grid-cols-2 min-[375px]:gap-2 min-[640px]:gap-3 min-[768px]:gap-4 min-[1024px]:grid-cols-3 min-[1280px]:grid-cols-4">
-              {items.map((product) => (
-                <ProductCard key={product.id || product.slug || product.name} product={product} />
-              ))}
-            </div>
+            {!loading && !error && items.length === 0 ? (
+              <div className="text-gray2 py-12 text-center text-sm">No products found in this category.</div>
+            ) : null}
+            {!loading && items.length > 0 ? (
+              <div className="grid grid-cols-1 gap-2 min-[375px]:grid-cols-2 min-[375px]:gap-2 min-[640px]:gap-3 min-[768px]:gap-4 min-[1024px]:grid-cols-3 min-[1280px]:grid-cols-4">
+                {items.map((product) => (
+                  <ProductCard key={product.id || product.slug || product.name} product={product} />
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
