@@ -63,7 +63,7 @@ const CategoryFilter = ({ filters, onFilterChange }) => {
           )}
         </div>
 
-        {/* Rating */}
+        {/* Rating
         <div className="bg-card overflow-hidden rounded border border-white/10">
           <button
             onClick={() => toggleSection('rating')}
@@ -86,11 +86,16 @@ const CategoryFilter = ({ filters, onFilterChange }) => {
                     onChange={() => onFilterChange('rating', r)}
                     className="accent-teal"
                   />
-                  <span className="flex items-center gap-1">
-                    <span className="text-yellow text-[16px]">
-                      {'★'.repeat(r)}
-                      {'☆'.repeat(5 - r)}
-                    </span>
+                  <span className="flex items-center gap-1.5">
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={14}
+                          className={i < r ? 'fill-yellow text-yellow' : 'text-gray/40'}
+                        />
+                      ))}
+                    </div>
                     <span className="text-gray2 text-[16px]">& Up</span>
                   </span>
                 </label>
@@ -98,6 +103,7 @@ const CategoryFilter = ({ filters, onFilterChange }) => {
             </div>
           )}
         </div>
+        */}
 
         {/* Discount */}
         <div className="bg-card overflow-hidden rounded border border-white/10">

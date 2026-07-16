@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerMerchant, getCurrentUser } from '../../../services/authService';
 import { registerMerchantStore, getMyMerchantStore } from '../../../services/merchantService';
+import Logo from '../../../components/Logo';
 import { 
   Store, 
   Rocket, 
@@ -249,9 +250,7 @@ const MerchantRegister = () => {
 
       {/* ───── NAV ───── */}
       <nav className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-white/[0.07] bg-navy2 px-4 min-[640px]:px-10">
-        <Link to="/" className="font-['Syne'] text-[1.5rem] font-extrabold text-white no-underline min-[640px]:text-[1.7rem]">
-          <span className="text-teal">ES</span>UUQ
-        </Link>
+        <Logo className="h-10 min-[640px]:h-12" textClassName="text-white" />
         <div className="flex gap-3">
           <Link to="/" className="inline-flex items-center gap-2 rounded-lg border border-white/[0.07] bg-transparent px-5 py-2 text-[0.85rem] font-semibold text-gray2 transition-all duration-150 hover:border-[rgba(0,201,167,0.25)] hover:text-white">
             <ArrowLeft size={16} />
