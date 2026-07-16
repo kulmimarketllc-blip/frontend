@@ -91,7 +91,7 @@ const RegisterView = () => {
       subtitleLinkText="Sign in here"
       leftTagline="Join thousands of happy shoppers"
       leftTaglineEmphasis=""
-      leftDescription="Create your free ESUUQ account and start shopping from hundreds of verified merchants, all in one place."
+      leftDescription="Create your free Kulmi Market account and start shopping from hundreds of verified merchants, all in one place."
       leftPerks={registerPerks}
     >
       <div className="mb-4 grid grid-cols-1 gap-3">

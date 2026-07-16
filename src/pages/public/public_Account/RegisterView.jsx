@@ -11,7 +11,7 @@ const RegisterView = () => {
   };
 
   return (
-    <AccountLayout title="Join ESUUQ" sub="The ultimate marketplace experience">
+    <AccountLayout title="Join Kulmi Market" sub="The ultimate marketplace experience">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -93,10 +93,10 @@ const RegisterView = () => {
           <HelpCircle size={14} className="text-gray" />
           <Link
             to="/merchant-register"
-            title="Sell on ESUUQ"
+            title="Sell on Kulmi Market"
             className="text-teal hover:text-teal2 text-[0.7rem] font-bold tracking-widest uppercase no-underline"
           >
-            Sell on ESUUQ?
+            Sell on Kulmi Market?
           </Link>
         </div>
 

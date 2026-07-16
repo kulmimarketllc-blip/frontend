@@ -3,7 +3,7 @@ const USERS = {
   admin: {
     id: 1,
     name: 'Admin User',
-    email: 'admin@esuuq.com',
+    email: 'admin@kulmi.com',
     role: 'admin',
     avatar: 'A',
     badge: 'Super Admin',
@@ -11,7 +11,7 @@ const USERS = {
   merchant: {
     id: 2,
     name: 'TechZone MN',
-    email: 'techzone@esuuq.com',
+    email: 'techzone@kulmi.com',
     role: 'merchant',
     avatar: 'T',
     badge: 'Merchant Account',

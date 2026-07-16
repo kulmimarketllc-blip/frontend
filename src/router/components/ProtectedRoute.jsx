@@ -35,10 +35,16 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   if (!user) {
+    if (location.pathname.startsWith('/merchant')) {
+      return <Navigate to="/merchant-register" replace />;
+    }
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
   if (Array.isArray(allowedRoles) && allowedRoles.length > 0 && !allowedRoles.includes(user?.role)) {
+    if (location.pathname.startsWith('/merchant') && user?.role !== 'merchant') {
+      return <Navigate to="/merchant-register" replace />;
+    }
     return <Navigate to={routeByRole(user?.role)} replace />;
   }
 

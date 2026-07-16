@@ -1123,7 +1123,7 @@ const CartView = () => {
                 Order Placed!
               </h1>
               <p className="text-gray mx-auto mb-6 min-[480px]:mb-8 max-w-120 text-sm min-[480px]:text-base leading-relaxed">
-                Thank you for shopping with ESUUQ. Your order has been confirmed and is being
+                Thank you for shopping with Kulmi Market. Your order has been confirmed and is being
                 processed by our merchants.
               </p>
               <div className="border-teal/30 bg-teal/10 text-teal mb-6 min-[480px]:mb-8 inline-flex items-center gap-2 min-[480px]:gap-2.5 rounded border px-4 min-[480px]:px-5 py-2 min-[480px]:py-2.5 font-['Syne'] text-sm min-[480px]:text-base font-bold">

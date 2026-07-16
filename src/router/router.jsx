@@ -1,9 +1,10 @@
 import { lazy, Suspense } from 'react';
-import { createBrowserRouter, createRoutesFromElements, Route, useNavigate, useParams } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, useNavigate, useParams, Navigate } from 'react-router-dom';
 
 import RootLayout from '../layout/public/RootLayout';
 import LoadingFallback from './components/LoadingFallback';
 import ProtectedRoute from './components/ProtectedRoute';
+import RouteErrorBoundary from './components/RouteErrorBoundary';
 
 const Home = lazy(() => import('../pages/public/public_Home/Home'));
 const ContactView = lazy(() => import('../pages/public/public_contact/ContactView'));
@@ -23,6 +24,14 @@ const SearchView = lazy(() => import('../pages/public/public_Search/SearchView')
 const ProductDetailsView = lazy(
   () => import('../pages/public/public_ProductDetails/ProductDetailsView')
 );
+const WishlistView = lazy(() => import('../pages/public/public_Wishlist/WishlistView'));
+
+const AboutUsView = lazy(() => import('../pages/public/public_AboutUs/AboutUsView'));
+const PrivacyPolicyView = lazy(() => import('../pages/public/public_Legal/PrivacyPolicyView'));
+const TermsOfServiceView = lazy(() => import('../pages/public/public_Legal/TermsOfServiceView'));
+const ShippingPolicyView = lazy(() => import('../pages/public/public_Legal/ShippingPolicyView'));
+const CommissionInfoView = lazy(() => import('../pages/public/public_Legal/CommissionInfoView'));
+const FAQView = lazy(() => import('../pages/public/public_FAQ/FAQView'));
 
 // Account Pages
 const LoginView = lazy(() => import('../pages/auth/LoginView'));
@@ -161,9 +170,10 @@ const AdminPlaceholder = ({ title, icon }) => (
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<RootLayout />}>
+      <Route path="/" element={<RootLayout />} errorElement={<RouteErrorBoundary />}>
         <Route index element={<Home />} />
         <Route path="contact" element={wrap(ContactView)} />
+        <Route path="support/contact" element={<Navigate to="/contact" replace />} />
         <Route path="electronics" element={wrap(ElectronicsView)} />
         <Route path="fashion" element={wrap(FashionView)} />
         <Route path="home-garden" element={wrap(HomeGardenView)} />
@@ -176,17 +186,27 @@ const router = createBrowserRouter(
         <Route path="pet-supplies" element={wrap(PetSuppliesView)} />
         <Route path="health" element={wrap(HealthView)} />
         <Route path="search" element={wrap(SearchView)} />
+        <Route path="wishlist" element={wrap(WishlistView)} />
         <Route path="cart" element={<ProtectedRoute>{wrap(CartView)}</ProtectedRoute>} />
         <Route
           path="product/:id"
           element={wrap(ProductDetailsView)}
         />
 
+        <Route path="about-us" element={wrap(AboutUsView)} />
+        <Route path="legal/privacy" element={wrap(PrivacyPolicyView)} />
+        <Route path="legal/terms" element={wrap(TermsOfServiceView)} />
+        <Route path="legal/shipping" element={wrap(ShippingPolicyView)} />
+        <Route path="commission" element={wrap(CommissionInfoView)} />
+        <Route path="help/faq" element={wrap(FAQView)} />
+
         <Route path="*" element={wrap(NotFound)} />
       </Route>
 
       {/* Standalone pages - No marketplace layout */}
       <Route path="merchant-register" element={wrap(MerchantRegister)} />
+      <Route path="merchant/commission" element={<Navigate to="/commission" replace />} />
+      <Route path="account/orders" element={<Navigate to="/dashboard/orders" replace />} />
 
       {/* Auth & Dashboards - No marketplace layout */}
       <Route path="auth">
@@ -199,7 +219,7 @@ const router = createBrowserRouter(
         <ProtectedRoute>
           {wrap(UserView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrapElement(<UserDashboardRoute />)} />
         <Route path="orders" element={wrap(UserOrders)} />
         <Route path="track" element={wrap(UserTrackOrder)} />
@@ -217,7 +237,7 @@ const router = createBrowserRouter(
         <ProtectedRoute allowedRoles={['admin']}>
           {wrap(AdminView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrapElement(<AdminDashboardRoute />)} />
         <Route path="orders" element={wrap(AdminOrders)} />
         <Route path="products" element={wrap(AdminProducts)} />
@@ -237,7 +257,7 @@ const router = createBrowserRouter(
         <ProtectedRoute allowedRoles={['merchant']}>
           {wrap(MerchantView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrapElement(<MerchantDashboardRoute />)} />
         <Route path="orders" element={wrap(MerchantOrders)} />
         <Route path="products" element={wrapElement(<MerchantProductsRoute />)} />
@@ -256,7 +276,7 @@ const router = createBrowserRouter(
         <ProtectedRoute allowedRoles={['sub_admin', 'admin']}>
           {wrap(SubAdminView)}
         </ProtectedRoute>
-      }>
+      } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrap(SubAdminDashboard)} />
         <Route path="support-tickets" element={wrap(SubAdminSupportTickets)} />
         <Route path="review-moderation" element={wrap(SubAdminReviewModeration)} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import NotificationDropdown from '../../components/ui/NotificationDropdown';
+import Logo from '../../components/Logo';
 
 const DashboardHeader = ({ panelLabel, mobileOpen, onToggleMobileMenu, actionButtons = [], user }) => {
   const navigate = useNavigate();
@@ -18,15 +19,12 @@ const DashboardHeader = ({ panelLabel, mobileOpen, onToggleMobileMenu, actionBut
           {mobileOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
 
-        <Link
-          to="/"
-          className="font-['Syne'] text-[1.3rem] font-extrabold tracking-tight text-white no-underline"
-        >
-          ES<span className="text-teal">UUQ</span>
+        <div className="flex items-center gap-1">
+          <Logo className="h-8" textClassName="text-white text-sm" />
           <sub className="text-gray ml-1 align-middle text-[0.52rem] font-normal tracking-[0.14em] uppercase">
             {panelLabel}
           </sub>
-        </Link>
+        </div>
       </div>
 
       <div className="flex items-center gap-2 min-[700px]:gap-3">

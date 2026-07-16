@@ -6,7 +6,7 @@ import { getMyMerchantStore } from '../../../services/merchantService';
 const faqs = [
   { q: 'How long do payouts take?', a: 'Standard payouts are processed daily and typically arrive in your connected bank account within 2-3 business days. You can also request instant payouts for a 1% fee.' },
   { q: 'How are commissions calculated?', a: 'Commissions are a percentage of the total order value, including shipping. Standard rates are 8% for most categories, though specialized categories may vary.' },
-  { q: 'Can I sell outside the US?', a: 'Currently, the ESUUQ merchant platform supports sellers with registered businesses and bank accounts in the United States, Canada, and the United Kingdom.' },
+  { q: 'Can I sell outside the US?', a: 'Currently, the Kulmi Market merchant platform supports sellers with registered businesses and bank accounts in the United States, Canada, and the United Kingdom.' },
   { q: 'What documents do I need for approval?', a: 'You will need a valid government-issued ID, proof of business registration (LLC, Corp, etc.), and a bank statement matching your business name for direct deposits.' }
 ];
 
@@ -32,7 +32,7 @@ const MerchantSupport = () => {
   }, []);
 
   const supportPhone = store?.businessInfo?.phone || '+1-612-555-0199';
-  const supportEmail = store?.businessInfo?.email || 'support@esuuq.com';
+  const supportEmail = store?.businessInfo?.email || 'support@kulmi.com';
 
   const sendMessage = () => {
     const text = message.trim();

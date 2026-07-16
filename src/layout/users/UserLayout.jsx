@@ -70,11 +70,11 @@ const UserLayout = () => {
     loadSidebarCounts();
 
     const onShopUpdate = () => loadSidebarCounts();
-    window.addEventListener('esuuq:shop-updated', onShopUpdate);
+    window.addEventListener('kulmi:shop-updated', onShopUpdate);
 
     return () => {
       active = false;
-      window.removeEventListener('esuuq:shop-updated', onShopUpdate);
+      window.removeEventListener('kulmi:shop-updated', onShopUpdate);
     };
   }, [location.pathname]);
 

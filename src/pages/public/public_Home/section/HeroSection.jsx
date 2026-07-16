@@ -84,7 +84,7 @@ const HeroSection = () => {
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a href="#featured" className="inline-block bg-teal px-8 py-3 text-[0.85rem] font-medium tracking-[0.06em] text-navy transition hover:bg-teal2">Shop Now</a>
-            <a href="#merchants" className="inline-block border border-white/20 px-8 py-3 text-[0.85rem] text-white transition hover:border-teal hover:text-teal">Sell on ESUUQ</a>
+            <a href="#merchants" className="inline-block border border-white/20 px-8 py-3 text-[0.85rem] text-white transition hover:border-teal hover:text-teal">Sell on Kulmi Market</a>
           </div>
           <div className="mt-8 flex gap-8">
             <div><div className="font-['Syne'] text-[1.4rem] font-bold text-white">{stats.merchants}</div><div className="text-[0.72rem] text-gray">Merchants</div></div>
