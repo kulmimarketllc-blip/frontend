@@ -1,0 +1,116 @@
+{
+  "stats": [
+    {
+      "icon": "DollarSign",
+      "iconBg": "bg-teal/10",
+      "label": "Total Revenue (Month)",
+      "val": "$84,320",
+      "trend": "↑ 18.4%",
+      "up": true
+    },
+    {
+      "icon": "Package",
+      "iconBg": "bg-purple-500/10",
+      "label": "Total Orders",
+      "val": "1,847",
+      "trend": "↑ 12.1%",
+      "up": true
+    },
+    {
+      "icon": "Store",
+      "iconBg": "bg-yellow/10",
+      "label": "Active Merchants",
+      "val": "312",
+      "trend": "↑ 5.3%",
+      "up": true
+    },
+    {
+      "icon": "Users",
+      "iconBg": "bg-red/10",
+      "label": "Total Customers",
+      "val": "24,580",
+      "trend": "↓ 2.1%",
+      "up": false
+    }
+  ],
+  "recentOrders": [
+    {
+      "id": "#ESQ-00847",
+      "customer": "Ahmed M.",
+      "amount": "$392.95",
+      "status": "Delivered",
+      "statusColor": "text-green-500 bg-green-500/10",
+      "date": "Mar 12"
+    },
+    {
+      "id": "#ESQ-00846",
+      "customer": "Fatima O.",
+      "amount": "$124.50",
+      "status": "Shipping",
+      "statusColor": "text-yellow bg-yellow/10",
+      "date": "Mar 12"
+    },
+    {
+      "id": "#ESQ-00845",
+      "customer": "James K.",
+      "amount": "$89.00",
+      "status": "Processing",
+      "statusColor": "text-blue-500 bg-blue-500/10",
+      "date": "Mar 11"
+    },
+    {
+      "id": "#ESQ-00844",
+      "customer": "Sara L.",
+      "amount": "$214.99",
+      "status": "Delivered",
+      "statusColor": "text-green-500 bg-green-500/10",
+      "date": "Mar 11"
+    },
+    {
+      "id": "#ESQ-00843",
+      "customer": "David P.",
+      "amount": "$49.99",
+      "status": "Cancelled",
+      "statusColor": "text-red bg-red/10",
+      "date": "Mar 10"
+    }
+  ],
+  "activities": [
+    {
+      "icon": "Store",
+      "bg": "bg-teal/10",
+      "text": "New merchant <strong>'GadgetGo'</strong> just signed up.",
+      "time": "2m ago"
+    },
+    {
+      "icon": "Tag",
+      "bg": "bg-purple-500/10",
+      "text": "Coupon <strong>'SPRING20'</strong> was applied 15 times.",
+      "time": "1h ago"
+    },
+    {
+      "icon": "CheckCircle",
+      "bg": "bg-green-500/10",
+      "text": "Order <strong>#ESQ-00840</strong> was successfully delivered.",
+      "time": "3h ago"
+    },
+    {
+      "icon": "CreditCard",
+      "bg": "bg-blue-500/10",
+      "text": "Payout of <strong>$2,480</strong> to 'StyleSavvy' was initiated.",
+      "time": "8h ago"
+    },
+    {
+      "icon": "TrendingDown",
+      "bg": "bg-red/10",
+      "text": "<strong>'Electronics'</strong> category sales are down 8% this week.",
+      "time": "1d ago"
+    }
+  ],
+  "quickLinks": [
+    { "id": "merchants", "label": "Manage Merchants" },
+    { "id": "orders", "label": "View All Orders" },
+    { "id": "coupons", "label": "Create Coupon" },
+    { "id": "payouts", "label": "Process Payouts" }
+  ]
+}
