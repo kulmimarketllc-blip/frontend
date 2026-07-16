@@ -86,6 +86,24 @@ const LoginView = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const { user } = await startGoogleOAuth();
+      const returnTo = location.state?.from?.pathname;
+      if (returnTo) {
+        navigate(returnTo);
+      } else {
+        navigate(routeByRole(user?.role));
+      }
+    } catch (err) {
+      setError(err?.response?.data?.message || err.message || 'Google sign-in failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthLayout
       mode="login"
@@ -115,7 +133,7 @@ const LoginView = () => {
       </div>
 
       <div className="mb-4 grid grid-cols-1 gap-3">
-        <SocialButton provider="google" onClick={startGoogleOAuth}>Google</SocialButton>
+        <SocialButton provider="google" onClick={handleGoogleLogin}>Google</SocialButton>
         {/* <SocialButton provider="facebook">Facebook</SocialButton> */}
       </div>
 

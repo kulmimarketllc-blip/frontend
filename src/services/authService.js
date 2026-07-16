@@ -8,6 +8,8 @@ import {
     setToken,
     setUser,
 } from '../utils/storage';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../firebase/auth';
 
 const cleanBase = (API_CONFIG.BASE_URL || '').replace(/\/+$/, '');
 const authBase = /\/v\d+$/.test(cleanBase) ? '/auth' : '/v1/auth';
@@ -132,6 +134,39 @@ export const logout = async () => {
 
 export const getCurrentUser = () => getUser();
 
-export const startGoogleOAuth = () => {
-    window.location.assign(`${cleanBase}${authBase}/google`);
+// export const startGoogleOAuth = () => {
+//     window.location.assign(`${cleanBase}${authBase}/google`);
+// };
+
+// export const startGoogleOAuth = async () => {
+//     try {
+//         const result = await signInWithPopup(auth, googleProvider);
+
+//         console.log("Firebase User:", result.user);
+
+//         const idToken = await result.user.getIdToken();
+
+//         console.log("Firebase Token:", idToken);
+
+//         // Backend integration comes next
+//     } catch (error) {
+//         console.error("Google Login Error:", error);
+//         throw error;
+//     }
+// };
+
+export const startGoogleOAuth = async () => {
+    const result = await signInWithPopup(auth, googleProvider);
+    const idToken = await result.user.getIdToken();
+
+    const response = await axiosInstance.post(
+        `${authBase}/google`,
+        { idToken },
+        { withCredentials: true }
+    );
+
+    const payload = unwrapPayload(response);
+    const { accessToken, user } = payload || {};
+    persistSession(accessToken, user);
+    return payload;
 };

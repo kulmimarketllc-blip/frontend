@@ -81,7 +81,29 @@ const RegisterView = () => {
       setLoading(false);
     }
   };
+  const handleGoogleSignup = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const { user } = await startGoogleOAuth();
+      localStorage.removeItem('pendingUserId');
+      localStorage.removeItem('pendingEmail');
 
+      if (user?.role === 'merchant') {
+        navigate('/merchant');
+      } else if (user?.role === 'admin') {
+        navigate('/admin');
+      } else if (user?.role === 'sub_admin') {
+        navigate('/subadmin');
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      setError(err?.response?.data?.message || err.message || 'Google sign-in failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <AuthLayout
       mode="register"
@@ -98,6 +120,7 @@ const RegisterView = () => {
         <SocialButton provider="google" onClick={startGoogleOAuth}>Continue with Google</SocialButton>
         {/* <SocialButton provider="facebook">Continue with Facebook</SocialButton> */}
       </div>
+
 
       <AuthDivider text="or sign up with email" />
 
