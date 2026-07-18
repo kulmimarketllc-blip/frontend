@@ -15,7 +15,8 @@ export const APP_CONFIG = Object.freeze({
 /* ----------------------------- API ----------------------------- */
 export const API_CONFIG = Object.freeze({
   BASE_URL: ENV.API_BASE_URL,
-  TIMEOUT: ENV.IS_DEV ? 10_000 : 5_000,
+  // 0 = no timeout; requests wait indefinitely (slow KVM server)
+  TIMEOUT: 0,
   WITH_CREDENTIALS: false,
 });
 
