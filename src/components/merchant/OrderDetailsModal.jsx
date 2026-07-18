@@ -36,6 +36,17 @@ const OrderDetailsModal = memo(({ isOpen = false, onClose, orderId, order = {} }
     return () => document.removeEventListener('keydown', onKey);
   }, [isOpen, onClose]);
 
+  const currentStatus = String(order?.status || '').toLowerCase();
+  const merchantActions = getMerchantNextStatusActions(currentStatus);
+  const options = merchantActions.map((action) => action.next);
+  const selectedIsAllowed = options.includes(localStatus);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const nextStatus = options[0] || currentStatus;
+    setLocalStatus(nextStatus);
+  }, [currentStatus, isOpen]);
+
   if (!isOpen) return null;
   const customer = order?.customer || {};
   const items = Array.isArray(order?.items) ? order.items : [];
@@ -56,18 +67,6 @@ const OrderDetailsModal = memo(({ isOpen = false, onClose, orderId, order = {} }
       : null;
 
   const handleOverlay = (e) => { if (e.target === e.currentTarget) onClose(); };
-
-  const currentStatus = String(order?.status || '').toLowerCase();
-  const role = getUser()?.role;
-  const merchantActions = getMerchantNextStatusActions(currentStatus);
-  const options = merchantActions.map((action) => action.next);
-  const selectedIsAllowed = options.includes(localStatus);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const nextStatus = options[0] || currentStatus;
-    setLocalStatus(nextStatus);
-  }, [currentStatus, isOpen]);
 
   const modalContent = (
     <div

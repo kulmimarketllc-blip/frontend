@@ -3,6 +3,10 @@ import { FileText, Loader2, Download } from 'lucide-react';
 import SubAdminPageHeader from '../components/SubAdminPageHeader';
 import subAdminService from '../../../services/subAdminService';
 import { toast } from 'react-toastify';
+import ActionDialog from '../../../components/ui/modals/ActionDialog';
+import Pagination from '../../admin/components/Pagination';
+
+const ITEMS_PER_PAGE = 10;
 
 const statusClass = {
   submitted: 'text-green-500 bg-green-500/10 border-green-500/30',
@@ -13,12 +17,18 @@ const statusClass = {
 const SubAdminReports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const fetchReports = async () => {
+  const fetchReports = async (page = currentPage) => {
     try {
       setLoading(true);
-      const res = await subAdminService.listReports();
-      setReports(res.data || []);
+      const res = await subAdminService.listReports({ page, limit: ITEMS_PER_PAGE });
+      const list = res.data || [];
+      setReports(list);
+      setTotalItems(Number(res?.meta?.total || list.length));
+      setCurrentPage(page);
     } catch (error) {
       console.error('Failed to fetch reports:', error);
       toast.error('Failed to load reports');
@@ -28,13 +38,13 @@ const SubAdminReports = () => {
   };
 
   useEffect(() => {
-    fetchReports();
+    fetchReports(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCreateReport = async () => {
-    const title = window.prompt('Enter report title:', `Moderation Report - ${new Date().toLocaleDateString()}`);
-    if (!title) return;
+  const handleCreateReport = () => setReportDialogOpen(true);
 
+  const confirmCreateReport = async ({ title }) => {
     try {
       await subAdminService.generateReport(title, 'Generated from Reports page.');
       toast.success('Report generated successfully');
@@ -42,6 +52,7 @@ const SubAdminReports = () => {
     } catch (error) {
       console.error('Report generation failed:', error);
       toast.error('Failed to generate report');
+      throw error;
     }
   };
 
@@ -124,6 +135,33 @@ const SubAdminReports = () => {
           </div>
         )}
       </div>
+
+      {reports.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={ITEMS_PER_PAGE}
+          onPageChange={(page) => fetchReports(page)}
+          loading={loading}
+        />
+      )}
+
+      <ActionDialog
+        open={reportDialogOpen}
+        onClose={() => setReportDialogOpen(false)}
+        onConfirm={confirmCreateReport}
+        tone="primary"
+        title="Create Report"
+        message="A new moderation report will be generated and added to the list below."
+        confirmText="Create Report"
+        fields={[{
+          name: 'title',
+          label: 'Report Title',
+          required: true,
+          defaultValue: `Moderation Report - ${new Date().toLocaleDateString()}`,
+          placeholder: 'Enter a title for this report...',
+        }]}
+      />
     </div>
   );
 };

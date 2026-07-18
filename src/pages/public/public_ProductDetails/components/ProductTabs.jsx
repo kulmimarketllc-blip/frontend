@@ -5,7 +5,7 @@ import { getProductReviews, submitProductReview, toggleReviewHelpful, flagReview
 import { MoreVertical, AlertTriangle } from 'lucide-react';
 import ReportModal from '../../../../components/ui/modals/ReportModal';
 
-const ProductTabs = ({ product }) => {
+const ProductTabs = ({ product, onReviewsLoaded }) => {
   const [activeTab, setActiveTab] = useState('description');
   const [reviewsState, setReviewsState] = useState({
     loading: false,
@@ -49,6 +49,10 @@ const ProductTabs = ({ product }) => {
           items: Array.isArray(result?.data) ? result.data : Array.isArray(result) ? result : [],
           breakdown: result?.breakdown || null,
         });
+        const items = Array.isArray(result?.data) ? result.data : Array.isArray(result) ? result : [];
+        const total = result?.breakdown?.total != null ? Number(result.breakdown.total) : items.length;
+        const average = result?.breakdown?.average != null ? Number(result.breakdown.average) : 0;
+        onReviewsLoaded?.({ total, average });
       } catch (error) {
         if (!active) return;
         setReviewsState((prev) => ({
@@ -56,6 +60,7 @@ const ProductTabs = ({ product }) => {
           loading: false,
           error: error?.response?.data?.message || 'Unable to load product reviews right now.',
         }));
+        onReviewsLoaded?.({ total: 0, average: 0 });
       }
     };
 
@@ -64,7 +69,7 @@ const ProductTabs = ({ product }) => {
     return () => {
       active = false;
     };
-  }, [productId]);
+  }, [productId, onReviewsLoaded]);
 
   useEffect(() => {
     let active = true;
@@ -108,12 +113,16 @@ const ProductTabs = ({ product }) => {
   const refreshReviews = async () => {
     if (!productId) return;
     const result = await getProductReviews(productId, { page: 1, limit: 20 });
+    const items = Array.isArray(result?.data) ? result.data : Array.isArray(result) ? result : [];
     setReviewsState({
       loading: false,
       error: '',
-      items: Array.isArray(result?.data) ? result.data : Array.isArray(result) ? result : [],
+      items,
       breakdown: result?.breakdown || null,
     });
+    const total = result?.breakdown?.total != null ? Number(result.breakdown.total) : items.length;
+    const average = result?.breakdown?.average != null ? Number(result.breakdown.average) : 0;
+    onReviewsLoaded?.({ total, average });
   };
 
   const handleSubmitReview = async (event) => {
@@ -178,9 +187,19 @@ const ProductTabs = ({ product }) => {
     }
   };
 
+  const reviewCount = useMemo(() => {
+    // Prefer live review API data — never fall back to stale product.reviewCount
+    if (reviewsState.breakdown?.total != null) return Number(reviewsState.breakdown.total);
+    if (!reviewsState.loading) return reviewsState.items.length;
+    return null; // still loading
+  }, [reviewsState]);
+
   const tabs = [
     { id: 'description', label: 'Description' },
-    { id: 'reviews', label: `Reviews (${reviewsState.breakdown?.total ?? product.reviews ?? 0})` },
+    {
+      id: 'reviews',
+      label: reviewCount == null ? 'Reviews' : `Reviews (${reviewCount})`,
+    },
     { id: 'shipping', label: 'Shipping' },
   ];
 
@@ -243,7 +262,7 @@ const ProductTabs = ({ product }) => {
                     ))}
                   </div>
                   <p className="text-xs lg:text-sm font-medium text-gray2">
-                    {reviewsState.breakdown?.total || 0} verified reviews
+                    {reviewCount ?? 0} verified {(reviewCount ?? 0) === 1 ? 'review' : 'reviews'}
                   </p>
                 </div>
 

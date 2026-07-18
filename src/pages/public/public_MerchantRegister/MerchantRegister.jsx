@@ -22,7 +22,9 @@ import {
   Zap, 
   PartyPopper, 
   ArrowLeft,
-  CheckCircle2
+  CheckCircle2,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -69,17 +71,24 @@ const STEPS = [
 ];
 
 /* ── Reusable components ── */
-const InputField = ({ label, required, optional, hint, ...props }) => (
+const InputField = ({ label, required, optional, hint, rightAction, ...props }) => (
   <div className="mb-4">
     <label className="mb-1.5 block text-[0.82rem] font-semibold text-gray2 min-[640px]:text-[0.875rem]">
       {label}
       {required && <span className="ml-0.5 text-teal">*</span>}
       {optional && <span className="ml-1 text-[0.72rem] font-normal text-gray">(optional)</span>}
     </label>
-    <input
-      className="w-full rounded-lg border border-white/[0.07] bg-navy3 px-4 py-3 font-['DM_Sans'] text-base text-white outline-none placeholder:text-gray transition-all duration-150 focus:border-teal focus:shadow-[0_0_0_3px_rgba(0,201,167,0.1)]"
-      {...props}
-    />
+    <div className="relative">
+      <input
+        className={`w-full rounded-lg border border-white/[0.07] bg-navy3 px-4 py-3 font-['DM_Sans'] text-base text-white outline-none placeholder:text-gray transition-all duration-150 focus:border-teal focus:shadow-[0_0_0_3px_rgba(0,201,167,0.1)] ${rightAction ? 'pr-11' : ''}`}
+        {...props}
+      />
+      {rightAction && (
+        <div className="absolute top-1/2 right-3 -translate-y-1/2">
+          {rightAction}
+        </div>
+      )}
+    </div>
     {hint && <div className="mt-1.5 text-[0.75rem] text-gray">{hint}</div>}
   </div>
 );
@@ -128,6 +137,8 @@ const MerchantRegister = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [existingMerchant, setExistingMerchant] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     const user = getCurrentUser();
@@ -403,8 +414,44 @@ const MerchantRegister = () => {
               <div className="mb-6 text-[0.875rem] leading-relaxed text-gray min-[640px]:text-base">Set a strong password to protect your merchant account.</div>
 
               <div className="grid gap-4 min-[640px]:grid-cols-2">
-                <InputField label="Password" required type="password" name="password" value={form.password} onChange={handleChange} placeholder="Min. 8 characters" />
-                <InputField label="Confirm Password" required type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="Repeat password" />
+                <InputField
+                  label="Password"
+                  required
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="Min. 8 characters"
+                  rightAction={
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="text-gray hover:text-teal transition-colors"
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  }
+                />
+                <InputField
+                  label="Confirm Password"
+                  required
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  name="confirmPassword"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Repeat password"
+                  rightAction={
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                      className="text-gray hover:text-teal transition-colors"
+                      aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                    >
+                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  }
+                />
               </div>
             </div>
           )}

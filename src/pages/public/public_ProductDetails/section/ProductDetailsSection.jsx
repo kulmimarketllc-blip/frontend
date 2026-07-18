@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import ProductGallery from '../components/ProductGallery';
@@ -101,6 +101,10 @@ const ProductDetailsSection = () => {
     [product?.category]
   );
 
+  const handleReviewsLoaded = useCallback(({ total, average }) => {
+    setProduct((prev) => (prev ? { ...prev, reviews: total, rating: average } : prev));
+  }, []);
+
   if (loading) {
     return (
       <div className="bg-navy flex min-h-screen items-center justify-center">
@@ -165,7 +169,7 @@ const ProductDetailsSection = () => {
           <ProductInfo product={product} />
         </div>
 
-        <ProductTabs product={product} />
+        <ProductTabs product={product} onReviewsLoaded={handleReviewsLoaded} />
 
         <RelatedProducts items={relatedProducts} />
       </div>

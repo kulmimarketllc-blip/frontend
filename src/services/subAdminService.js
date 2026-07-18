@@ -1,7 +1,10 @@
 import axiosInstance from './axiosInstance';
+import { API_CONFIG } from '../config/constants';
 
-const SUB_ADMIN_BASE = '/v1/sub-admin';
-const SUPPORT_BASE = '/v1/support';
+const cleanBase = (API_CONFIG.BASE_URL || '').replace(/\/+$/, '');
+const apiBase = /\/v\d+$/.test(cleanBase) ? '' : '/v1';
+const SUB_ADMIN_BASE = `${apiBase}/sub-admin`;
+const SUPPORT_BASE = `${apiBase}/support`;
 
 const unwrapPayload = (response) => {
   const body = response?.data;

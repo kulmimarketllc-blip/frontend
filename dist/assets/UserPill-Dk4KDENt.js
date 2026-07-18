@@ -1,1 +1,0 @@
-import{j as e}from"./index-BtNRHIVw.js";const l=({children:s,className:r})=>e.jsxs("span",{className:`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[0.68rem] font-semibold ${r}`,children:[e.jsx("span",{className:"h-1.5 w-1.5 rounded-full bg-current"}),s]});export{l as U};

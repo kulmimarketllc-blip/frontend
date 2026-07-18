@@ -3,21 +3,31 @@ import { Store, Loader2, Check, X } from 'lucide-react';
 import SubAdminPageHeader from '../components/SubAdminPageHeader';
 import subAdminService from '../../../services/subAdminService';
 import { toast } from 'react-toastify';
+import ActionDialog from '../../../components/ui/modals/ActionDialog';
+import Pagination from '../../admin/components/Pagination';
+
+const ITEMS_PER_PAGE = 10;
 
 const SubAdminMerchantApprovals = () => {
   const [merchants, setMerchants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState(null);
+  const [approving, setApproving] = useState(null); // merchant object
+  const [rejecting, setRejecting] = useState(null); // merchant object
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const fetchMerchants = async () => {
+  const fetchMerchants = async (page = currentPage) => {
     try {
       setLoading(true);
-      const response = await subAdminService.listPendingMerchants();
+      const response = await subAdminService.listPendingMerchants({ page, limit: ITEMS_PER_PAGE });
       const merchantsArray = Array.isArray(response.data) 
         ? response.data 
         : (Array.isArray(response) ? response : []);
       
       setMerchants(merchantsArray);
+      setTotalItems(Number(response?.meta?.total || merchantsArray.length));
+      setCurrentPage(page);
     } catch (error) {
       console.error('Failed to fetch pending merchants:', error);
       toast.error('Failed to load pending merchants');
@@ -27,16 +37,12 @@ const SubAdminMerchantApprovals = () => {
   };
 
   useEffect(() => {
-    fetchMerchants();
+    fetchMerchants(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleApprove = async (merchant) => {
-    if (!merchant) return;
-    
-    if (!window.confirm(`Are you sure you want to approve ${merchant.storeName} with a standard 8.0% commission rate?`)) {
-      return;
-    }
-
+  const confirmApprove = async () => {
+    const merchant = approving;
     try {
       setProcessingId(merchant.id);
       await subAdminService.approveMerchant(merchant.id, 8.0);
@@ -44,24 +50,14 @@ const SubAdminMerchantApprovals = () => {
       setMerchants(prev => prev.filter(m => m.id !== merchant.id));
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to approve merchant');
+      throw error;
     } finally {
       setProcessingId(null);
     }
   };
 
-  const handleReject = async (merchant) => {
-    if (!merchant) return;
-    
-    const reason = window.prompt(`Enter rejection reason for ${merchant.storeName} (min 10 chars):`);
-    if (reason === null) return; // Cancelled
-    
-    if (reason.trim().length < 10) {
-      toast.error('Rejection reason must be at least 10 characters long');
-      return;
-    }
-
-    if (!window.confirm(`Are you sure you want to reject ${merchant.storeName}?`)) return;
-
+  const confirmReject = async ({ reason }) => {
+    const merchant = rejecting;
     try {
       setProcessingId(merchant.id);
       await subAdminService.rejectMerchant(merchant.id, reason);
@@ -69,6 +65,7 @@ const SubAdminMerchantApprovals = () => {
       setMerchants(prev => prev.filter(m => m.id !== merchant.id));
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to reject merchant');
+      throw error;
     } finally {
       setProcessingId(null);
     }
@@ -121,7 +118,7 @@ const SubAdminMerchantApprovals = () => {
                   <td className="px-3 py-2.5">
                     <div className="flex gap-1.5">
                       <button 
-                        onClick={() => handleApprove(merchant)}
+                        onClick={() => setApproving(merchant)}
                         disabled={processingId === merchant.id}
                         className="text-green-500 bg-green-500/10 hover:bg-green-500/20 disabled:opacity-50 rounded border border-green-500/30 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
                       >
@@ -129,7 +126,7 @@ const SubAdminMerchantApprovals = () => {
                         Approve
                       </button>
                       <button 
-                        onClick={() => handleReject(merchant)}
+                        onClick={() => setRejecting(merchant)}
                         disabled={processingId === merchant.id}
                         className="text-red bg-red/10 hover:bg-red/20 disabled:opacity-50 rounded border border-red/30 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
                       >
@@ -148,6 +145,42 @@ const SubAdminMerchantApprovals = () => {
           </table>
         </div>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onPageChange={(page) => fetchMerchants(page)}
+        loading={loading}
+      />
+
+      <ActionDialog
+        open={!!approving}
+        onClose={() => setApproving(null)}
+        onConfirm={confirmApprove}
+        tone="success"
+        title="Approve Merchant"
+        message={`${approving?.storeName} will be activated with a standard 8.0% commission rate.`}
+        confirmText="Approve Merchant"
+      />
+
+      <ActionDialog
+        open={!!rejecting}
+        onClose={() => setRejecting(null)}
+        onConfirm={confirmReject}
+        tone="danger"
+        title="Reject Application"
+        message={`${rejecting?.storeName}'s application will be rejected. The reason below will be shared with the applicant.`}
+        confirmText="Reject Application"
+        fields={[{
+          name: 'reason',
+          label: 'Rejection Reason',
+          required: true,
+          minLength: 10,
+          multiline: true,
+          placeholder: 'Explain why this application is being rejected (min 10 characters)...',
+        }]}
+      />
     </div>
   );
 };

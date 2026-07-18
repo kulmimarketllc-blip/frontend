@@ -117,17 +117,23 @@ const ProductCard = ({ product, inScroll = false }) => {
 
         {/* RATING */}
         <div className="mb-3 flex items-center gap-1.5">
-          <div className="flex gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                size={14}
-                className={i < filledStars ? 'fill-yellow text-yellow' : 'text-gray/30'}
-              />
-            ))}
-          </div>
-          <span className="text-[0.7rem] font-bold text-white/90">{ratingValue.toFixed(1)}</span>
-          <span className="text-gray/60 text-[0.75rem]">({product.reviews ?? 0})</span>
+          {Number(product.reviews) > 0 ? (
+            <>
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={14}
+                    className={i < filledStars ? 'fill-yellow text-yellow' : 'text-gray/30'}
+                  />
+                ))}
+              </div>
+              <span className="text-[0.7rem] font-bold text-white/90">{ratingValue.toFixed(1)}</span>
+              <span className="text-gray/60 text-[0.75rem]">({product.reviews})</span>
+            </>
+          ) : (
+            <span className="text-gray/50 text-[0.72rem] leading-[14px]">No reviews yet</span>
+          )}
         </div>
 
         {/* PRICE */}

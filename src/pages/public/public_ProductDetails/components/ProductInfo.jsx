@@ -110,11 +110,13 @@ const ProductInfo = ({ product }) => {
               <Star
                 key={i}
                 size={14}
-                className={i < 4 ? 'fill-yellow text-yellow' : 'text-white/10'}
+                className={i < Math.round(Number(product.rating) || 0) ? 'fill-yellow text-yellow' : 'text-white/10'}
               />
             ))}
           </div>
-          <span className="text-gray2 text-xs lg:text-sm font-medium">({product.reviews} reviews)</span>
+          <span className="text-gray2 text-xs lg:text-sm font-medium">
+            ({Number(product.reviews) || 0} {Number(product.reviews) === 1 ? 'review' : 'reviews'})
+          </span>
         </div>
       </div>
 

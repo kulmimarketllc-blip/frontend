@@ -5,6 +5,7 @@ import UserPageHeader from '../components/UserPageHeader';
 import UserPill from '../components/UserPill';
 import { getMyOrders } from '../../../services/checkoutService';
 import { addToCart } from '../../../services/shopStorageService';
+import Pagination from '../../admin/components/Pagination';
 
 const ACTIVE_STATUSES = [
   'pending_payment',
@@ -42,6 +43,8 @@ const getOrderMeta = (order) => {
   return `${shippingLabel.charAt(0).toUpperCase() + shippingLabel.slice(1)} Delivery`;
 };
 
+const ITEMS_PER_PAGE = 10;
+
 const UserOrders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
@@ -50,12 +53,13 @@ const UserOrders = () => {
   const [reorderBusyId, setReorderBusyId] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const loadOrders = async () => {
       try {
         setLoading(true);
-        const payload = await getMyOrders({ page: 1, limit: 50 });
+        const payload = await getMyOrders({ page: 1, limit: 100 });
         setOrders(Array.isArray(payload?.data) ? payload.data : []);
       } catch {
         setOrders([]);
@@ -89,6 +93,16 @@ const UserOrders = () => {
     if (selectedFilter === 'returns') return orders.filter((o) => ['return_requested', 'returned', 'refunded'].includes(o.status));
     return orders;
   }, [orders, selectedFilter]);
+
+  const pagedOrders = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredOrders.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredOrders, currentPage]);
+
+  const changeFilter = (key) => {
+    setSelectedFilter(key);
+    setCurrentPage(1);
+  };
 
   const handleReorder = (order) => {
     const items = Array.isArray(order?.items) ? order.items : [];
@@ -145,7 +159,7 @@ const UserOrders = () => {
           <button
             key={filter.key}
             type="button"
-            onClick={() => setSelectedFilter(filter.key)}
+            onClick={() => changeFilter(filter.key)}
             className={`rounded px-3 py-1.5 text-[0.75rem] font-medium transition-all ${
               selectedFilter === filter.key
                 ? 'bg-teal text-navy'
@@ -167,7 +181,7 @@ const UserOrders = () => {
         {!loading && !filteredOrders.length && (
           <div className="bg-card rounded-md border border-white/[0.07] p-4 text-sm text-gray2">No orders found for this filter.</div>
         )}
-        {!loading && filteredOrders.map((order) => (
+        {!loading && pagedOrders.map((order) => (
           <div key={order.id} className="bg-card rounded-md border border-white/[0.07] p-4">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.07] pb-3">
               <div>
@@ -223,6 +237,16 @@ const UserOrders = () => {
           </div>
         ))}
       </div>
+
+      {!loading && filteredOrders.length > ITEMS_PER_PAGE && (
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredOrders.length}
+          itemsPerPage={ITEMS_PER_PAGE}
+          onPageChange={(page) => setCurrentPage(page)}
+          loading={loading}
+        />
+      )}
     </div>
   );
 };

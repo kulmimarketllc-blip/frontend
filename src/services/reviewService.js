@@ -14,8 +14,13 @@ const unwrapPayload = (response) => {
 
 export const getProductReviews = async (productId, params = {}) => {
   const response = await axiosInstance.get(`${apiBase}/reviews/product/${productId}`, { params });
-  // Return the full response object (data, breakdown, meta)
-  return response?.data;
+  // Body shape: { success, data: { data: [...reviews], breakdown, meta } }
+  // Unwrap so callers get { data, breakdown, meta } directly.
+  const body = response?.data;
+  if (body?.data && typeof body.data === 'object' && !Array.isArray(body.data)) {
+    return body.data;
+  }
+  return body;
 };
 
 export const submitProductReview = async (payload) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Save, Settings, DollarSign, Bell, Lock, Key } from 'lucide-react';
+import { Save, Settings, DollarSign } from 'lucide-react';
 import DashboardPageHeader from '../components/DashboardPageHeader';
 import { getAdminSettings, updateAdminSettings } from '../../../services/adminService';
 
@@ -21,16 +21,6 @@ const TIMEZONE_OPTIONS = {
     'Europe/Madrid',
   ],
 };
-
-const Toggle = ({ value, onChange }) => (
-  <button
-    type="button"
-    onClick={() => onChange(!value)}
-    className={`relative h-5 w-9 shrink-0 rounded-full border-none transition-colors ${value ? 'bg-teal' : 'bg-white/[0.07]'}`}
-  >
-    <span className={`absolute top-0.75 h-3.5 w-3.5 rounded-full bg-white transition-all ${value ? 'left-4.5' : 'left-0.75'}`} />
-  </button>
-);
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState(null);
@@ -76,8 +66,6 @@ const AdminSettings = () => {
       const payload = await updateAdminSettings({
         general: settings.general,
         commission: settings.commission,
-        notifications: settings.notifications,
-        security: settings.security,
       });
       setSettings(payload || settings);
       setMessage('Settings saved successfully.');
@@ -172,47 +160,6 @@ const AdminSettings = () => {
           </div>
         </div>
 
-        <div className="bg-card rounded-md border border-white/[0.07] p-5">
-          <h3 className="mb-4 flex items-center gap-2 font-['Syne'] text-[1rem] font-bold text-white">
-            <Bell size={16} className="text-teal" /> Notification Settings
-          </h3>
-          {[
-            ['newOrderAlerts', 'New Order Alerts', 'Email + push on new orders'],
-            ['merchantApprovals', 'Merchant Approvals', 'Alert when merchant applies'],
-            ['lowStockAlerts', 'Low Stock Alerts', 'Notify on inventory below 5'],
-            ['revenueReports', 'Revenue Reports', 'Daily summary emails'],
-          ].map(([key, label, subtitle]) => (
-            <div key={key} className="flex items-center justify-between border-b border-white/[0.07] py-3.5 last:border-b-0">
-              <div>
-                <div className="text-[0.85rem] font-medium text-white">{label}</div>
-                <div className="text-gray text-[0.72rem]">{subtitle}</div>
-              </div>
-              <Toggle value={Boolean(settings?.notifications?.[key])} onChange={(val) => updateSection('notifications', { [key]: val })} />
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-card rounded-md border border-white/[0.07] p-5">
-          <h3 className="mb-4 flex items-center gap-2 font-['Syne'] text-[1rem] font-bold text-white">
-            <Lock size={16} className="text-teal" /> Security Settings
-          </h3>
-          {[
-            ['twoFactorRequired', 'Two-Factor Auth (Admin)', 'Require 2FA for all admins'],
-            ['apiRateLimiting', 'API Rate Limiting', 'Limit 100 req/min per IP'],
-            ['auditLog', 'Audit Log', 'Log all admin actions'],
-          ].map(([key, label, subtitle]) => (
-            <div key={key} className="flex items-center justify-between border-b border-white/[0.07] py-3.5 last:border-b-0">
-              <div>
-                <div className="text-[0.85rem] font-medium text-white">{label}</div>
-                <div className="text-gray text-[0.72rem]">{subtitle}</div>
-              </div>
-              <Toggle value={Boolean(settings?.security?.[key])} onChange={(val) => updateSection('security', { [key]: val })} />
-            </div>
-          ))}
-          <button type="button" className="text-gray2 flex items-center justify-center hover:border-teal hover:text-teal mt-4 w-full rounded border border-white/[0.07] py-2.5 text-[0.82rem] transition-colors gap-2">
-            <Key size={14} className="text-teal" /> Change Admin Password
-          </button>
-        </div>
       </div>
     </div>
   );

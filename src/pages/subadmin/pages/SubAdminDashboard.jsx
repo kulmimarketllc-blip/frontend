@@ -13,11 +13,13 @@ import SubAdminPageHeader from '../components/SubAdminPageHeader';
 import subAdminService from '../../../services/subAdminService';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ActionDialog from '../../../components/ui/modals/ActionDialog';
 
 const SubAdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,16 +65,15 @@ const SubAdminDashboard = () => {
     }
   };
 
-  const handleNewReport = async () => {
-    const title = window.prompt('Enter report title:', `Moderation Report - ${new Date().toLocaleDateString()}`);
-    if (!title) return;
+  const handleNewReport = () => setReportDialogOpen(true);
 
+  const confirmNewReport = async ({ title }) => {
     try {
       await subAdminService.generateReport(title, 'Manually generated moderation report from dashboard.');
       toast.success('New report generated! View it in "My Reports"');
     } catch (error) {
-      
       toast.error('Failed to generate report');
+      throw error;
     }
   };
 
@@ -212,6 +213,23 @@ const SubAdminDashboard = () => {
           </div>
         </div>
       </div>
+
+      <ActionDialog
+        open={reportDialogOpen}
+        onClose={() => setReportDialogOpen(false)}
+        onConfirm={confirmNewReport}
+        tone="primary"
+        title="Generate Report"
+        message="A new moderation report will be created and saved under My Reports."
+        confirmText="Generate"
+        fields={[{
+          name: 'title',
+          label: 'Report Title',
+          required: true,
+          defaultValue: `Moderation Report - ${new Date().toLocaleDateString()}`,
+          placeholder: 'Enter a title for this report...',
+        }]}
+      />
     </div>
   );
 };
