@@ -1,0 +1,1 @@
+import{j as t}from"./index-D74cxxfe.js";import{C as e}from"./CategoryPageLayout-DcI4xZZj.js";import"./ProductCard-Dtf-icPL.js";import"./eye-CSIddFm_.js";import"./star-Bi1w64l4.js";import"./chevron-down-BJ3Ptsfw.js";const s=()=>t.jsx(e,{title:"Health",description:"Vitamins, supplements, fitness equipment, and personal wellness essentials."}),m=()=>t.jsx(s,{});export{m as default};
