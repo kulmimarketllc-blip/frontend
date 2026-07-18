@@ -134,26 +134,6 @@ export const logout = async () => {
 
 export const getCurrentUser = () => getUser();
 
-// export const startGoogleOAuth = () => {
-//     window.location.assign(`${cleanBase}${authBase}/google`);
-// };
-
-// export const startGoogleOAuth = async () => {
-//     try {
-//         const result = await signInWithPopup(auth, googleProvider);
-
-//         console.log("Firebase User:", result.user);
-
-//         const idToken = await result.user.getIdToken();
-
-//         console.log("Firebase Token:", idToken);
-
-//         // Backend integration comes next
-//     } catch (error) {
-//         console.error("Google Login Error:", error);
-//         throw error;
-//     }
-// };
 
 export const startGoogleOAuth = async () => {
     const result = await signInWithPopup(auth, googleProvider);
