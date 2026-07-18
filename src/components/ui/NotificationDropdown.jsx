@@ -82,7 +82,7 @@ const NotificationDropdown = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 min-[500px]:w-96 origin-top-right rounded-xl border border-white/10 bg-navy2 shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
+        <div className="fixed inset-x-2 top-16 z-50 origin-top overflow-hidden rounded-xl border border-white/10 bg-navy2 shadow-2xl animate-in fade-in slide-in-from-top-2 min-[500px]:absolute min-[500px]:inset-x-auto min-[500px]:top-auto min-[500px]:right-0 min-[500px]:mt-2 min-[500px]:w-96 min-[500px]:origin-top-right">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-white/5 bg-navy3/50 px-4 py-3">
             <h3 className="font-['Syne'] text-[0.95rem] font-bold text-white">Notifications</h3>
@@ -97,7 +97,7 @@ const NotificationDropdown = () => {
           </div>
 
           {/* List */}
-          <div className="max-h-[350px] overflow-y-auto">
+          <div className="max-h-[min(60vh,350px)] overflow-y-auto">
             {notifications.length === 0 ? (
               <div className="py-8 text-center text-sm text-gray">
                 <Bell size={24} className="mx-auto mb-2 opacity-20" />

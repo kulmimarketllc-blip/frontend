@@ -1036,7 +1036,7 @@ const CartView = () => {
                             {method.logos.map((logo, idx) => (
                               <div
                                 key={logo.alt || idx}
-                                className="bg-white rounded-sm p-1 border border-white/[0.06] flex items-center justify-center h-6 w-12"
+                                className="bg-white rounded-sm p-1 border border-white/6 flex items-center justify-center h-6 w-12"
                               >
                                 <img
                                   src={logo.src || logo}
@@ -1062,7 +1062,7 @@ const CartView = () => {
                       </Elements>
                     ) : (
                       <div className="rounded border border-yellow-500/30 bg-yellow-500/10 p-3 text-sm text-yellow-200">
-                        Stripe is not configured yet. Add VITE_STRIPE_PUBLIC_KEY to the frontend env file.
+                        Payment method is not configured yet.
                       </div>
                     )
                   )}

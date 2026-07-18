@@ -11,6 +11,7 @@ import {
 } from '../../../services/userService';
 import { logout } from '../../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import ActionDialog from '../../../components/ui/modals/ActionDialog';
 
 const defaultSettings = {
   notifications: {
@@ -77,6 +78,7 @@ const UserSettings = () => {
   const [savingSettings, setSavingSettings] = useState(false);
   const [deletingAccount, setDeletingAccount] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deactivateDialogOpen, setDeactivateDialogOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -167,9 +169,9 @@ const UserSettings = () => {
     }
   };
 
-  const handleDeactivate = async () => {
-    const confirmed = window.confirm('Deactivate your account? You can contact support to restore it later.');
-    if (!confirmed) return;
+  const handleDeactivate = () => setDeactivateDialogOpen(true);
+
+  const confirmDeactivate = async () => {
     try {
       setError('');
       setMessage('');
@@ -177,6 +179,7 @@ const UserSettings = () => {
       setMessage('Account deactivated. Please sign in again if needed.');
     } catch (err) {
       setError(err?.response?.data?.message || 'Unable to deactivate account.');
+      throw err;
     }
   };
 
@@ -337,7 +340,7 @@ const UserSettings = () => {
                     setShowDeleteConfirm(false);
                     setDeleteForm({ confirmText: '', currentPassword: '' });
                   }}
-                  className="rounded border border-white/[0.12] bg-transparent px-4 py-2 text-[0.8rem] font-medium text-gray2"
+                  className="rounded border border-white/12 bg-transparent px-4 py-2 text-[0.8rem] font-medium text-gray2"
                 >
                   Cancel
                 </button>
@@ -346,6 +349,16 @@ const UserSettings = () => {
           ) : null}
         </div>
       </div>
+
+      <ActionDialog
+        open={deactivateDialogOpen}
+        onClose={() => setDeactivateDialogOpen(false)}
+        onConfirm={confirmDeactivate}
+        tone="warning"
+        title="Deactivate Account"
+        message="Your account will be deactivated and you will be signed out. You can contact support to restore it later."
+        confirmText="Deactivate"
+      />
     </div>
   );
 };

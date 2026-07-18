@@ -8,6 +8,9 @@ import {
   getMyMerchantStore,
   updateReplyToReview,
 } from '../../../services/merchantService';
+import Pagination from '../../admin/components/Pagination';
+
+const ITEMS_PER_PAGE = 10;
 
 const MerchantReviews = () => {
   const [merchantId, setMerchantId] = useState('');
@@ -16,8 +19,10 @@ const MerchantReviews = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [replyModal, setReplyModal] = useState({ isOpen: false, review: null, text: '' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const load = async () => {
+  const load = async (page = currentPage) => {
     try {
       setLoading(true);
       setError('');
@@ -33,8 +38,11 @@ const MerchantReviews = () => {
         return;
       }
 
-      const payload = await getMyMerchantReviews(id, { page: 1, limit: 50, sort: 'newest' });
-      setRows(Array.isArray(payload?.data) ? payload.data : []);
+      const payload = await getMyMerchantReviews(id, { page, limit: ITEMS_PER_PAGE, sort: 'newest' });
+      const list = Array.isArray(payload?.data) ? payload.data : [];
+      setRows(list);
+      setTotalItems(Number(payload?.meta?.total || list.length));
+      setCurrentPage(page);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to load reviews.');
     } finally {
@@ -43,7 +51,8 @@ const MerchantReviews = () => {
   };
 
   useEffect(() => {
-    load();
+    load(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const breakdown = useMemo(() => {
@@ -185,6 +194,16 @@ const MerchantReviews = () => {
             ))}
             {!rows.length ? <div className="text-sm text-gray2">No reviews yet for this store.</div> : null}
           </div>
+
+          {rows.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={ITEMS_PER_PAGE}
+              onPageChange={(page) => load(page)}
+              loading={loading}
+            />
+          )}
         </div>
       </div>
 

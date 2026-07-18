@@ -3,18 +3,28 @@ import { Search, UserRoundCog, Loader2, ShieldAlert, AlertTriangle, UserCheck } 
 import SubAdminPageHeader from '../components/SubAdminPageHeader';
 import subAdminService from '../../../services/subAdminService';
 import { toast } from 'react-toastify';
+import ActionDialog from '../../../components/ui/modals/ActionDialog';
+import Pagination from '../../admin/components/Pagination';
+
+const ITEMS_PER_PAGE = 10;
 
 const SubAdminUserManagement = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [processingId, setProcessingId] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null); // { id, action, name }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (page = currentPage) => {
     try {
       setLoading(true);
-      const response = await subAdminService.listUsers({ search: searchTerm });
-      setUsers(response.data || []);
+      const response = await subAdminService.listUsers({ search: searchTerm, page, limit: ITEMS_PER_PAGE });
+      const list = response.data || [];
+      setUsers(list);
+      setTotalItems(Number(response?.meta?.total || list.length));
+      setCurrentPage(page);
     } catch (error) {
       console.error('Failed to fetch users:', error);
       toast.error('Failed to load users');
@@ -25,16 +35,17 @@ const SubAdminUserManagement = () => {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      fetchUsers();
+      fetchUsers(1); // reset to first page when search changes
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
-  const handleModerate = async (id, action) => {
-    const reason = prompt(`Enter reason for ${action}:`);
-    if (!reason) return;
+  const handleModerate = (id, action, name) => setPendingAction({ id, action, name });
 
+  const confirmModerate = async ({ reason }) => {
+    const { id, action } = pendingAction;
     try {
       setProcessingId(id);
       await subAdminService.moderateUser(id, action, reason);
@@ -42,10 +53,18 @@ const SubAdminUserManagement = () => {
       fetchUsers(); // Refresh list
     } catch (error) {
       toast.error(error.response?.data?.message || `Failed to ${action} user`);
+      throw error;
     } finally {
       setProcessingId(null);
     }
   };
+
+  const ACTION_META = {
+    warn: { tone: 'warning', title: 'Warn User', confirmText: 'Send Warning', message: 'A formal warning will be recorded for this user.' },
+    suspend: { tone: 'danger', title: 'Suspend User', confirmText: 'Suspend User', message: 'This user will lose access to their account until restored.' },
+    restore: { tone: 'success', title: 'Restore User', confirmText: 'Restore User', message: 'This user will regain access to their account.' },
+  };
+  const actionMeta = ACTION_META[pendingAction?.action] || ACTION_META.warn;
 
   if (loading && users.length === 0) {
     return (
@@ -121,22 +140,25 @@ const SubAdminUserManagement = () => {
                   <td className="px-3 py-2.5">
                     <div className="flex gap-1.5">
                       <button 
-                        onClick={() => handleModerate(user.id, 'warn')}
-                        className="text-yellow bg-yellow/10 hover:bg-yellow/20 rounded border border-yellow/40 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
+                        onClick={() => handleModerate(user.id, 'warn', `${user.firstName} ${user.lastName}`)}
+                        disabled={processingId === user.id}
+                        className="text-yellow bg-yellow/10 hover:bg-yellow/20 disabled:opacity-50 rounded border border-yellow/40 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
                       >
                         <AlertTriangle size={12} /> Warn
                       </button>
                       {user.isSuspended ? (
                         <button 
-                          onClick={() => handleModerate(user.id, 'restore')}
-                          className="text-green-500 bg-green-500/10 hover:bg-green-500/20 rounded border border-green-500/30 px-2 py-1 text-[0.7rem] font-semibold"
+                          onClick={() => handleModerate(user.id, 'restore', `${user.firstName} ${user.lastName}`)}
+                          disabled={processingId === user.id}
+                          className="text-green-500 bg-green-500/10 hover:bg-green-500/20 disabled:opacity-50 rounded border border-green-500/30 px-2 py-1 text-[0.7rem] font-semibold"
                         >
                           Restore
                         </button>
                       ) : (
                         <button 
-                          onClick={() => handleModerate(user.id, 'suspend')}
-                          className="text-red bg-red/10 hover:bg-red/20 rounded border border-red/30 px-2 py-1 text-[0.7rem] font-semibold"
+                          onClick={() => handleModerate(user.id, 'suspend', `${user.firstName} ${user.lastName}`)}
+                          disabled={processingId === user.id}
+                          className="text-red bg-red/10 hover:bg-red/20 disabled:opacity-50 rounded border border-red/30 px-2 py-1 text-[0.7rem] font-semibold"
                         >
                           Suspend
                         </button>
@@ -154,7 +176,32 @@ const SubAdminUserManagement = () => {
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={ITEMS_PER_PAGE}
+          onPageChange={(page) => fetchUsers(page)}
+          loading={loading}
+        />
       </div>
+
+      <ActionDialog
+        open={!!pendingAction}
+        onClose={() => setPendingAction(null)}
+        onConfirm={confirmModerate}
+        tone={actionMeta.tone}
+        title={actionMeta.title}
+        message={pendingAction ? `${pendingAction.name} — ${actionMeta.message} Please provide a reason.` : ''}
+        confirmText={actionMeta.confirmText}
+        fields={[{
+          name: 'reason',
+          label: 'Reason',
+          required: true,
+          multiline: true,
+          placeholder: 'Explain why you are taking this action...',
+        }]}
+      />
     </div>
   );
 };

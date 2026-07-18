@@ -4,17 +4,27 @@ import { Flag, ShieldAlert, Loader2, Check, Trash2, Eye } from 'lucide-react';
 import SubAdminPageHeader from '../components/SubAdminPageHeader';
 import subAdminService from '../../../services/subAdminService';
 import { toast } from 'react-toastify';
+import ActionDialog from '../../../components/ui/modals/ActionDialog';
+import Pagination from '../../admin/components/Pagination';
+
+const ITEMS_PER_PAGE = 10;
 
 const SubAdminFlaggedContent = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null); // { id, action, name }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const fetchFlaggedProducts = async () => {
+  const fetchFlaggedProducts = async (page = currentPage) => {
     try {
       setLoading(true);
-      const response = await subAdminService.listFlaggedContent();
-      setProducts(response.data || []);
+      const response = await subAdminService.listFlaggedContent({ page, limit: ITEMS_PER_PAGE });
+      const list = response.data || [];
+      setProducts(list);
+      setTotalItems(Number(response?.meta?.total || list.length));
+      setCurrentPage(page);
     } catch (error) {
       console.error('Failed to fetch flagged content:', error);
       toast.error('Failed to load flagged content');
@@ -24,13 +34,14 @@ const SubAdminFlaggedContent = () => {
   };
 
   useEffect(() => {
-    fetchFlaggedProducts();
+    fetchFlaggedProducts(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAction = async (id, action) => {
-    const reason = prompt(`Enter reason for moderation action (${action}):`);
-    if (!reason) return;
+  const handleAction = (id, action, name) => setPendingAction({ id, action, name });
 
+  const confirmAction = async ({ reason }) => {
+    const { id, action } = pendingAction;
     try {
       setProcessingId(id);
       await subAdminService.moderateContent(id, action, reason);
@@ -38,6 +49,7 @@ const SubAdminFlaggedContent = () => {
       setProducts(prev => prev.filter(p => p.id !== id));
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to moderate content');
+      throw error;
     } finally {
       setProcessingId(null);
     }
@@ -98,14 +110,16 @@ const SubAdminFlaggedContent = () => {
                   <td className="px-3 py-2.5">
                     <div className="flex gap-1.5">
                       <button 
-                        onClick={() => handleAction(product.id, 'clear_flags')}
-                        className="text-green-500 bg-green-500/10 hover:bg-green-500/20 rounded border border-green-500/30 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
+                        onClick={() => handleAction(product.id, 'clear_flags', product.name)}
+                        disabled={processingId === product.id}
+                        className="text-green-500 bg-green-500/10 hover:bg-green-500/20 disabled:opacity-50 rounded border border-green-500/30 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
                       >
                         <Check size={12} /> Mark Safe
                       </button>
                       <button 
-                        onClick={() => handleAction(product.id, 'reject')}
-                        className="text-red bg-red/10 hover:bg-red/20 rounded border border-red/30 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
+                        onClick={() => handleAction(product.id, 'reject', product.name)}
+                        disabled={processingId === product.id}
+                        className="text-red bg-red/10 hover:bg-red/20 disabled:opacity-50 rounded border border-red/30 px-2 py-1 text-[0.7rem] font-semibold flex items-center gap-1"
                       >
                         <Trash2 size={12} /> Remove
                       </button>
@@ -129,6 +143,35 @@ const SubAdminFlaggedContent = () => {
           </table>
         </div>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onPageChange={(page) => fetchFlaggedProducts(page)}
+        loading={loading}
+      />
+
+      <ActionDialog
+        open={!!pendingAction}
+        onClose={() => setPendingAction(null)}
+        onConfirm={confirmAction}
+        tone={pendingAction?.action === 'reject' ? 'danger' : 'success'}
+        title={pendingAction?.action === 'reject' ? 'Remove Product' : 'Mark Product as Safe'}
+        message={
+          pendingAction?.action === 'reject'
+            ? `"${pendingAction?.name}" will be removed from the marketplace. Please provide a reason for this action.`
+            : `All flags on "${pendingAction?.name}" will be cleared. Please provide a reason for this action.`
+        }
+        confirmText={pendingAction?.action === 'reject' ? 'Remove Product' : 'Mark Safe'}
+        fields={[{
+          name: 'reason',
+          label: 'Reason',
+          required: true,
+          multiline: true,
+          placeholder: 'Explain why you are taking this action...',
+        }]}
+      />
     </div>
   );
 };
