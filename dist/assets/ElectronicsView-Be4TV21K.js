@@ -1,1 +1,0 @@
-import{j as t}from"./index-BDCCHugg.js";import{C as o}from"./CategoryPageLayout-CANz8CxL.js";import"./ProductCard-dL0V9gWF.js";import"./eye-CdRAkZQL.js";import"./star-rl3R0U7-.js";import"./chevron-down-CtAWi-LQ.js";const s=()=>t.jsx(o,{title:"Electronics",description:"Discover the latest gadgets, phones, laptops, and tech accessories."}),m=()=>t.jsx(s,{});export{m as default};
