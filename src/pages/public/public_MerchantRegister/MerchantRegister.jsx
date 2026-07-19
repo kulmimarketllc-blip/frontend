@@ -244,11 +244,12 @@ const MerchantRegister = () => {
         });
 
         setSubmitting(false);
-        setShowModal(true);
         
         // Store pending info for OTP view
         localStorage.setItem('pendingUserId', response.userId);
         localStorage.setItem('pendingEmail', form.email);
+        
+        navigate('/auth/otp', { state: { userId: response.userId, email: form.email } });
       }
     } catch (err) {
       setSubmitting(false);

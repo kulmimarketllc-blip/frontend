@@ -1,1 +1,0 @@
-import{j as o}from"./index-BDCCHugg.js";import{C as t}from"./CategoryPageLayout-CANz8CxL.js";import"./ProductCard-dL0V9gWF.js";import"./eye-CdRAkZQL.js";import"./star-rl3R0U7-.js";import"./chevron-down-CtAWi-LQ.js";const s=()=>o.jsx(t,{title:"Toys & Kids",description:"Educational toys, games, outdoor fun, and creative kits for all ages."}),d=()=>o.jsx(s,{});export{d as default};
