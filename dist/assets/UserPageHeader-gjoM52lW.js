@@ -1,1 +1,0 @@
-import{j as e}from"./index-B_5TQWkI.js";const a=({title:t,subtitle:r,className:s=""})=>e.jsxs("div",{className:s,children:[e.jsx("h1",{className:"font-['Syne'] text-[1.4rem] font-bold text-white lg:text-[1.5rem]",children:t}),e.jsx("p",{className:"text-gray text-[1rem]",children:r})]});export{a as U};
