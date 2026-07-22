@@ -184,7 +184,7 @@ const NavbarLayout = () => {
         <div className="flex items-center gap-2 min-[900px]:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 min-[640px]:p-2 transition hover:bg-[rgba(0,201,167,0.15)]"
+            className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:p-2"
             title="Menu"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -194,23 +194,31 @@ const NavbarLayout = () => {
               setMobileSearchOpen(!mobileSearchOpen);
               if (mobileMenuOpen) setMobileMenuOpen(false);
             }}
-            className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 min-[640px]:p-2 transition hover:bg-[rgba(0,201,167,0.15)]"
+            className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:p-2"
             title="Search"
           >
             {mobileSearchOpen ? <X size={18} /> : <Search size={18} />}
           </button>
         </div>
 
-        <Logo className="h-10 min-[640px]:h-12 min-[900px]:col-start-1" textClassName="text-white" />
+        <Logo
+          className="h-10 min-[640px]:h-12 min-[900px]:col-start-1"
+          textClassName="text-white"
+        />
 
-        <div ref={searchBoxRef} className="search-bar bg-navy3 relative hidden items-center overflow-visible rounded-sm border border-white/10 min-[900px]:flex">
-          <select 
+        <div
+          ref={searchBoxRef}
+          className="search-bar bg-navy3 relative hidden items-center overflow-visible rounded-sm border border-white/10 min-[900px]:flex"
+        >
+          <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="bg-navy3 text-gray2 h-full cursor-pointer border-r border-white/10 px-3 text-[0.8rem] outline-none"
           >
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.name}>{cat.name}</option>
+              <option key={cat.id} value={cat.name}>
+                {cat.name}
+              </option>
             ))}
           </select>
           <input
@@ -227,7 +235,7 @@ const NavbarLayout = () => {
               }
             }}
             placeholder="Search products, brands, categories..."
-            className="placeholder:text-gray flex-1 bg-transparent px-4 py-[0.4rem] lg:py-[0.6rem] text-[0.9rem] text-white outline-none"
+            className="placeholder:text-gray flex-1 bg-transparent px-4 py-[0.4rem] text-[0.9rem] text-white outline-none lg:py-[0.6rem]"
           />
           <button
             type="button"
@@ -238,16 +246,21 @@ const NavbarLayout = () => {
           </button>
 
           {searchOpen && (
-            <div className="absolute top-[calc(100%+6px)] left-0 right-0 rounded-sm border border-white/10 bg-navy2 p-2 shadow-2xl" style={{ zIndex: 500 }}>
+            <div
+              className="bg-navy2 absolute top-[calc(100%+6px)] right-0 left-0 rounded-sm border border-white/10 p-2 shadow-2xl"
+              style={{ zIndex: 500 }}
+            >
               {searchText.trim() ? (
                 <>
-                  <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Suggestions</div>
+                  <div className="text-gray px-2 py-1 text-[0.65rem] font-bold tracking-widest uppercase">
+                    Suggestions
+                  </div>
                   {(searchSuggestions.length ? searchSuggestions : [searchText]).map((item) => (
                     <button
                       type="button"
                       key={item}
                       onClick={() => submitSearch(item)}
-                      className="block w-full rounded px-2 py-2 text-left text-[0.8rem] text-gray2 transition-colors hover:bg-white/5 hover:text-white"
+                      className="text-gray2 block w-full rounded px-2 py-2 text-left text-[0.8rem] transition-colors hover:bg-white/5 hover:text-white"
                     >
                       {item}
                     </button>
@@ -255,16 +268,18 @@ const NavbarLayout = () => {
                 </>
               ) : (
                 <>
-                  <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Trending</div>
+                  <div className="text-gray px-2 py-1 text-[0.65rem] font-bold tracking-widest uppercase">
+                    Trending
+                  </div>
                   {trendingSearches.map((item) => (
                     <button
                       type="button"
                       key={item.query}
                       onClick={() => submitSearch(item.query)}
-                      className="flex w-full items-center justify-between rounded px-2 py-2 text-left text-[0.8rem] text-gray2 transition-colors hover:bg-white/5 hover:text-white"
+                      className="text-gray2 flex w-full items-center justify-between rounded px-2 py-2 text-left text-[0.8rem] transition-colors hover:bg-white/5 hover:text-white"
                     >
                       <span>{item.query}</span>
-                      <span className="text-[0.65rem] text-gray">{item.count}</span>
+                      <span className="text-gray text-[0.65rem]">{item.count}</span>
                     </button>
                   ))}
                 </>
@@ -275,14 +290,14 @@ const NavbarLayout = () => {
 
         <div className="flex items-center gap-1 min-[640px]:gap-2">
           <div
-            className="relative order-last min-[640px]:order-first group"
+            className="group relative order-last min-[640px]:order-first"
             ref={profileBtnRef}
             onMouseEnter={() => setProfileDropdownOpen(true)}
             onMouseLeave={() => setProfileDropdownOpen(false)}
           >
             {currentUser ? (
               <button
-                className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 min-[640px]:p-2 transition hover:bg-[rgba(0,201,167,0.15)]"
+                className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:p-2"
                 title="Account"
                 onClick={() => setProfileDropdownOpen((v) => !v)}
                 aria-haspopup="true"
@@ -293,7 +308,7 @@ const NavbarLayout = () => {
             ) : (
               <button
                 onClick={() => navigate('/auth/login')}
-                className="min-[500px]:hidden icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 transition hover:bg-[rgba(0,201,167,0.15)]"
+                className="icon-btn text-gray2 hover:text-teal rounded-sm p-1.5 transition hover:bg-[rgba(0,201,167,0.15)] min-[500px]:hidden"
                 title="Sign In"
               >
                 <User size={20} />
@@ -303,17 +318,16 @@ const NavbarLayout = () => {
             {/* Auth Status Display */}
             {currentUser && (
               <div
-                className={`absolute top-full right-0 z-400 pt-2 w-64 transition-opacity duration-150 ${
-                  profileDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-                } min-[900px]:invisible min-[900px]:group-hover:visible min-[900px]:opacity-100`}
-                style={{ pointerEvents: profileDropdownOpen ? 'auto' : 'none' }}
+                className={`absolute top-full right-0 z-400 w-64 pt-2 transition-opacity duration-150 ${
+                  profileDropdownOpen ? 'visible opacity-100 pointer-events-auto' : 'invisible opacity-0 pointer-events-none'
+                } min-[900px]:invisible min-[900px]:opacity-100 min-[900px]:group-hover:visible min-[900px]:group-hover:pointer-events-auto`}
               >
                 <div className="overflow-hidden rounded-md border border-white/10 bg-[#0D1626] shadow-2xl backdrop-blur-xl">
                   <div className="border-b border-white/10 px-4 py-3">
-                    <div className="text-[0.88rem] leading-none font-bold text-teal capitalize">
+                    <div className="text-teal text-[0.88rem] leading-none font-bold capitalize">
                       {currentUser.firstName} {currentUser.lastName}
                     </div>
-                    <div className="text-gray2 mt-1 text-[0.7rem] leading-none tracking-widest uppercase font-semibold">
+                    <div className="text-gray2 mt-1 text-[0.7rem] leading-none font-semibold tracking-widest uppercase">
                       {currentUser.role}
                     </div>
                     <div className="text-gray mt-1.5 text-[0.7rem] wrap-break-word">
@@ -321,7 +335,8 @@ const NavbarLayout = () => {
                     </div>
                   </div>
                   <div className="space-y-0.5 p-2">
-                    {(currentUser.role === 'customer' || currentUser.role === 'delivery_partner') && (
+                    {(currentUser.role === 'customer' ||
+                      currentUser.role === 'delivery_partner') && (
                       <Link
                         to="/dashboard"
                         className="text-gray2 hover:bg-teal/10 hover:text-teal flex items-center gap-2.5 rounded px-3 py-2 text-[0.82rem] no-underline transition"
@@ -354,7 +369,7 @@ const NavbarLayout = () => {
                         setProfileDropdownOpen(false);
                         handleLogout();
                       }}
-                      className="bg-red-500/20 hover:bg-red-500/30 text-red-300 hover:text-red-200 flex w-full items-center gap-2.5 rounded px-3 py-2 text-[0.82rem] font-bold no-underline transition"
+                      className="flex w-full cursor-pointer items-center gap-2.5 rounded bg-red-500/20 px-3 py-2 text-[0.82rem] font-bold text-red-300 no-underline transition hover:bg-red-500/30 hover:text-red-200"
                     >
                       <LogOut size={14} /> Sign Out
                     </button>
@@ -367,7 +382,7 @@ const NavbarLayout = () => {
           {!currentUser && (
             <button
               onClick={() => navigate('/auth/login')}
-              className="hidden min-[500px]:block text-teal hover:text-teal2 border border-teal hover:border-teal2 rounded-sm px-3 py-1.5 text-[0.82rem] font-semibold transition"
+              className="text-teal hover:text-teal2 border-teal hover:border-teal2 hidden cursor-pointer rounded-sm border px-3 py-1.5 text-[0.82rem] font-semibold transition min-[500px]:block"
             >
               Sign In
             </button>
@@ -375,7 +390,7 @@ const NavbarLayout = () => {
 
           <Link
             to="/wishlist"
-            className="icon-btn text-gray2 hover:text-teal relative rounded-sm p-1.5 min-[640px]:p-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)]"
+            className="icon-btn text-gray2 hover:text-teal relative rounded-sm p-1.5 no-underline transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:p-2"
             title="Wishlist"
           >
             <Heart size={18} className="min-[640px]:size-5" />
@@ -385,7 +400,7 @@ const NavbarLayout = () => {
           </Link>
           <Link
             to="/cart"
-            className="icon-btn text-gray2 hover:text-teal relative rounded-sm p-1.5 min-[640px]:p-2 no-underline transition hover:bg-[rgba(0,201,167,0.15)]"
+            className="icon-btn text-gray2 hover:text-teal relative rounded-sm p-1.5 no-underline transition hover:bg-[rgba(0,201,167,0.15)] min-[640px]:p-2"
             title="Cart"
           >
             <ShoppingCart size={18} className="min-[640px]:size-5" />
@@ -397,8 +412,8 @@ const NavbarLayout = () => {
 
         {/* Mobile Search Overlay */}
         {mobileSearchOpen && (
-          <div className="absolute top-full left-0 right-0 border-b border-white/10 bg-[rgba(10,15,30,0.98)] p-3 min-[900px]:hidden backdrop-blur-lg">
-            <div className="relative flex h-11 items-center overflow-visible rounded-sm border border-white/10 bg-navy3">
+          <div className="absolute top-full right-0 left-0 border-b border-white/10 bg-[rgba(10,15,30,0.98)] p-3 backdrop-blur-lg min-[900px]:hidden">
+            <div className="bg-navy3 relative flex h-11 items-center overflow-visible rounded-sm border border-white/10">
               <input
                 type="text"
                 autoComplete="off"
@@ -413,7 +428,7 @@ const NavbarLayout = () => {
                   }
                 }}
                 placeholder="Search products, brands..."
-                className="placeholder:text-gray flex-1 bg-transparent px-4 text-[0.9rem] text-white outline-none w-full h-full"
+                className="placeholder:text-gray h-full w-full flex-1 bg-transparent px-4 text-[0.9rem] text-white outline-none"
               />
               <button
                 type="button"
@@ -421,16 +436,21 @@ const NavbarLayout = () => {
                   setMobileSearchOpen(false);
                   submitSearch();
                 }}
-                className="bg-teal text-navy hover:bg-teal2 h-full px-5 transition-colors shrink-0"
+                className="bg-teal text-navy hover:bg-teal2 h-full shrink-0 px-5 transition-colors"
               >
                 <Search size={18} />
               </button>
 
               {searchOpen && (
-                <div className="absolute top-[calc(100%+6px)] left-0 right-0 rounded-sm border border-white/10 bg-navy2 p-2 shadow-2xl" style={{ zIndex: 500 }}>
+                <div
+                  className="bg-navy2 absolute top-[calc(100%+6px)] right-0 left-0 rounded-sm border border-white/10 p-2 shadow-2xl"
+                  style={{ zIndex: 500 }}
+                >
                   {searchText.trim() ? (
                     <>
-                      <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Suggestions</div>
+                      <div className="text-gray px-2 py-1 text-[0.65rem] font-bold tracking-widest uppercase">
+                        Suggestions
+                      </div>
                       {(searchSuggestions.length ? searchSuggestions : [searchText]).map((item) => (
                         <button
                           type="button"
@@ -439,7 +459,7 @@ const NavbarLayout = () => {
                             setMobileSearchOpen(false);
                             submitSearch(item);
                           }}
-                          className="block w-full rounded px-2 py-2 text-left text-[0.8rem] text-gray2 transition-colors hover:bg-white/5 hover:text-white"
+                          className="text-gray2 block w-full rounded px-2 py-2 text-left text-[0.8rem] transition-colors hover:bg-white/5 hover:text-white"
                         >
                           {item}
                         </button>
@@ -447,7 +467,9 @@ const NavbarLayout = () => {
                     </>
                   ) : (
                     <>
-                      <div className="px-2 py-1 text-[0.65rem] font-bold tracking-widest text-gray uppercase">Trending</div>
+                      <div className="text-gray px-2 py-1 text-[0.65rem] font-bold tracking-widest uppercase">
+                        Trending
+                      </div>
                       {trendingSearches.map((item) => (
                         <button
                           type="button"
@@ -456,10 +478,10 @@ const NavbarLayout = () => {
                             setMobileSearchOpen(false);
                             submitSearch(item.query);
                           }}
-                          className="flex w-full items-center justify-between rounded px-2 py-2 text-left text-[0.8rem] text-gray2 transition-colors hover:bg-white/5 hover:text-white"
+                          className="text-gray2 flex w-full items-center justify-between rounded px-2 py-2 text-left text-[0.8rem] transition-colors hover:bg-white/5 hover:text-white"
                         >
                           <span>{item.query}</span>
-                          <span className="text-[0.65rem] text-gray">{item.count}</span>
+                          <span className="text-gray text-[0.65rem]">{item.count}</span>
                         </button>
                       ))}
                     </>

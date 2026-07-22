@@ -65,12 +65,13 @@ const OTPView = () => {
   };
 
   const handleResend = async () => {
-    if (!pendingUserId || secondsLeft > 0) return;
+    const userEmail = location.state?.email || localStorage.getItem('pendingEmail');
+    if (!pendingUserId || !userEmail || secondsLeft > 0) return;
 
     setError('');
     setInfo('');
     try {
-      await resendOtp(pendingUserId);
+      await resendOtp(userEmail, 'register');
       setInfo('A new OTP has been sent.');
       setSecondsLeft(60);
     } catch (err) {

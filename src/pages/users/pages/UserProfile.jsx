@@ -10,7 +10,6 @@ const UserProfile = () => {
     firstName: '',
     lastName: '',
     phone: '',
-    avatarUrl: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -26,7 +25,6 @@ const UserProfile = () => {
           firstName: user?.firstName || '',
           lastName: user?.lastName || '',
           phone: user?.phone || '',
-          avatarUrl: user?.avatarUrl || '',
         });
       } catch (err) {
         setError(err?.response?.data?.message || 'Unable to load profile.');
@@ -100,17 +98,6 @@ const UserProfile = () => {
             <div className="mt-1 inline-flex items-center rounded-full border border-teal/40 bg-teal/10 px-2 py-0.5 text-[0.65rem] font-medium text-teal">
               {profile?.isVerified ? 'Verified Member' : 'Account Pending Verification'}
             </div>
-          </div>
-          <div className="ml-auto min-w-64 flex-1">
-            <label className="text-gray mb-1 block text-[0.7rem] font-medium tracking-widest uppercase">
-              Avatar URL
-            </label>
-            <input
-              value={form.avatarUrl}
-              onChange={handleChange('avatarUrl')}
-              placeholder="https://..."
-              className="bg-navy3 focus:border-teal w-full rounded border border-white/[0.07] px-3 py-2.5 text-[0.875rem] text-white outline-none"
-            />
           </div>
         </div>
 

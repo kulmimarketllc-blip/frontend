@@ -8,6 +8,7 @@ import {
   setMyDefaultAddress,
   updateMyAddress,
 } from '../../../services/userService';
+import { COUNTRIES } from '../../../utils/countries';
 
 const emptyForm = {
   type: 'home',
@@ -22,8 +23,6 @@ const emptyForm = {
   country: 'United States',
   isDefault: false,
 };
-
-const COUNTRY_OPTIONS = ['United States', 'Canada', 'Mexico'];
 
 const STATE_OPTIONS_BY_COUNTRY = {
   'United States': [
@@ -276,7 +275,8 @@ const UserAddresses = () => {
           <div>
             <label className="text-gray mb-1 block text-[0.7rem] font-medium tracking-widest uppercase">Country</label>
             <select value={form.country} onChange={handleChange('country')} className="bg-navy3 focus:border-teal w-full rounded border border-white/[0.07] px-3 py-2.5 text-[0.875rem] text-white outline-none">
-              {COUNTRY_OPTIONS.map((country) => (
+              <option value="" disabled>Select country</option>
+              {COUNTRIES.map((country) => (
                 <option key={country} value={country}>{country}</option>
               ))}
             </select>

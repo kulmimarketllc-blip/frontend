@@ -26,10 +26,12 @@ const RelatedProducts = ({ items = [] }) => {
   return (
     <section className="mt-16 sm:mt-24">
       <div className="mb-8 flex items-end justify-between">
-        <h2 className="font-['Syne'] text-2xl font-bold text-white sm:text-3xl">Related Products</h2>
+        <h2 className="font-['Syne'] text-2xl font-bold text-white sm:text-3xl">
+          Related Products
+        </h2>
         <Link
           to="/"
-          className="text-gray2 hover:text-teal transition-colors text-[0.8rem] font-bold uppercase tracking-widest flex items-center gap-1"
+          className="text-gray2 hover:text-teal flex items-center gap-1 text-[0.8rem] font-bold tracking-widest uppercase transition-colors"
         >
           View All <ArrowRight size={14} />
         </Link>

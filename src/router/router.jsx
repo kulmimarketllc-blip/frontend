@@ -38,6 +38,8 @@ const LoginView = lazy(() => import('../pages/auth/LoginView'));
 const RegisterView = lazy(() => import('../pages/auth/RegisterView'));
 const OTPView = lazy(() => import('../pages/auth/otp/OTPView'));
 const OAuthCallbackView = lazy(() => import('../pages/auth/OAuthCallbackView'));
+const ForgotPasswordView = lazy(() => import('../pages/auth/ForgotPasswordView'));
+
 
 // User Dashboard
 const UserView = lazy(() => import('../pages/users/UserView'));
@@ -73,6 +75,7 @@ const MerchantAddProduct = lazy(() => import('../pages/merchant/pages/MerchantAd
 const MerchantReviews = lazy(() => import('../pages/merchant/pages/MerchantReviews'));
 const MerchantPromotions = lazy(() => import('../pages/merchant/pages/MerchantPromotions'));
 const MerchantProfile = lazy(() => import('../pages/merchant/pages/MerchantProfile'));
+const MerchantSettings = lazy(() => import('../pages/merchant/pages/MerchantSettings'));
 const MerchantSupport = lazy(() => import('../pages/merchant/pages/MerchantSupport'));
 
 const SubAdminView = lazy(() => import('../pages/subadmin/SubAdminView'));
@@ -111,6 +114,7 @@ const merchantPathMap = {
   payouts: '/merchant/payouts',
   products: '/merchant/products',
   inventory: '/merchant/inventory',
+  settings: '/merchant/settings',
 };
 
 const userPathMap = {
@@ -214,6 +218,7 @@ const router = createBrowserRouter(
         <Route path="register" element={wrap(RegisterView)} />
         <Route path="otp" element={wrap(OTPView)} />
         <Route path="callback" element={wrap(OAuthCallbackView)} />
+        <Route path="forgot-password" element={wrap(ForgotPasswordView)} />
       </Route>
       <Route path="dashboard" element={
         <ProtectedRoute>
@@ -269,6 +274,7 @@ const router = createBrowserRouter(
         <Route path="reviews" element={wrap(MerchantReviews)} />
         <Route path="promotions" element={wrap(MerchantPromotions)} />
         <Route path="profile" element={wrap(MerchantProfile)} />
+        <Route path="settings" element={wrap(MerchantSettings)} />
         <Route path="support" element={wrap(MerchantSupport)} />
         <Route path="register" element={wrap(MerchantRegister)} />
       </Route>

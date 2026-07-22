@@ -42,6 +42,7 @@ export const SocialButton = ({ provider = 'google', children, onClick }) => {
 export const AuthInput = ({
   id,
   label,
+  labelRight,
   type = 'text',
   placeholder,
   icon,
@@ -54,13 +55,18 @@ export const AuthInput = ({
 
   return (
     <div className="mb-4">
-      {label && (
-        <label
-          htmlFor={id}
-          className="text-gray mb-1.5 block text-[0.7rem] font-medium tracking-widest uppercase"
-        >
-          {label}
-        </label>
+      {(label || labelRight) && (
+        <div className="mb-1.5 flex items-center justify-between">
+          {label && (
+            <label
+              htmlFor={id}
+              className="text-gray text-[0.7rem] font-medium tracking-widest uppercase"
+            >
+              {label}
+            </label>
+          )}
+          {labelRight && <div className="text-[0.7rem]">{labelRight}</div>}
+        </div>
       )}
 
       <div className="relative">

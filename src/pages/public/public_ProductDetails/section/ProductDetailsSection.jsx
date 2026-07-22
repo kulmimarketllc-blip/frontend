@@ -9,6 +9,7 @@ import {
   getProductById,
   getProductBySlug,
   getRelatedProducts,
+  normalizeProductRatings,
 } from '../../../../services/productService';
 
 const toSlug = (value = '') =>
@@ -27,12 +28,13 @@ const toUiProduct = (item = {}) => {
   const variants = Array.isArray(item.variants) ? item.variants : [];
   const colors = variants.find((variant) => variant?.type === 'color')?.values || [];
   const sizes = variants.find((variant) => variant?.type === 'size')?.values || [];
+  const { avgRating, reviewCount } = normalizeProductRatings(item);
 
   return {
     ...item,
     category: item.category?.name || 'Category',
-    reviews: item.reviewCount || 0,
-    rating: item.avgRating || 0,
+    reviews: reviewCount,
+    rating: avgRating,
     oldPrice,
     price,
     off,
