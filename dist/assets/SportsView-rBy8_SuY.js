@@ -1,0 +1,1 @@
+import{j as t}from"./index-Cy9443FS.js";import{C as o}from"./CategoryPageLayout-B2M3WgAz.js";import"./ProductCard-B07Yopg0.js";import"./eye-BxWV5tRg.js";import"./star-BZR4FXwT.js";import"./chevron-down-BpEcDuP2.js";const r=()=>t.jsx(o,{title:"Sports",description:"Sports equipment, fitness gear, outdoor adventures, and athletic wear."}),n=()=>t.jsx(r,{});export{n as default};
