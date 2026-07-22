@@ -16,6 +16,7 @@ import {
   Clock,
   XCircle,
   Home,
+  User,
 } from 'lucide-react';
 import DashboardShell from '../common/DashboardShell';
 import {
@@ -130,6 +131,7 @@ const MerchantLayout = () => {
         { id: 'reviews', icon: Star, label: 'Reviews', to: '/merchant/reviews' },
         { id: 'promotions', icon: Tag, label: 'Promotions', to: '/merchant/promotions' },
         { id: 'profile', icon: Store, label: 'Store Profile', to: '/merchant/profile' },
+        { id: 'settings', icon: User, label: 'Account Settings', to: '/merchant/settings' },
       ],
     },
     {

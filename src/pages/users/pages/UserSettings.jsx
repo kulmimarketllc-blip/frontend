@@ -12,6 +12,7 @@ import {
 import { logout } from '../../../services/authService';
 import { useNavigate } from 'react-router-dom';
 import ActionDialog from '../../../components/ui/modals/ActionDialog';
+import { Eye, EyeOff } from 'lucide-react';
 
 const defaultSettings = {
   notifications: {
@@ -81,6 +82,16 @@ const UserSettings = () => {
   const [deactivateDialogOpen, setDeactivateDialogOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [showPasswords, setShowPasswords] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+    delete: false,
+  });
+
+  const toggleShowPassword = (field) => {
+    setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -261,9 +272,24 @@ const UserSettings = () => {
           ))}
 
           <form onSubmit={submitPassword} className="mt-4 grid grid-cols-1 gap-3 min-[700px]:grid-cols-3">
-            <input autoComplete="current-password" value={passwordForm.currentPassword} onChange={handlePasswordChange('currentPassword')} type="password" placeholder="Current password" className="bg-navy3 focus:border-teal rounded border border-white/[0.07] px-3 py-2.5 text-[0.85rem] text-white outline-none" />
-            <input autoComplete="new-password" value={passwordForm.newPassword} onChange={handlePasswordChange('newPassword')} type="password" placeholder="New password" className="bg-navy3 focus:border-teal rounded border border-white/[0.07] px-3 py-2.5 text-[0.85rem] text-white outline-none" />
-            <input autoComplete="new-password" value={passwordForm.confirmPassword} onChange={handlePasswordChange('confirmPassword')} type="password" placeholder="Confirm password" className="bg-navy3 focus:border-teal rounded border border-white/[0.07] px-3 py-2.5 text-[0.85rem] text-white outline-none" />
+            <div className="relative">
+              <input autoComplete="current-password" value={passwordForm.currentPassword} onChange={handlePasswordChange('currentPassword')} type={showPasswords.current ? 'text' : 'password'} placeholder="Current password" className="bg-navy3 focus:border-teal w-full rounded border border-white/[0.07] px-3 py-2.5 pr-10 text-[0.85rem] text-white outline-none" />
+              <button type="button" onClick={() => toggleShowPassword('current')} className="text-gray hover:text-teal absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors" tabIndex={-1}>
+                {showPasswords.current ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            <div className="relative">
+              <input autoComplete="new-password" value={passwordForm.newPassword} onChange={handlePasswordChange('newPassword')} type={showPasswords.new ? 'text' : 'password'} placeholder="New password" className="bg-navy3 focus:border-teal w-full rounded border border-white/[0.07] px-3 py-2.5 pr-10 text-[0.85rem] text-white outline-none" />
+              <button type="button" onClick={() => toggleShowPassword('new')} className="text-gray hover:text-teal absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors" tabIndex={-1}>
+                {showPasswords.new ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            <div className="relative">
+              <input autoComplete="new-password" value={passwordForm.confirmPassword} onChange={handlePasswordChange('confirmPassword')} type={showPasswords.confirm ? 'text' : 'password'} placeholder="Confirm password" className="bg-navy3 focus:border-teal w-full rounded border border-white/[0.07] px-3 py-2.5 pr-10 text-[0.85rem] text-white outline-none" />
+              <button type="button" onClick={() => toggleShowPassword('confirm')} className="text-gray hover:text-teal absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors" tabIndex={-1}>
+                {showPasswords.confirm ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
             <div className="min-[700px]:col-span-3">
               <button type="submit" disabled={savingPassword} className="bg-teal text-navy hover:bg-teal2 rounded px-4 py-2 text-[0.8rem] font-medium disabled:opacity-70">
                 {savingPassword ? 'Updating...' : 'Change Password'}
@@ -316,15 +342,20 @@ const UserSettings = () => {
                   placeholder="Type DELETE"
                   className="bg-navy3 focus:border-red rounded border border-white/[0.07] px-3 py-2.5 text-[0.85rem] text-white outline-none"
                 />
-                <input
-                  autoComplete="new-password"
-                  name="delete-account-password"
-                  value={deleteForm.currentPassword}
-                  onChange={handleDeleteField('currentPassword')}
-                  type="password"
-                  placeholder="Current password"
-                  className="bg-navy3 focus:border-red rounded border border-white/[0.07] px-3 py-2.5 text-[0.85rem] text-white outline-none"
-                />
+                <div className="relative">
+                  <input
+                    autoComplete="new-password"
+                    name="delete-account-password"
+                    value={deleteForm.currentPassword}
+                    onChange={handleDeleteField('currentPassword')}
+                    type={showPasswords.delete ? 'text' : 'password'}
+                    placeholder="Current password"
+                    className="bg-navy3 focus:border-red w-full rounded border border-white/[0.07] px-3 py-2.5 pr-10 text-[0.85rem] text-white outline-none"
+                  />
+                  <button type="button" onClick={() => toggleShowPassword('delete')} className="text-gray hover:text-red absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors" tabIndex={-1}>
+                    {showPasswords.delete ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 <button

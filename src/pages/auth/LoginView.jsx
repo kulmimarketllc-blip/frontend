@@ -119,21 +119,23 @@ const LoginView = () => {
       <div className="mb-6 flex overflow-hidden rounded-md border border-white/10">
         <button
           type="button"
-          className="flex-1 bg-teal px-4 py-2.5 text-[0.82rem] font-semibold tracking-[0.04em] text-navy"
+          className="bg-teal text-navy flex-1 cursor-pointer px-4 py-2.5 text-[0.82rem] font-semibold tracking-[0.04em]"
         >
           Sign In
         </button>
         <button
           type="button"
           onClick={() => navigate('/auth/register')}
-          className="text-gray hover:text-teal flex-1 bg-transparent px-4 py-2.5 text-[0.82rem] font-medium tracking-[0.04em] transition-colors"
+          className="text-gray hover:text-teal flex-1 cursor-pointer bg-transparent px-4 py-2.5 text-[0.82rem] font-medium tracking-[0.04em] transition-colors"
         >
           Create Account
         </button>
       </div>
 
       <div className="mb-4 grid grid-cols-1 gap-3">
-        <SocialButton provider="google" onClick={handleGoogleLogin}>Google</SocialButton>
+        <SocialButton provider="google" onClick={handleGoogleLogin}>
+          Google
+        </SocialButton>
         {/* <SocialButton provider="facebook">Facebook</SocialButton> */}
       </div>
 
@@ -153,6 +155,14 @@ const LoginView = () => {
         <AuthInput
           id="password"
           label="Password"
+          labelRight={
+            <Link
+              to="/auth/forgot-password"
+              className="text-teal hover:text-teal2 transition-colors"
+            >
+              Forgot Password?
+            </Link>
+          }
           type={showPassword ? 'text' : 'password'}
           placeholder="Enter your password"
           icon={showPassword ? 'eyeOff' : 'eye'}
@@ -161,7 +171,7 @@ const LoginView = () => {
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        {error ? <p className="mb-3 text-sm text-red">{error}</p> : null}
+        {error ? <p className="text-red mb-3 text-sm">{error}</p> : null}
 
         <AuthButton type="submit" disabled={loading}>
           {loading ? 'Signing In...' : 'Sign In ->'}

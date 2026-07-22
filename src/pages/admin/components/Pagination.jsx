@@ -12,26 +12,27 @@ const Pagination = ({
 
   const getPageNumbers = () => {
     const pages = [];
-    const maxVisible = 5;
+    const maxVisible = 7;
 
     if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
-      pages.push(1);
+      pages.push(1, 2);
       
-      if (currentPage > 3) pages.push('...');
+      if (currentPage > 4) pages.push('...');
       
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
+      const start = Math.max(3, currentPage - 1);
+      const end = Math.min(totalPages - 2, currentPage + 1);
       
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
       
-      if (currentPage < totalPages - 2) pages.push('...');
-      pages.push(totalPages);
+      if (currentPage < totalPages - 3) pages.push('...');
+      
+      pages.push(totalPages - 1, totalPages);
     }
     
     return pages;

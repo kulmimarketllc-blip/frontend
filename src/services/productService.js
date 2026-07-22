@@ -14,22 +14,39 @@ const unwrapPayload = (response) => {
 
 const asArray = (value) => (Array.isArray(value) ? value : []);
 
+// Seeded products were historically inserted with fake 4.5 / 12 aggregates.
+// Hide that placeholder until the API returns live review stats.
+export const normalizeProductRatings = (product = {}) => {
+  const avgRating = Number(product.avgRating ?? product.rating ?? 0);
+  const reviewCount = Number(product.reviewCount ?? product.reviews ?? 0);
+  const looksLikeFakeSeed =
+    Math.abs(avgRating - 4.5) < 0.01 && reviewCount === 12;
+
+  if (looksLikeFakeSeed) {
+    return { avgRating: 0, reviewCount: 0 };
+  }
+
+  return { avgRating, reviewCount };
+};
+
 export const mapProductToCard = (product = {}) => {
   const price = Number(product.price || 0);
   const comparePrice = Number(product.comparePrice || 0);
-  const off = comparePrice > price && comparePrice > 0
-    ? Math.round(((comparePrice - price) / comparePrice) * 100)
-    : null;
+  const { avgRating, reviewCount } = normalizeProductRatings(product);
+  const off =
+    comparePrice > price && comparePrice > 0
+      ? Math.round(((comparePrice - price) / comparePrice) * 100)
+      : null;
 
   return {
     id: product.id,
     slug: product.slug,
-    name: (product.name || 'Unnamed Product').replace(/esuuq/ig, 'Kulmi'),
-    store: (product.merchant?.storeName || 'Marketplace Store').replace(/esuuq/ig, 'Kulmi'),
+    name: (product.name || 'Unnamed Product').replace(/esuuq/gi, 'Kulmi'),
+    store: (product.merchant?.storeName || 'Marketplace Store').replace(/esuuq/gi, 'Kulmi'),
     price: `$${price.toFixed(2)}`,
     old: comparePrice > 0 ? `$${comparePrice.toFixed(2)}` : '',
-    rating: product.avgRating || 0,
-    reviews: product.reviewCount || 0,
+    rating: avgRating,
+    reviews: reviewCount,
     image: asArray(product.images)[0] || '',
     badge: product.isFeatured ? 'HOT' : off && off >= 30 ? 'SALE' : '',
     off: off ? `-${off}%` : '',
@@ -119,7 +136,10 @@ export const getRelatedProducts = async (productId, limit = 8) => {
 };
 
 export const browseCategory = async (slug, params = {}, signal) => {
-  const response = await axiosInstance.get(`${apiBase}/search/category/${slug}`, { params, signal });
+  const response = await axiosInstance.get(`${apiBase}/search/category/${slug}`, {
+    params,
+    signal,
+  });
   return unwrapPayload(response);
 };
 
