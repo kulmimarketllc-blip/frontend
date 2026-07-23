@@ -115,6 +115,8 @@ export const checkAuth = async () => {
 export const logout = async () => {
   try {
     await axiosInstance.post(`${authBase}/logout`, {}, { withCredentials: true });
+  } catch (error) {
+    console.warn('Backend logout request failed, clearing local session:', error);
   } finally {
     removeToken();
     removeUser();

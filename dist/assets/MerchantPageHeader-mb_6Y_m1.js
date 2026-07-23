@@ -1,1 +1,0 @@
-import{j as e}from"./index-Cy9443FS.js";const a=({title:t,subtitle:r,className:s=""})=>e.jsxs("div",{className:s,children:[e.jsx("h1",{className:"font-['Syne'] text-[1.4rem] lg:text-[1.5rem] font-bold text-white",children:t}),e.jsx("p",{className:"text-gray text-[1rem]",children:r})]});export{a as M};

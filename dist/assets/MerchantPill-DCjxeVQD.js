@@ -1,0 +1,1 @@
+import{j as e}from"./index-BB_OJPt3.js";const t=({children:s,className:n})=>e.jsxs("span",{className:`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[0.68rem] font-semibold ${n}`,children:[e.jsx("span",{className:"h-1.5 w-1.5 rounded-full bg-current"}),s]});export{t as M};

@@ -1,0 +1,1 @@
+import{j as t}from"./index-BB_OJPt3.js";import{C as o}from"./CategoryPageLayout-CqtLMp-x.js";import"./ProductCard-CbfdrgtS.js";import"./eye-CEEn0flc.js";import"./star-o9dWk1MY.js";import"./chevron-down-D0Y_1LrN.js";const r=()=>t.jsx(o,{title:"Beauty",description:"Skincare, makeup, haircare, and wellness products from top brands."}),n=()=>t.jsx(r,{});export{n as default};
