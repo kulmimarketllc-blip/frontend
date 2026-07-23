@@ -5,7 +5,6 @@ import {
   FileBarChart,
   Flag,
   MessageCircle,
-  Scale,
   Star,
   Store,
   Ticket,
@@ -89,14 +88,6 @@ const SubAdminLayout = () => {
       label: 'Monitoring',
       items: [
         { id: 'user-management', icon: UserRoundCog, label: 'User Management', to: '/subadmin/user-management' },
-        { 
-          id: 'order-disputes', 
-          icon: Scale, 
-          label: 'Order Disputes', 
-          to: '/subadmin/order-disputes',
-          badge: stats.activeDisputes > 0 ? String(stats.activeDisputes) : null,
-          badgeColor: 'bg-purple-500 text-white',
-        },
       ],
     },
     {

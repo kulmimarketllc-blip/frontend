@@ -11,9 +11,22 @@ import {
   Clock,
   ShoppingBag,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../../../services/authService';
 
 const UserDashboardView = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error('Sign Out failed:', err);
+    } finally {
+      window.dispatchEvent(new Event('kulmi:auth-updated'));
+      navigate('/auth/login');
+    }
+  };
   const stats = [
     { label: 'Orders', value: '14', icon: Package, bg: 'bg-teal/10', color: 'text-teal' },
     { label: 'Wishlist', value: '28', icon: Heart, bg: 'bg-red/10', color: 'text-red' },
@@ -75,12 +88,13 @@ const UserDashboardView = () => {
             </p>
           </div>
         </div>
-        <Link
-          to="/"
-          className="border-red/20 text-red hover:bg-red/5 flex items-center gap-2 rounded-full border px-4 py-2 text-[0.82rem] font-bold transition-all"
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="border-red/20 text-red hover:bg-red/5 flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-[0.82rem] font-bold transition-all"
         >
           <LogOut size={16} /> Sign Out
-        </Link>
+        </button>
       </div>
 
       <div className="mb-8 grid grid-cols-2 gap-4 min-[900px]:grid-cols-4">

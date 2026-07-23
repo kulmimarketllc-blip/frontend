@@ -52,10 +52,16 @@ const DashboardSidebar = ({ navSections, mobileOpen, onSelectItem }) => {
         <button
           type="button"
           onClick={async () => {
-            await logout();
-            navigate('/auth/login');
+            try {
+              await logout();
+            } catch (err) {
+              console.error('Logout failed:', err);
+            } finally {
+              window.dispatchEvent(new Event('kulmi:auth-updated'));
+              navigate('/auth/login');
+            }
           }}
-          className="text-red hover:bg-red/10 flex w-full items-center gap-2.5 rounded px-3 py-2 text-left text-[0.82rem] transition-colors"
+          className="text-red hover:bg-red/10 flex w-full cursor-pointer items-center gap-2.5 rounded px-3 py-2 text-left text-[0.82rem] transition-colors"
         >
           <LogOut size={16} /> Logout
         </button>

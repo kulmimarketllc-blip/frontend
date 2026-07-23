@@ -119,9 +119,16 @@ const NavbarLayout = () => {
   }, []);
 
   const handleLogout = async () => {
-    await logout();
-    setCurrentUser(null);
-    navigate('/auth/login');
+    setProfileDropdownOpen(false);
+    try {
+      await logout();
+    } catch (err) {
+      console.error('Sign Out failed:', err);
+    } finally {
+      setCurrentUser(null);
+      window.dispatchEvent(new Event('kulmi:auth-updated'));
+      navigate('/auth/login');
+    }
   };
 
   const submitSearch = (query) => {
