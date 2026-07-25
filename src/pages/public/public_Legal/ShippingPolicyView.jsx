@@ -18,17 +18,17 @@ const ShippingPolicyView = () => {
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
             <Truck className="text-teal mb-4 h-8 w-8" />
             <h3 className="mb-2 text-xl font-bold">Standard Shipping</h3>
-            <p className="text-sm text-gray-400">3-5 business days. Free for orders over $50.</p>
+            <p className="text-sm text-gray-400">3-5 business days. Free shipping on all orders.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
             <Zap className="mb-4 h-8 w-8 text-blue-400" />
             <h3 className="mb-2 text-xl font-bold">Express Shipping</h3>
-            <p className="text-sm text-gray-400">1-2 business days. Calculated at checkout.</p>
+            <p className="text-sm text-gray-400">1-2 business days. Free shipping on all orders.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
             <Globe className="mb-4 h-8 w-8 text-purple-400" />
-            <h3 className="mb-2 text-xl font-bold">International</h3>
-            <p className="text-sm text-gray-400">7-14 business days. Duties and taxes may apply.</p>
+            <h3 className="mb-2 text-xl font-bold">Diaspora Shipping</h3>
+            <p className="text-sm text-gray-400">7-14 business days to diaspora communities worldwide.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
             <ShieldAlert className="mb-4 h-8 w-8 text-red-400" />
@@ -53,19 +53,17 @@ const ShippingPolicyView = () => {
             <section>
               <h2 className="mb-4 text-2xl font-bold text-white">Shipping Rates</h2>
               <p>
-                Shipping charges for your order will be calculated and displayed at checkout. We
-                periodically offer free shipping promotions which will be automatically applied to
-                qualifying orders.
+                Kulmi Market offers free shipping on all orders. No shipping charges will be added
+                at checkout.
               </p>
             </section>
 
             <section>
-              <h2 className="mb-4 text-2xl font-bold text-white">
-                P.O. Boxes and APO/FPO Addresses
-              </h2>
+              <h2 className="mb-4 text-2xl font-bold text-white">Shipping Regions</h2>
               <p>
-                Kulmi Market ships to addresses within the U.S., U.S. Territories, and APO/FPO/DPO
-                addresses. However, certain items may have shipping restrictions.
+                Kulmi Market ships within East Africa, including Somalia, Kenya, Ethiopia, and
+                neighboring countries. We also deliver to diaspora communities around the world.
+                Certain items may have shipping restrictions depending on the destination.
               </p>
             </section>
           </div>
