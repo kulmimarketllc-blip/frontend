@@ -224,6 +224,12 @@ const UserOrders = () => {
                 >
                   Track
                 </Link>
+                <Link
+                  to={`/dashboard/support?new=1&orderId=${encodeURIComponent(order.id)}&category=order`}
+                  className="text-gray2 hover:border-teal hover:text-teal rounded border border-white/[0.07] px-3 py-1 text-[0.74rem] no-underline"
+                >
+                  Get Help
+                </Link>
                 <button
                   type="button"
                   onClick={() => handleReorder(order)}

@@ -94,7 +94,7 @@ const RegisterView = () => {
       } else if (user?.role === 'admin') {
         navigate('/admin');
       } else if (user?.role === 'sub_admin') {
-        navigate('/subadmin');
+        navigate('/subadmin/support-tickets');
       } else {
         navigate('/dashboard');
       }

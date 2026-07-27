@@ -102,6 +102,7 @@ const UserDashboard = ({ onNav }) => {
         const quickActions = [
           { id: 'orders', label: 'View Orders', sub: 'Check shipping and history' },
           { id: 'track', label: 'Track Order', sub: 'Open live delivery tracking' },
+          { id: 'support', label: 'Help & Support', sub: 'Open or track support tickets' },
           { id: 'wishlist', label: 'Wishlist', sub: 'Review saved products' },
           { id: 'addresses', label: 'Addresses', sub: 'Manage delivery locations' },
           { id: 'profile', label: 'Profile', sub: 'Update account details' },
