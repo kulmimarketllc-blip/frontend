@@ -32,7 +32,7 @@ const LoginView = () => {
   const routeByRole = (role) => {
     if (role === 'merchant') return '/merchant';
     if (role === 'admin') return '/admin';
-    if (role === 'sub_admin') return '/subadmin';
+    if (role === 'sub_admin') return '/subadmin/support-tickets';
     return '/dashboard';
   };
 

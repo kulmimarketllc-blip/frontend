@@ -1,10 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import {
-  ChartNoAxesColumn,
   FileBarChart,
   Flag,
-  MessageCircle,
   Star,
   Store,
   Ticket,
@@ -23,8 +21,7 @@ const SubAdminLayout = () => {
     pendingMerchants: 0,
     flaggedReviews: 0,
     flaggedContent: 0,
-    activeDisputes: 0,
-    supportTickets: 0,
+    openTickets: 0,
   });
 
   useEffect(() => {
@@ -48,16 +45,14 @@ const SubAdminLayout = () => {
     {
       label: 'Moderation',
       items: [
-        { id: 'dashboard', icon: ChartNoAxesColumn, label: 'Dashboard', to: '/subadmin' },
-        // Temporarily hide Support Tickets from sub-admin sidebar
-        // {
-        //   id: 'support-tickets',
-        //   icon: Ticket,
-        //   label: 'Support Tickets',
-        //   to: '/subadmin/support-tickets',
-        //   badge: stats.openTickets > 0 ? String(stats.openTickets) : null,
-        //   badgeColor: 'bg-red text-white',
-        // },
+        {
+          id: 'support-tickets',
+          icon: Ticket,
+          label: 'Support Tickets',
+          to: '/subadmin/support-tickets',
+          badge: stats.openTickets > 0 ? String(stats.openTickets) : null,
+          badgeColor: 'bg-red text-white',
+        },
         {
           id: 'review-moderation',
           icon: Star,

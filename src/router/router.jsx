@@ -51,6 +51,7 @@ const UserProfile = lazy(() => import('../pages/users/pages/UserProfile'));
 const UserAddresses = lazy(() => import('../pages/users/pages/UserAddresses'));
 const UserPayments = lazy(() => import('../pages/users/pages/UserPayments'));
 const UserSettings = lazy(() => import('../pages/users/pages/UserSettings'));
+const UserSupport = lazy(() => import('../pages/users/pages/UserSupport'));
 
 // Portals
 const AdminView = lazy(() => import('../pages/admin/AdminView'));
@@ -64,6 +65,7 @@ const AdminDelivery = lazy(() => import('../pages/admin/pages/AdminDelivery'));
 const AdminRevenue = lazy(() => import('../pages/admin/pages/AdminRevenue'));
 const AdminCoupons = lazy(() => import('../pages/admin/pages/AdminCoupons'));
 const AdminSettings = lazy(() => import('../pages/admin/pages/AdminSettings'));
+const AdminSupportTickets = lazy(() => import('../pages/admin/pages/AdminSupportTickets'));
 
 const MerchantDashboard = lazy(() => import('../pages/merchant/pages/MerchantDashboard'));
 const MerchantOrders = lazy(() => import('../pages/merchant/pages/MerchantOrders'));
@@ -85,7 +87,6 @@ const SubAdminReviewModeration = lazy(() => import('../pages/subadmin/pages/SubA
 const SubAdminFlaggedContent = lazy(() => import('../pages/subadmin/pages/SubAdminFlaggedContent'));
 const SubAdminMerchantApprovals = lazy(() => import('../pages/subadmin/pages/SubAdminMerchantApprovals'));
 const SubAdminUserManagement = lazy(() => import('../pages/subadmin/pages/SubAdminUserManagement'));
-const SubAdminOrderDisputes = lazy(() => import('../pages/subadmin/pages/SubAdminOrderDisputes'));
 const SubAdminCustomerMessages = lazy(() => import('../pages/subadmin/pages/SubAdminCustomerMessages'));
 const SubAdminActivityLog = lazy(() => import('../pages/subadmin/pages/SubAdminActivityLog'));
 const SubAdminReports = lazy(() => import('../pages/subadmin/pages/SubAdminReports'));
@@ -125,6 +126,7 @@ const userPathMap = {
   addresses: '/dashboard/addresses',
   payments: '/dashboard/payments',
   settings: '/dashboard/settings',
+  support: '/dashboard/support',
 };
 
 const AdminDashboardRoute = () => {
@@ -237,6 +239,7 @@ const router = createBrowserRouter(
         <Route path="addresses" element={wrap(UserAddresses)} />
         <Route path="payments" element={wrap(UserPayments)} />
         <Route path="settings" element={wrap(UserSettings)} />
+        <Route path="support" element={wrap(UserSupport)} />
       </Route>
       <Route path="admin" element={
         <ProtectedRoute allowedRoles={['admin']}>
@@ -252,6 +255,7 @@ const router = createBrowserRouter(
         <Route path="revenue" element={wrap(AdminRevenue)} />
         <Route path="coupons" element={wrap(AdminCoupons)} />
         <Route path="settings" element={wrap(AdminSettings)} />
+        <Route path="support-tickets" element={wrap(AdminSupportTickets)} />
         {/* <Route path="payouts" element={<AdminPlaceholder title="Payout Management" icon="💸" />} />
         <Route path="commission" element={<AdminPlaceholder title="Commission Config" icon="📈" />} />
         <Route path="categories" element={<AdminPlaceholder title="Category Management" icon="📂" />} />
@@ -284,12 +288,13 @@ const router = createBrowserRouter(
         </ProtectedRoute>
       } errorElement={<RouteErrorBoundary />}>
         <Route index element={wrap(SubAdminDashboard)} />
+        <Route path="dashboard" element={wrap(SubAdminDashboard)} />
         <Route path="support-tickets" element={wrap(SubAdminSupportTickets)} />
         <Route path="review-moderation" element={wrap(SubAdminReviewModeration)} />
         <Route path="flagged-content" element={wrap(SubAdminFlaggedContent)} />
         <Route path="merchant-approvals" element={wrap(SubAdminMerchantApprovals)} />
         <Route path="user-management" element={wrap(SubAdminUserManagement)} />
-        <Route path="order-disputes" element={wrap(SubAdminOrderDisputes)} />
+        <Route path="order-disputes" element={<Navigate to="/subadmin/support-tickets" replace />} />
         {/* <Route path="customer-messages" element={wrap(SubAdminCustomerMessages)} /> */}
         <Route path="activity-log" element={wrap(SubAdminActivityLog)} />
         <Route path="my-reports" element={wrap(SubAdminReports)} />
