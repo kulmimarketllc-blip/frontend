@@ -116,11 +116,14 @@ const subAdminService = {
 
   getTicketDetails: (id) => axiosInstance.get(`${SUPPORT_BASE}/tickets/${id}`).then(unwrapPayload),
 
-  updateTicketStatus: (id, status) => axiosInstance.patch(`${SUPPORT_BASE}/tickets/${id}/status`, { status }).then(unwrapPayload),
+  updateTicketStatus: (id, status, note) =>
+    axiosInstance.patch(`${SUPPORT_BASE}/tickets/${id}/status`, { status, note }).then(unwrapPayload),
 
-  addTicketReply: (id, content) => axiosInstance.post(`${SUPPORT_BASE}/tickets/${id}/replies`, { content }).then(unwrapPayload),
+  addTicketReply: (id, message, isInternal = false) =>
+    axiosInstance.post(`${SUPPORT_BASE}/tickets/${id}/replies`, { message, isInternal }).then(unwrapPayload),
 
-  assignTicket: (id, assignedToId) => axiosInstance.patch(`${SUPPORT_BASE}/tickets/${id}/assign`, { assignedToId }).then(unwrapPayload),
+  assignTicket: (id, assignedToId) =>
+    axiosInstance.patch(`${SUPPORT_BASE}/tickets/${id}/assign`, { assignedToId }).then(unwrapPayload),
 
   // --- Activity Logs ---
   getActivityLogs: (page = 1, limit = 50, adminId) => 
