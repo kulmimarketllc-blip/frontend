@@ -15,7 +15,9 @@ import {
   Tag,
   BarChart3,
   Settings,
+  Headphones,
 } from 'lucide-react';
+import supportService from '../../services/supportService';
 import DashboardShell from '../common/DashboardShell';
 import { fetchCurrentUser, getCurrentUser } from '../../services/authService';
 import { getAdminDashboard, getAdminHealth } from '../../services/adminService';
@@ -58,6 +60,13 @@ const baseNavSections = [
     {
       label: 'System',
       items: [
+        {
+          id: 'support-tickets',
+          icon: Headphones,
+          label: 'Support Tickets',
+          to: '/admin/support-tickets',
+          badgeColor: 'bg-red text-white',
+        },
         // { id: 'analytics', icon: BarChart3, label: 'Analytics', to: '/admin/analytics' },
         { id: 'settings', icon: Settings, label: 'Settings', to: '/admin/settings' },
       ],
@@ -70,6 +79,7 @@ const AdminLayout = () => {
   const [currentUser, setCurrentUser] = useState(() => getCurrentUser());
   const [dashboardStats, setDashboardStats] = useState(null);
   const [healthStats, setHealthStats] = useState(null);
+  const [openTickets, setOpenTickets] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -106,6 +116,19 @@ const AdminLayout = () => {
 
     loadAdminSidebarMetrics();
 
+    const loadSupportCounts = async () => {
+      try {
+        const counts = await supportService.getTicketCounts();
+        if (!active) return;
+        setOpenTickets(Number(counts?.open || 0));
+      } catch {
+        if (!active) return;
+        setOpenTickets(0);
+      }
+    };
+
+    loadSupportCounts();
+
     return () => {
       active = false;
     };
@@ -136,10 +159,17 @@ const AdminLayout = () => {
           };
         }
 
+        if (item.id === 'support-tickets') {
+          return {
+            ...item,
+            badge: openTickets > 0 ? String(openTickets) : null,
+          };
+        }
+
         return item;
       }),
     }));
-  }, [dashboardStats, healthStats]);
+  }, [dashboardStats, healthStats, openTickets]);
 
   const headerUser = useMemo(() => {
     const firstName = String(currentUser?.firstName || '').trim();

@@ -1,0 +1,1 @@
+import{j as o}from"./index-BqGi8fL6.js";import{C as t}from"./CategoryPageLayout-ZCMZT-8a.js";import"./ProductCard-BBfX4XKt.js";import"./eye-DYxIqN1f.js";import"./star-OG7EXP8M.js";import"./chevron-down-BI_67KHa.js";const s=()=>o.jsx(t,{title:"Books",description:"Bestsellers, new releases, fiction, non-fiction, and stationery."}),p=()=>o.jsx(s,{});export{p as default};

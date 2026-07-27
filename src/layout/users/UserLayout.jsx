@@ -9,7 +9,9 @@ import {
   MapPin,
   CreditCard,
   Settings,
+  Headphones,
 } from 'lucide-react';
+import supportService from '../../services/supportService';
 import DashboardShell from '../common/DashboardShell';
 import { fetchCurrentUser, getCurrentUser } from '../../services/authService';
 import { getMyOrders } from '../../services/checkoutService';
@@ -22,6 +24,7 @@ const UserLayout = () => {
   const [currentUser, setCurrentUser] = useState(() => getCurrentUser());
   const [orderCount, setOrderCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [openTickets, setOpenTickets] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -60,10 +63,20 @@ const UserLayout = () => {
           : (Array.isArray(ordersPayload?.data) ? ordersPayload.data.length : 0));
 
         setWishlistCount(getWishlistItems().length);
+
+        try {
+          const ticketCounts = await supportService.getTicketCounts();
+          if (!active) return;
+          setOpenTickets(Number(ticketCounts?.open || 0) + Number(ticketCounts?.inProgress || 0));
+        } catch {
+          if (!active) return;
+          setOpenTickets(0);
+        }
       } catch {
         if (!active) return;
         setOrderCount(0);
         setWishlistCount(getWishlistItems().length);
+        setOpenTickets(0);
       }
     };
 
@@ -114,9 +127,17 @@ const UserLayout = () => {
           to: '/dashboard/payments',
         },
         { id: 'settings', icon: Settings, label: 'Settings', to: '/dashboard/settings' },
+        {
+          id: 'support',
+          icon: Headphones,
+          label: 'Help & Support',
+          to: '/dashboard/support',
+          badge: openTickets > 0 ? String(openTickets) : null,
+          badgeColor: 'bg-teal text-navy',
+        },
       ],
     },
-  ]), [orderCount, wishlistCount]);
+  ]), [orderCount, wishlistCount, openTickets]);
 
   const headerUser = useMemo(() => {
     const firstName = String(currentUser?.firstName || '').trim();

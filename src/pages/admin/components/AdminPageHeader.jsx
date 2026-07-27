@@ -1,7 +1,7 @@
 import DashboardPageHeader from './DashboardPageHeader';
 
-const AdminPageHeader = ({ title, subtitle }) => {
-  return <DashboardPageHeader title={title} subtitle={subtitle} />;
+const AdminPageHeader = ({ title, subtitle, actions }) => {
+  return <DashboardPageHeader title={title} subtitle={subtitle} actions={actions} />;
 };
 
 export default AdminPageHeader;
